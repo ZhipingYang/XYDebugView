@@ -14,7 +14,18 @@ s.source       = { :git => 'https://github.com/ZhipingYang/XYDebugView.git', :ta
 
 s.requires_arc = true
 
-s.source_files = 'XYDebugView/XYDebugView/**/*'
+# s.source_files = [
+# "CLScanKit/ScanCarNumber/controller/*.{h,m,mm}",
+# "CLScanKit/ScanCarNumber/view/*.{h,m}",
+# "XYDebugView/XYDebugView/*.{h,m}",
+# "CLScanKit/base/controller/*.{h,m}",
+# "CLScanKit/base/model/CKScanCodeConfigModel.*",
+# "CLScanKit/base/model/CKScanResultModel.*",
+# "CLScanKit/base/controller/.{h,m}",
+# "CLScanKit/base/plugin/*.{h,m}",
+# "CLScanKit/SDK/LPR/*.{h,cpp}"
+# ]
+s.source_files = 'XYDebugView/**/*'
 
 s.frameworks = 'UIKit'
 
