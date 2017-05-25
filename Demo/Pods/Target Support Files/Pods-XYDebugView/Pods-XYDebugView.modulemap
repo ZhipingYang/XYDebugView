@@ -1,0 +1,6 @@
+framework module Pods_XYDebugView {
+  umbrella header "Pods-XYDebugView-umbrella.h"
+
+  export *
+  module * { export * }
+}

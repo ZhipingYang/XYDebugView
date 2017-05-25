@@ -13,7 +13,7 @@
 		65758CB21ED5B41600A7738D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB01ED5B41600A7738D /* Main.storyboard */; };
 		65758CB41ED5B41600A7738D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB31ED5B41600A7738D /* Assets.xcassets */; };
 		65758CB71ED5B41600A7738D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB51ED5B41600A7738D /* LaunchScreen.storyboard */; };
-		65758CC41ED5B4CD00A7738D /* XYDebugViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CC31ED5B4CD00A7738D /* XYDebugViewManager.m */; };
+		F42F7918F9077D132C143A18 /* Pods_XYDebugView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +27,9 @@
 		65758CB31ED5B41600A7738D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65758CB61ED5B41600A7738D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65758CB81ED5B41600A7738D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		65758CC21ED5B4CD00A7738D /* XYDebugViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugViewManager.h; sourceTree = "<group>"; };
-		65758CC31ED5B4CD00A7738D /* XYDebugViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugViewManager.m; sourceTree = "<group>"; };
+		7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYDebugView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2DE005133616843BDEAF6F6 /* Pods-XYDebugView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYDebugView.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView.release.xcconfig"; sourceTree = "<group>"; };
+		E8DD6F7D0E917ADD00EBC4FC /* Pods-XYDebugView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYDebugView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,17 +37,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F42F7918F9077D132C143A18 /* Pods_XYDebugView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C567E81F63FF442AE01A0DC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E8DD6F7D0E917ADD00EBC4FC /* Pods-XYDebugView.debug.xcconfig */,
+				B2DE005133616843BDEAF6F6 /* Pods-XYDebugView.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		65758C9B1ED5B41600A7738D = {
 			isa = PBXGroup;
 			children = (
 				65758CA61ED5B41600A7738D /* XYDebugView */,
 				65758CA51ED5B41600A7738D /* Products */,
+				3C567E81F63FF442AE01A0DC /* Pods */,
+				A22F45403A9B4FE37D0BCC99 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,7 +74,6 @@
 		65758CA61ED5B41600A7738D /* XYDebugView */ = {
 			isa = PBXGroup;
 			children = (
-				65758CC11ED5B4CD00A7738D /* XYDebugView */,
 				65758CAA1ED5B41600A7738D /* AppDelegate.h */,
 				65758CAB1ED5B41600A7738D /* AppDelegate.m */,
 				65758CAD1ED5B41600A7738D /* ViewController.h */,
@@ -83,14 +95,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		65758CC11ED5B4CD00A7738D /* XYDebugView */ = {
+		A22F45403A9B4FE37D0BCC99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				65758CC21ED5B4CD00A7738D /* XYDebugViewManager.h */,
-				65758CC31ED5B4CD00A7738D /* XYDebugViewManager.m */,
+				7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */,
 			);
-			name = XYDebugView;
-			path = ../../XYDebugView;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,9 +110,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65758CBB1ED5B41600A7738D /* Build configuration list for PBXNativeTarget "XYDebugView" */;
 			buildPhases = (
+				8872033D94E64BB743682EF0 /* [CP] Check Pods Manifest.lock */,
 				65758CA01ED5B41600A7738D /* Sources */,
 				65758CA11ED5B41600A7738D /* Frameworks */,
 				65758CA21ED5B41600A7738D /* Resources */,
+				80CD36433CE2E5F6588FC21E /* [CP] Embed Pods Frameworks */,
+				BF3755F1054640B09581C325 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,6 +173,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		80CD36433CE2E5F6588FC21E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8872033D94E64BB743682EF0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BF3755F1054640B09581C325 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		65758CA01ED5B41600A7738D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -167,7 +228,6 @@
 			files = (
 				65758CAF1ED5B41600A7738D /* ViewController.m in Sources */,
 				65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */,
-				65758CC41ED5B4CD00A7738D /* XYDebugViewManager.m in Sources */,
 				65758CA91ED5B41600A7738D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +348,7 @@
 		};
 		65758CBC1ED5B41600A7738D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8DD6F7D0E917ADD00EBC4FC /* Pods-XYDebugView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = H9J886PZ98;
@@ -303,6 +364,7 @@
 		};
 		65758CBD1ED5B41600A7738D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2DE005133616843BDEAF6F6 /* Pods-XYDebugView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = H9J886PZ98;
