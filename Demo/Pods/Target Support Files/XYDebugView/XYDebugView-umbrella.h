@@ -10,7 +10,11 @@
 #endif
 #endif
 
+#import "UIColor+XYRandom.h"
+#import "XYDebug+runtime.h"
+#import "XYDebugView.h"
 #import "XYDebugViewManager.h"
+#import "XYDebugWindow.h"
 
 FOUNDATION_EXPORT double XYDebugViewVersionNumber;
 FOUNDATION_EXPORT const unsigned char XYDebugViewVersionString[];

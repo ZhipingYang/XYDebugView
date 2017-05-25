@@ -1,11 +1,11 @@
 PODS:
-  - XYDebugView (0.0.1)
+  - XYDebugView (0.1.0)
 
 DEPENDENCIES:
   - XYDebugView
 
 SPEC CHECKSUMS:
-  XYDebugView: 403ec143dd6dad255d6f5c61b40f4b6055474d2e
+  XYDebugView: 887789b160ca85fc95909abbbedc289a1407f805
 
 PODFILE CHECKSUM: d0bab4febcf9a5bb4eb554cf9a0bd674b5dd283c
 
