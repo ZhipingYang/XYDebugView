@@ -8,7 +8,7 @@
 
 #import "XYDebugWindow.h"
 #import "XYDebugViewManager.h"
-#import "UIView+XYDebug.h"
+#import "XYDebug+runtime.h"
 
 #ifndef SCREEN_WIDTH
 #define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
@@ -17,6 +17,17 @@
 #ifndef SCREEN_HEIGHT
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
 #endif
+
+@interface XYDebugWindow ()
+
+@property (nonatomic, strong) DebugSlider *layerSlider;
+@property (nonatomic, strong) DebugSlider *distanceSlider;
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+
+@property (nonatomic, strong) NSMutableArray <CALayer *>* debugLayers;
+
+@end
 
 @implementation XYDebugWindow
 
@@ -43,21 +54,32 @@
         transform.m34 = -1.0 / 500;
         _scrollView.layer.sublayerTransform = transform;
         
-        _slider = [[DebugSlider alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-30, 40, 40, SCREEN_HEIGHT-40*2)];
-        _slider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
-        _slider.hidden = YES;
+        _layerSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-30, 40, 30, SCREEN_HEIGHT-40*2)];
+        _layerSlider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        _layerSlider.hidden = YES;
+        
+        _distanceSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(0, 40, 30, SCREEN_HEIGHT-40*2)];
+        _distanceSlider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        _distanceSlider.hidden = YES;
         
         typeof(self) weakSelf = self;
-        _slider.touchMoveBlock = ^(float percent) {
+        _layerSlider.touchMoveBlock = ^(float percent) {
             [weakSelf showDifferentLayers:percent];
         };
-        _slider.touchEndBlock = ^{
+        _layerSlider.touchEndBlock = ^{
             [weakSelf showAllLayer];
+        };
+        _distanceSlider.touchMoveBlock = ^(float percent) {
+            [weakSelf changeDistance:percent];
+        };
+        _distanceSlider.touchEndBlock = ^{
+            [weakSelf recoverDistance];
         };
         
         [self addSubview:_scrollView];
         [self addSubview:_button];
-        [self addSubview:_slider];
+        [self addSubview:_layerSlider];
+        [self addSubview:_distanceSlider];
         self.backgroundColor = [UIColor clearColor];
         self.debugLayers = @[].mutableCopy;
         self.layer.masksToBounds = YES;
@@ -74,8 +96,10 @@
     } else if (_frameManager.isDebugging) {
         if (CGRectContainsPoint(_button.frame,point)) {
             return _button;
-        } else if (CGRectContainsPoint(_slider.frame,point) && _souceView) {
-            return _slider;
+        } else if (CGRectContainsPoint(_layerSlider.frame,point) && _souceView) {
+            return _layerSlider;
+        } else if (CGRectContainsPoint(_distanceSlider.frame,point) && _souceView) {
+            return _distanceSlider;
         } else if (CGRectContainsPoint(_scrollView.frame,point) && _souceView) {
             return _scrollView;
         }
@@ -88,15 +112,21 @@
 {
     _souceView = souceView;
     if (_souceView == nil) {
-        [[self.debugLayers copy] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-        self.scrollView.hidden = YES;
-        self.slider.hidden = YES;
+        [[_debugLayers copy] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        _scrollView.hidden = YES;
+        _layerSlider.hidden = YES;
+        _distanceSlider.hidden = YES;
     } else {
-        self.scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
+        _scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
         [self scrollViewAddLayersInView:_souceView layerLevel:0 index:0];
-        self.scrollView.hidden = NO;
-        self.scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
-        self.slider.hidden = NO;
+        _scrollView.hidden = NO;
+        _scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
+        _layerSlider.hidden = NO;
+        _distanceSlider.hidden = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.debugLayers enumerateObjectsUsingBlock:^(CALayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            }];
+        });
     }
 }
 
@@ -105,7 +135,8 @@
     if ([view isKindOfClass:[UIView class]] && view) {
         if (view.superview) {
             UIView *cloneView = view.cloneView;
-            cloneView.layer.zPosition = -600 + (layerLevel*80+index*8);
+            cloneView.layer.zPosition = 0;
+            cloneView.layer.debug_zPostion = -600 + (layerLevel*80+index*8);
             cloneView.layer.masksToBounds = YES;
             
             CGRect frame = [view.superview convertRect:view.frame toView:_souceView];
@@ -114,25 +145,34 @@
             cloneView.layer.opacity = 0.8;
             [self.debugLayers addObject:cloneView.layer];
             [self.scrollView.layer addSublayer:cloneView.layer];
+            
+            CABasicAnimation *theAnimation;
+            theAnimation=[CABasicAnimation animationWithKeyPath:@"zPosition"];
+            theAnimation.fromValue=[NSNumber numberWithFloat:0];
+            theAnimation.toValue=[NSNumber numberWithFloat:-600 + (layerLevel*80+index*8)];
+            theAnimation.duration=1;
+            theAnimation.fillMode = kCAFillModeForwards;
+            theAnimation.removedOnCompletion = NO;
+            [cloneView.layer addAnimation:theAnimation forKey:@"zPosition"];
         }
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self scrollViewAddLayersInView:obj layerLevel:layerLevel+1 index:idx];
-            }];
-        });
+        [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self scrollViewAddLayersInView:obj layerLevel:layerLevel+1 index:idx];
+        }];
     }
 }
 
+#pragma mark - actions
+
 - (void)showDifferentLayers:(float)percent
 {
-    CGFloat positionMax = self.debugLayers.firstObject.zPosition;
+    CGFloat positionMax = self.debugLayers.firstObject.debug_zPostion;
     CGFloat positionMin = positionMax;
     for (CALayer *layer in self.debugLayers) {
-        if (layer.zPosition >= positionMax) {
-            positionMax = layer.zPosition;
+        if (layer.debug_zPostion >= positionMax) {
+            positionMax = layer.debug_zPostion;
         }
-        if (layer.zPosition <= positionMin) {
-            positionMin = layer.zPosition;
+        if (layer.debug_zPostion <= positionMin) {
+            positionMin = layer.debug_zPostion;
         }
     }
     // 分成20节,每节为5
@@ -145,7 +185,7 @@
     CGFloat dowmRange = positionMin + gap*(num-1);
     
     for (CALayer *layer in self.debugLayers) {
-        layer.opacity = (layer.zPosition>upRange || layer.zPosition<dowmRange) ? 0.1:1;
+        layer.opacity = (layer.debug_zPostion>upRange || layer.debug_zPostion<dowmRange) ? 0.1:1;
     }
 }
 
@@ -156,5 +196,28 @@
     }
 }
 
+- (void)changeDistance:(float)percent
+{
+    for (CALayer *layer in self.debugLayers) {
+        [layer removeAnimationForKey:@"zPosition"];
+        CGFloat newZPostion = 2*layer.debug_zPostion*percent;
+        layer.zPosition = newZPostion;
+    }
+}
+
+- (void)recoverDistance
+{
+    for (CALayer *layer in self.debugLayers) {
+        [layer removeAnimationForKey:@"zPosition"];
+        CABasicAnimation *theAnimation;
+        theAnimation=[CABasicAnimation animationWithKeyPath:@"zPosition"];
+        theAnimation.fromValue=[NSNumber numberWithFloat:layer.zPosition];
+        theAnimation.toValue=[NSNumber numberWithFloat:layer.debug_zPostion];
+        theAnimation.duration=0.1;
+        theAnimation.fillMode = kCAFillModeForwards;
+        theAnimation.removedOnCompletion = NO;
+        [layer addAnimation:theAnimation forKey:@"zPosition"];
+    }
+}
 
 @end

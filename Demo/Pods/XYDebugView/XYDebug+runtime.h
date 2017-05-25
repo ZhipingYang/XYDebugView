@@ -17,3 +17,10 @@
 @property (nonatomic, copy, readonly) NSArray <UIView *> *debuRecurrenceAllSubviews;
 
 @end
+
+@interface CALayer (XYDebug)
+
+@property (nonatomic, assign) CGFloat debug_zPostion;
+
+@end
+

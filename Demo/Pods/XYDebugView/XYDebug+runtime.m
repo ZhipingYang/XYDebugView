@@ -6,7 +6,7 @@
 //
 //
 
-#import "UIView+XYDebug.h"
+#import "XYDebug+runtime.h"
 #import <objc/runtime.h>
 
 const static char * DebugStoreUIViewBackColor = "DebugStoreUIViewBackColor";
@@ -81,6 +81,25 @@ const static char * DebugColorSublayer = "DebugColorSublayer";
     };
     getSubViewsBlock(self);
     return [NSArray arrayWithArray:all];
+}
+
+@end
+
+
+const static char * DebugStoreZPosition = "DebugStoreZPosition";
+
+
+@implementation CALayer (XYDebug)
+
+- (CGFloat)debug_zPostion
+{
+    id obj = objc_getAssociatedObject(self, DebugStoreZPosition);
+    return [obj floatValue];
+}
+
+- (void)setDebug_zPostion:(CGFloat)debug_zPostion
+{
+    objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end

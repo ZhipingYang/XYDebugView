@@ -63,6 +63,7 @@
 {
     if (self = [super initWithFrame:frame]) {
         _colorLayer = [CALayer layer];
+        _colorLayer.frame = CGRectMake(0, 0, frame.size.width, 0);
         _colorLayer.backgroundColor = [[UIColor greenColor] colorWithAlphaComponent:0.4].CGColor;
         [self.layer addSublayer:_colorLayer];
     }
@@ -75,13 +76,13 @@
     CGPoint point = [touch locationInView:self];
     _colorLayer.frame = CGRectMake(0, 0, self.bounds.size.width, point.y);
     float percent = point.y / self.frame.size.height;
-    percent = percent<0 ? percent : (percent>1 ? 1:percent);
+    percent = percent<0 ? 0 : (percent>1 ? 1:percent);
     !_touchMoveBlock ?: _touchMoveBlock(percent);
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    _colorLayer.frame = CGRectZero;
+    _colorLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 0);
     !_touchEndBlock ?: _touchEndBlock();
 }
 

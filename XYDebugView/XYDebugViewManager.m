@@ -8,7 +8,7 @@
 
 #import "XYDebugViewManager.h"
 #import "XYDebugWindow.h"
-#import "UIView+XYDebug.h"
+#import "XYDebug+runtime.h"
 #import "UIColor+XYRandom.h"
 
 #pragma mark - XYDebugViewManager

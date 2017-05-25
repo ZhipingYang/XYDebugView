@@ -13,8 +13,8 @@
 		5681F2EB82C5AE4F2F531ABE76C4FB02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
 		65758CD51ED6B75800A7738D /* XYDebugView.h in Headers */ = {isa = PBXBuildFile; fileRef = 65758CC51ED6B16700A7738D /* XYDebugView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65758CD61ED6B75F00A7738D /* XYDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CC61ED6B16700A7738D /* XYDebugView.m */; };
-		65758CD71ED6B76B00A7738D /* UIView+XYDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 65758CC91ED6B1EA00A7738D /* UIView+XYDebug.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		65758CD81ED6B76B00A7738D /* UIView+XYDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CCA1ED6B1EA00A7738D /* UIView+XYDebug.m */; };
+		65758CD71ED6B76B00A7738D /* XYDebug+runtime.h in Headers */ = {isa = PBXBuildFile; fileRef = 65758CC91ED6B1EA00A7738D /* XYDebug+runtime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		65758CD81ED6B76B00A7738D /* XYDebug+runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CCA1ED6B1EA00A7738D /* XYDebug+runtime.m */; };
 		65758CD91ED6B76B00A7738D /* UIColor+XYRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 65758CCD1ED6B36500A7738D /* UIColor+XYRandom.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65758CDA1ED6B76B00A7738D /* UIColor+XYRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CCE1ED6B36500A7738D /* UIColor+XYRandom.m */; };
 		65758CDB1ED6B76B00A7738D /* XYDebugWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 65758CD11ED6B49D00A7738D /* XYDebugWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -46,8 +46,8 @@
 		4DAD1C7035182AA3EC2731048C0AA9D9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65758CC51ED6B16700A7738D /* XYDebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugView.h; sourceTree = "<group>"; };
 		65758CC61ED6B16700A7738D /* XYDebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugView.m; sourceTree = "<group>"; };
-		65758CC91ED6B1EA00A7738D /* UIView+XYDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XYDebug.h"; sourceTree = "<group>"; };
-		65758CCA1ED6B1EA00A7738D /* UIView+XYDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XYDebug.m"; sourceTree = "<group>"; };
+		65758CC91ED6B1EA00A7738D /* XYDebug+runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XYDebug+runtime.h"; sourceTree = "<group>"; };
+		65758CCA1ED6B1EA00A7738D /* XYDebug+runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XYDebug+runtime.m"; sourceTree = "<group>"; };
 		65758CCD1ED6B36500A7738D /* UIColor+XYRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+XYRandom.h"; sourceTree = "<group>"; };
 		65758CCE1ED6B36500A7738D /* UIColor+XYRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XYRandom.m"; sourceTree = "<group>"; };
 		65758CD11ED6B49D00A7738D /* XYDebugWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugWindow.h; sourceTree = "<group>"; };
@@ -167,8 +167,8 @@
 				FD292D03A3747EB1F9BA923B2DE72086 /* XYDebugViewManager.m */,
 				65758CC51ED6B16700A7738D /* XYDebugView.h */,
 				65758CC61ED6B16700A7738D /* XYDebugView.m */,
-				65758CC91ED6B1EA00A7738D /* UIView+XYDebug.h */,
-				65758CCA1ED6B1EA00A7738D /* UIView+XYDebug.m */,
+				65758CC91ED6B1EA00A7738D /* XYDebug+runtime.h */,
+				65758CCA1ED6B1EA00A7738D /* XYDebug+runtime.m */,
 				65758CCD1ED6B36500A7738D /* UIColor+XYRandom.h */,
 				65758CCE1ED6B36500A7738D /* UIColor+XYRandom.m */,
 				65758CD11ED6B49D00A7738D /* XYDebugWindow.h */,
@@ -213,7 +213,7 @@
 				CB9B5B0878030C8F3B0C8D7AB6F51798 /* XYDebugView-umbrella.h in Headers */,
 				D90865DD8E1D3C2EE659E24B8371FEBA /* XYDebugViewManager.h in Headers */,
 				65758CDB1ED6B76B00A7738D /* XYDebugWindow.h in Headers */,
-				65758CD71ED6B76B00A7738D /* UIView+XYDebug.h in Headers */,
+				65758CD71ED6B76B00A7738D /* XYDebug+runtime.h in Headers */,
 				65758CD51ED6B75800A7738D /* XYDebugView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,7 +293,7 @@
 				017D43B065C9D4444CF7B72F9746E6C2 /* XYDebugView-dummy.m in Sources */,
 				00CADD8508F38C4F931BFD2CF3BB8C7E /* XYDebugViewManager.m in Sources */,
 				65758CD61ED6B75F00A7738D /* XYDebugView.m in Sources */,
-				65758CD81ED6B76B00A7738D /* UIView+XYDebug.m in Sources */,
+				65758CD81ED6B76B00A7738D /* XYDebug+runtime.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
