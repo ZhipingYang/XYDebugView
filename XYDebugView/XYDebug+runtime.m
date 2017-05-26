@@ -88,7 +88,6 @@ const static char * DebugColorSublayer = "DebugColorSublayer";
 
 const static char * DebugStoreZPosition = "DebugStoreZPosition";
 
-
 @implementation CALayer (XYDebug)
 
 - (CGFloat)debug_zPostion
@@ -100,6 +99,21 @@ const static char * DebugStoreZPosition = "DebugStoreZPosition";
 - (void)setDebug_zPostion:(CGFloat)debug_zPostion
 {
     objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (void)zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration
+{
+    if ([self animationForKey:@"zPosition"]) {
+        [self removeAnimationForKey:@"zPosition"];
+    }
+    CABasicAnimation *theAnimation;
+    theAnimation = [CABasicAnimation animationWithKeyPath:@"zPosition"];
+    theAnimation.fromValue = [NSNumber numberWithFloat:from];
+    theAnimation.toValue = [NSNumber numberWithFloat:to];
+    theAnimation.duration = duration;
+    theAnimation.fillMode = kCAFillModeForwards;
+    theAnimation.removedOnCompletion = NO;
+    [self addAnimation:theAnimation forKey:@"zPosition"];
 }
 
 @end

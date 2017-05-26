@@ -70,13 +70,19 @@
     return self;
 }
 
+- (void)setDefalutPercent:(float)defalutPercent
+{
+    _defalutPercent = defalutPercent;
+    _colorLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*defalutPercent);
+}
+
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self];
-    _colorLayer.frame = CGRectMake(0, 0, self.bounds.size.width, point.y);
-    float percent = point.y / self.frame.size.height;
-    percent = percent<0 ? 0 : (percent>1 ? 1:percent);
+    CGFloat pointY = point.y<0 ? 0 : (point.y>self.frame.size.height ? self.frame.size.height:point.y);
+    _colorLayer.frame = CGRectMake(0, 0, self.bounds.size.width, pointY);
+    float percent = pointY / self.frame.size.height;
     !_touchMoveBlock ?: _touchMoveBlock(percent);
 }
 

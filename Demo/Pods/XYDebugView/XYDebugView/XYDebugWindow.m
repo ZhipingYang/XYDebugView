@@ -21,6 +21,7 @@
 @interface XYDebugWindow ()
 
 @property (nonatomic, strong) DebugSlider *layerSlider;
+
 @property (nonatomic, strong) DebugSlider *distanceSlider;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -30,6 +31,8 @@
 @end
 
 @implementation XYDebugWindow
+
+#pragma mark - life cycle
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -61,7 +64,7 @@
         _distanceSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(0, 40, 30, SCREEN_HEIGHT-40*2)];
         _distanceSlider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
         _distanceSlider.hidden = YES;
-        
+        _distanceSlider.defalutPercent = 0.5;
         typeof(self) weakSelf = self;
         _layerSlider.touchMoveBlock = ^(float percent) {
             [weakSelf showDifferentLayers:percent];
@@ -73,7 +76,7 @@
             [weakSelf changeDistance:percent];
         };
         _distanceSlider.touchEndBlock = ^{
-            [weakSelf recoverDistance];
+            [weakSelf recoverLayersDistance];
         };
         
         [self addSubview:_scrollView];
@@ -111,24 +114,24 @@
 - (void)setSouceView:(UIView *)souceView
 {
     _souceView = souceView;
+    
     if (_souceView == nil) {
         [[_debugLayers copy] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         _scrollView.hidden = YES;
         _layerSlider.hidden = YES;
         _distanceSlider.hidden = YES;
+        
     } else {
-        _scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
         [self scrollViewAddLayersInView:_souceView layerLevel:0 index:0];
-        _scrollView.hidden = NO;
         _scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
+        _scrollView.hidden = NO;
         _layerSlider.hidden = NO;
         _distanceSlider.hidden = NO;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.debugLayers enumerateObjectsUsingBlock:^(CALayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            }];
-        });
+        [self recoverLayersDistance];
     }
 }
+
+#pragma mark - private
 
 - (void)scrollViewAddLayersInView:(UIView *)view layerLevel:(CGFloat)layerLevel index:(NSUInteger)index
 {
@@ -136,7 +139,7 @@
         if (view.superview) {
             UIView *cloneView = view.cloneView;
             cloneView.layer.zPosition = 0;
-            cloneView.layer.debug_zPostion = -600 + (layerLevel*80+index*8);
+            cloneView.layer.debug_zPostion = (layerLevel*80 + index*8) - 600;
             cloneView.layer.masksToBounds = YES;
             
             CGRect frame = [view.superview convertRect:view.frame toView:_souceView];
@@ -145,15 +148,6 @@
             cloneView.layer.opacity = 0.8;
             [self.debugLayers addObject:cloneView.layer];
             [self.scrollView.layer addSublayer:cloneView.layer];
-            
-            CABasicAnimation *theAnimation;
-            theAnimation=[CABasicAnimation animationWithKeyPath:@"zPosition"];
-            theAnimation.fromValue=[NSNumber numberWithFloat:0];
-            theAnimation.toValue=[NSNumber numberWithFloat:-600 + (layerLevel*80+index*8)];
-            theAnimation.duration=1;
-            theAnimation.fillMode = kCAFillModeForwards;
-            theAnimation.removedOnCompletion = NO;
-            [cloneView.layer addAnimation:theAnimation forKey:@"zPosition"];
         }
         [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self scrollViewAddLayersInView:obj layerLevel:layerLevel+1 index:idx];
@@ -200,23 +194,17 @@
 {
     for (CALayer *layer in self.debugLayers) {
         [layer removeAnimationForKey:@"zPosition"];
-        CGFloat newZPostion = 2*layer.debug_zPostion*percent;
+        CGFloat newZPostion = 2 * layer.debug_zPostion * percent;
         layer.zPosition = newZPostion;
     }
 }
 
-- (void)recoverDistance
+- (void)recoverLayersDistance
 {
+    _distanceSlider.defalutPercent = 0.5;
+    
     for (CALayer *layer in self.debugLayers) {
-        [layer removeAnimationForKey:@"zPosition"];
-        CABasicAnimation *theAnimation;
-        theAnimation=[CABasicAnimation animationWithKeyPath:@"zPosition"];
-        theAnimation.fromValue=[NSNumber numberWithFloat:layer.zPosition];
-        theAnimation.toValue=[NSNumber numberWithFloat:layer.debug_zPostion];
-        theAnimation.duration=0.1;
-        theAnimation.fillMode = kCAFillModeForwards;
-        theAnimation.removedOnCompletion = NO;
-        [layer addAnimation:theAnimation forKey:@"zPosition"];
+        [layer zPositionAnimationFrom:layer.zPosition to:layer.debug_zPostion duration:0.6];
     }
 }
 
