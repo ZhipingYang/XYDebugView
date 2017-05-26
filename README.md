@@ -24,7 +24,7 @@ XYDebugView is debug tool to draw the all view's frame in device screen and show
 
 ## Installation
 
-FORScrollViewEmptyAssistant is available through [CocoaPods](http://cocoapods.org). To install
+XYDebugView is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
@@ -37,4 +37,4 @@ XcodeYang, xcodeyang@gmail.com
 
 ## License
 
-FORScrollViewEmptyAssistant is available under the MIT license. See the LICENSE file for more info.
+XYDebugView is available under the MIT license. See the LICENSE file for more info.
