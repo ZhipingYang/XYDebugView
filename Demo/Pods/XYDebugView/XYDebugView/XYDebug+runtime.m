@@ -98,7 +98,7 @@ const static char * DebugStoreZPosition = "DebugStoreZPosition";
 
 - (void)setDebug_zPostion:(CGFloat)debug_zPostion
 {
-    objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration
