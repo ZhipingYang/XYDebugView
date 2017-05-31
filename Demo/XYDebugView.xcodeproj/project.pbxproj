@@ -13,6 +13,7 @@
 		65758CB21ED5B41600A7738D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB01ED5B41600A7738D /* Main.storyboard */; };
 		65758CB41ED5B41600A7738D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB31ED5B41600A7738D /* Assets.xcassets */; };
 		65758CB71ED5B41600A7738D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB51ED5B41600A7738D /* LaunchScreen.storyboard */; };
+		657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 657ED40F1EDF35C30047D1F8 /* NSObject+Runtime.m */; };
 		6583DC521EDF293400D1F3B4 /* UIColor+XYRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */; };
 		6583DC531EDF293400D1F3B4 /* XYDebug+runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4B1EDF293400D1F3B4 /* XYDebug+runtime.m */; };
 		6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */; };
@@ -33,6 +34,8 @@
 		65758CB31ED5B41600A7738D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65758CB61ED5B41600A7738D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65758CB81ED5B41600A7738D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		657ED40E1EDF35C30047D1F8 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
+		657ED40F1EDF35C30047D1F8 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		6583DC481EDF293400D1F3B4 /* UIColor+XYRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+XYRandom.h"; sourceTree = "<group>"; };
 		6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XYRandom.m"; sourceTree = "<group>"; };
 		6583DC4A1EDF293400D1F3B4 /* XYDebug+runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XYDebug+runtime.h"; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 				65758CAB1ED5B41600A7738D /* AppDelegate.m */,
 				65758CAD1ED5B41600A7738D /* ViewController.h */,
 				65758CAE1ED5B41600A7738D /* ViewController.m */,
+				657ED40E1EDF35C30047D1F8 /* NSObject+Runtime.h */,
+				657ED40F1EDF35C30047D1F8 /* NSObject+Runtime.m */,
 				6583DC571EDF2AE400D1F3B4 /* UIWindow+Runtime.h */,
 				6583DC581EDF2AE400D1F3B4 /* UIWindow+Runtime.m */,
 				65758CB01ED5B41600A7738D /* Main.storyboard */,
@@ -271,6 +276,7 @@
 				65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */,
 				65758CA91ED5B41600A7738D /* main.m in Sources */,
 				6583DC531EDF293400D1F3B4 /* XYDebug+runtime.m in Sources */,
+				657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */,
 				6583DC521EDF293400D1F3B4 /* UIColor+XYRandom.m in Sources */,
 				6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */,
 				6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */,
