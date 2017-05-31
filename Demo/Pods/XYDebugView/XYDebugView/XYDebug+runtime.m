@@ -61,7 +61,7 @@ const static char * DebugColorSublayer = "DebugColorSublayer";
 
 - (void)setHasStoreDebugColor:(BOOL)hasStoreDebugColor
 {
-    objc_setAssociatedObject(self, DebugHasStoreUIViewBackColor, @(hasStoreDebugColor), OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, DebugHasStoreUIViewBackColor, @(hasStoreDebugColor), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)hasStoreDebugColor

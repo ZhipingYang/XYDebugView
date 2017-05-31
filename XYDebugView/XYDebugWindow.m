@@ -26,7 +26,7 @@
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
-@property (nonatomic, strong) NSMutableArray <CALayer *>* debugLayers;
+@property (nonatomic, strong) NSHashTable <CALayer *> *debugLayers;
 
 @end
 
@@ -84,7 +84,7 @@
         [self addSubview:_layerSlider];
         [self addSubview:_distanceSlider];
         self.backgroundColor = [UIColor clearColor];
-        self.debugLayers = @[].mutableCopy;
+        self.debugLayers = [NSHashTable weakObjectsHashTable];
         self.layer.masksToBounds = YES;
     }
     return self;
@@ -116,17 +116,19 @@
     _souceView = souceView;
     
     if (_souceView == nil) {
-        [[_debugLayers copy] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         _scrollView.hidden = YES;
         _layerSlider.hidden = YES;
         _distanceSlider.hidden = YES;
         
     } else {
+        [[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        [self.debugLayers removeAllObjects];
         [self scrollViewAddLayersInView:_souceView layerLevel:0 index:0];
         _scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
         _scrollView.hidden = NO;
         _layerSlider.hidden = NO;
         _distanceSlider.hidden = NO;
+        [self reCalculateZPostion];
         [self recoverLayersDistance];
     }
 }
@@ -139,7 +141,7 @@
         if (view.superview) {
             UIView *cloneView = view.cloneView;
             cloneView.layer.zPosition = 0;
-            cloneView.layer.debug_zPostion = (layerLevel*80 + index*8) - 600;
+            cloneView.layer.debug_zPostion = layerLevel*20+index;
             cloneView.layer.masksToBounds = YES;
             
             CGRect frame = [view.superview convertRect:view.frame toView:_souceView];
@@ -159,7 +161,7 @@
 
 - (void)showDifferentLayers:(float)percent
 {
-    CGFloat positionMax = self.debugLayers.firstObject.debug_zPostion;
+    CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
     CGFloat positionMin = positionMax;
     for (CALayer *layer in self.debugLayers) {
         if (layer.debug_zPostion >= positionMax) {
@@ -196,6 +198,27 @@
         [layer removeAnimationForKey:@"zPosition"];
         CGFloat newZPostion = 2 * layer.debug_zPostion * percent;
         layer.zPosition = newZPostion;
+    }
+}
+
+- (void)reCalculateZPostion
+{
+    CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
+    CGFloat positionMin = positionMax;
+    for (CALayer *layer in self.debugLayers) {
+        if (layer.debug_zPostion >= positionMax) {
+            positionMax = layer.debug_zPostion;
+        }
+        if (layer.debug_zPostion <= positionMin) {
+            positionMin = layer.debug_zPostion;
+        }
+    }
+    
+    CGFloat defalutMin = -600;
+    CGFloat defalutMax = 400;
+    CGFloat scale = (defalutMax-defalutMin)/(positionMax-positionMin);
+    for (CALayer *layer in self.debugLayers) {
+        layer.debug_zPostion = defalutMin + (layer.debug_zPostion - positionMin)*scale;
     }
 }
 
