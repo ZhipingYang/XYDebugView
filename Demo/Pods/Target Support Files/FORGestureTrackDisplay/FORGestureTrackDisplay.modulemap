@@ -1,0 +1,6 @@
+framework module FORGestureTrackDisplay {
+  umbrella header "FORGestureTrackDisplay-umbrella.h"
+
+  export *
+  module * { export * }
+}

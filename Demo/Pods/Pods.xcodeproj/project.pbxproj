@@ -7,105 +7,84 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B5CEAE166374FDA6D50C1F4444D0318 /* UIColor+XYRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2387AB66313928B2452AE7E5E0AF3490 /* UIColor+XYRandom.m */; };
-		4EEAAEDA15C92F89A2058937381D1AC7 /* Pods-XYDebugView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2805323F23F24E0BDAB9E0432F5B9547 /* Pods-XYDebugView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5014E1FF57AD015EF4AA76112194925A /* XYDebug+runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE39D8C9AD6E116F32BE14D3ECD3C11 /* XYDebug+runtime.m */; };
-		51673C59439C459FDAAD602B8022963A /* XYDebugWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9407826CBC948AA6EA83F871752D72 /* XYDebugWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		56544583352E21B20E692AC2CA34C0AD /* UIColor+XYRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 0469B2AF675FC197A1135E4191536865 /* UIColor+XYRandom.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5681F2EB82C5AE4F2F531ABE76C4FB02 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
-		6608D6E96394CF29FE0A158FD69540A3 /* XYDebugView.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DAAD6DD4D52202422C4AE03BEE956E /* XYDebugView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7E54A824FC333BB7E57F32BA33412D97 /* XYDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3E039D3F6D6099A232A439E49843A7 /* XYDebugView.m */; };
-		94B96E96E74025882107D5D3F0FDD329 /* XYDebugWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0026B0F525D0CD90EE275D03884508CE /* XYDebugWindow.m */; };
-		9A7196C6C3B6C48278F0396F22DFDEDC /* XYDebugViewManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4600133F988B4C2563DD31C19356393A /* XYDebugViewManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ABF4741566A4820132D520EC68DEC56B /* XYDebugViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F6634C5532ACADADAE2E49E076A620 /* XYDebugViewManager.m */; };
-		D7EB363CCCE23344A0B9A88158CBDD14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */; };
-		DCEFE12DA2ECBEFF02D0C8044180E968 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */; };
-		DEA49BE5AE9AECC0594883F23666C61B /* XYDebugView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 322056D08B35B43081D5623B4370E159 /* XYDebugView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DED6FC964FD5A3B159A8FD29B4BC5862 /* XYDebug+runtime.h in Headers */ = {isa = PBXBuildFile; fileRef = 667E860B1FB6C2583C3FC3A325CAEEDD /* XYDebug+runtime.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E3F11EAF94C1FEAA1CAFD138ECCDE59E /* XYDebugView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8F400670978DC39EB5AC5E0DD8BA44 /* XYDebugView-dummy.m */; };
-		FCC4FA721467F41CDD228FEB830096FB /* Pods-XYDebugView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EA910A6856F22B28B8AD546350202D27 /* Pods-XYDebugView-dummy.m */; };
+		11358158BC8506642121A20301B174AC /* FORGestureTrackDisplay-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C0FEA7E0BF38D28DEAE208B5217F114A /* FORGestureTrackDisplay-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		29F0900F821934B6A63B2511ACA50080 /* FORGestureTrackDisplay-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 901C0640A5CBB1A3984B1B6FD5C92BE7 /* FORGestureTrackDisplay-dummy.m */; };
+		337AFE2FD0CDAD07E3CEE95EDCE301E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
+		3CC282FF723DD744BE5DA3EFF6F03956 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */; };
+		4AFF356FE6244BD2F52008E64175B080 /* FORGestureTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = 763911AF07F3327A49717F18576076FF /* FORGestureTrack.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		75C5E04278120D35180E718E5E2B2CF8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */; };
+		788A0C65B02740E877B2E6D6E0175B59 /* FORGestureTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = A999A319C9A0136C347FA5C113BD5371 /* FORGestureTrack.m */; };
+		91DAAA5E373EB691173B2E450A6D489D /* Pods-XYDebugView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EA910A6856F22B28B8AD546350202D27 /* Pods-XYDebugView-dummy.m */; };
+		95AE6FB6F272762DBB866F36A92BAE0C /* Pods-XYDebugView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2805323F23F24E0BDAB9E0432F5B9547 /* Pods-XYDebugView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD431D219659190CA9A5D606CBE687F2 /* FORTrackGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = 9EEF2F778B0F9869DA93140009AA9706 /* FORTrackGesture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DC1B6573B4E19B4AE4C8E9C69D6D64D9 /* FORTrackGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = B26676F5871E285FC7FC5F9C713698D8 /* FORTrackGesture.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		662472F890A8919AD68DD340358F9136 /* PBXContainerItemProxy */ = {
+		5C05604815E82396328D6FC3AAFDB5B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 49272951DA73E9319F3A5BD9AA3261A2;
-			remoteInfo = XYDebugView;
+			remoteGlobalIDString = ED70C752FD5DAE4603C84ED49E990084;
+			remoteInfo = FORGestureTrackDisplay;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0026B0F525D0CD90EE275D03884508CE /* XYDebugWindow.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = XYDebugWindow.m; path = XYDebugView/XYDebugWindow.m; sourceTree = "<group>"; };
 		02E0517AC8A3EE73E3EE723A71FC29D1 /* Pods-XYDebugView-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XYDebugView-frameworks.sh"; sourceTree = "<group>"; };
-		0469B2AF675FC197A1135E4191536865 /* UIColor+XYRandom.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+XYRandom.h"; path = "XYDebugView/UIColor+XYRandom.h"; sourceTree = "<group>"; };
+		06107092DAF2EC6268DFE6BED2B9AFCD /* FORGestureTrackDisplay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FORGestureTrackDisplay.framework; path = FORGestureTrackDisplay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		228DBEB9B6B43935E078AB3A2B06B779 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2387AB66313928B2452AE7E5E0AF3490 /* UIColor+XYRandom.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+XYRandom.m"; path = "XYDebugView/UIColor+XYRandom.m"; sourceTree = "<group>"; };
 		2805323F23F24E0BDAB9E0432F5B9547 /* Pods-XYDebugView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-XYDebugView-umbrella.h"; sourceTree = "<group>"; };
-		322056D08B35B43081D5623B4370E159 /* XYDebugView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "XYDebugView-umbrella.h"; sourceTree = "<group>"; };
-		45304F90050EC7BA65868DA5D3815FA9 /* XYDebugView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = XYDebugView.xcconfig; sourceTree = "<group>"; };
-		4600133F988B4C2563DD31C19356393A /* XYDebugViewManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XYDebugViewManager.h; path = XYDebugView/XYDebugViewManager.h; sourceTree = "<group>"; };
-		4C5D0AD0B87ACE7DCD1F302162A0EABE /* XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = XYDebugView.framework; path = XYDebugView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D3E039D3F6D6099A232A439E49843A7 /* XYDebugView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = XYDebugView.m; path = XYDebugView/XYDebugView.m; sourceTree = "<group>"; };
-		51DAAD6DD4D52202422C4AE03BEE956E /* XYDebugView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XYDebugView.h; path = XYDebugView/XYDebugView.h; sourceTree = "<group>"; };
-		64F6634C5532ACADADAE2E49E076A620 /* XYDebugViewManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = XYDebugViewManager.m; path = XYDebugView/XYDebugViewManager.m; sourceTree = "<group>"; };
-		667E860B1FB6C2583C3FC3A325CAEEDD /* XYDebug+runtime.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "XYDebug+runtime.h"; path = "XYDebugView/XYDebug+runtime.h"; sourceTree = "<group>"; };
+		426A05749C7A15B94DC228F11119A8CE /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_XYDebugView.framework; path = "Pods-XYDebugView.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		519A399A80BCC5603F799577413A14BD /* FORGestureTrackDisplay.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FORGestureTrackDisplay.xcconfig; sourceTree = "<group>"; };
+		616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		673B533F55EDC63E67F58CE05E9F28FA /* Pods-XYDebugView-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-XYDebugView-acknowledgements.markdown"; sourceTree = "<group>"; };
+		763911AF07F3327A49717F18576076FF /* FORGestureTrack.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FORGestureTrack.h; path = FORGestureTrackDisplay/FORGestureTrack.h; sourceTree = "<group>"; };
+		7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8048B0E9D35DE1CDB2B3576FACCB630F /* Pods-XYDebugView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XYDebugView.debug.xcconfig"; sourceTree = "<group>"; };
-		845E63053F6EAD016ED951C8E0C7EE33 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B9407826CBC948AA6EA83F871752D72 /* XYDebugWindow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XYDebugWindow.h; path = XYDebugView/XYDebugWindow.h; sourceTree = "<group>"; };
+		901C0640A5CBB1A3984B1B6FD5C92BE7 /* FORGestureTrackDisplay-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FORGestureTrackDisplay-dummy.m"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9EEF2F778B0F9869DA93140009AA9706 /* FORTrackGesture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FORTrackGesture.h; path = FORGestureTrackDisplay/FORTrackGesture.h; sourceTree = "<group>"; };
+		A2F1FDEFAD4937901DD9A4313A682DAC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A999A319C9A0136C347FA5C113BD5371 /* FORGestureTrack.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FORGestureTrack.m; path = FORGestureTrackDisplay/FORGestureTrack.m; sourceTree = "<group>"; };
 		B15842E57C44AA39F8ECC832AF81E271 /* Pods-XYDebugView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-XYDebugView.modulemap"; sourceTree = "<group>"; };
-		B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B26676F5871E285FC7FC5F9C713698D8 /* FORTrackGesture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FORTrackGesture.m; path = FORGestureTrackDisplay/FORTrackGesture.m; sourceTree = "<group>"; };
+		C0FEA7E0BF38D28DEAE208B5217F114A /* FORGestureTrackDisplay-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FORGestureTrackDisplay-umbrella.h"; sourceTree = "<group>"; };
 		C72A222FF268CFE1DE1ACCCEBDD44F82 /* Pods-XYDebugView-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XYDebugView-resources.sh"; sourceTree = "<group>"; };
-		CD8F400670978DC39EB5AC5E0DD8BA44 /* XYDebugView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "XYDebugView-dummy.m"; sourceTree = "<group>"; };
+		C7BAE916404E5D080DC458A279D022B7 /* FORGestureTrackDisplay.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = FORGestureTrackDisplay.modulemap; sourceTree = "<group>"; };
 		CE4495B08551BEC3D8C98ADAAF7BD7C6 /* Pods-XYDebugView-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-XYDebugView-acknowledgements.plist"; sourceTree = "<group>"; };
-		D7DE256D1960668E0DB38B1887692C46 /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_XYDebugView.framework; path = "Pods-XYDebugView.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		E1E7B4EF5EFB78E418645FCDF6A9631B /* XYDebugView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = XYDebugView.modulemap; sourceTree = "<group>"; };
 		E92E5754B278373A00C1F9DCCCC09F17 /* Pods-XYDebugView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XYDebugView.release.xcconfig"; sourceTree = "<group>"; };
 		EA910A6856F22B28B8AD546350202D27 /* Pods-XYDebugView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-XYDebugView-dummy.m"; sourceTree = "<group>"; };
-		EBE39D8C9AD6E116F32BE14D3ECD3C11 /* XYDebug+runtime.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XYDebug+runtime.m"; path = "XYDebugView/XYDebug+runtime.m"; sourceTree = "<group>"; };
-		FC0E402EC698CB6E519305511C532EE7 /* XYDebugView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "XYDebugView-prefix.pch"; sourceTree = "<group>"; };
+		FE6956963D4BE6294B8A0BD91999B736 /* FORGestureTrackDisplay-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FORGestureTrackDisplay-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0BAB1668A1BE171DA14B63E0341DCD97 /* Frameworks */ = {
+		AB0EDBEC1C4B32777B35E68EC4BE8395 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCEFE12DA2ECBEFF02D0C8044180E968 /* Foundation.framework in Frameworks */,
+				3CC282FF723DD744BE5DA3EFF6F03956 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F5D3C762B897A0D0697B956399063061 /* Frameworks */ = {
+		E9CCE08B957FDE6F53A1E44F048CB6DB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5681F2EB82C5AE4F2F531ABE76C4FB02 /* Foundation.framework in Frameworks */,
-				D7EB363CCCE23344A0B9A88158CBDD14 /* UIKit.framework in Frameworks */,
+				337AFE2FD0CDAD07E3CEE95EDCE301E3 /* Foundation.framework in Frameworks */,
+				75C5E04278120D35180E718E5E2B2CF8 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A63375E0DB7F03A343B08C4237FB449 /* Pods */ = {
+		380C15F69D4D7ED87BAB66EB6D4C49D5 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4F5CDFA4418D2EC41CC04C5141C8E217 /* XYDebugView */,
+				61D2E301461A54B70F29D03B2A401678 /* FORGestureTrackDisplay */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		3C73792ABF9DFCD9F5577B33B74DC7F9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D7DE256D1960668E0DB38B1887692C46 /* Pods_XYDebugView.framework */,
-				4C5D0AD0B87ACE7DCD1F302162A0EABE /* XYDebugView.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		3E351AC3537BE014630E4F3B9D521669 /* Pods-XYDebugView */ = {
@@ -126,54 +105,48 @@
 			path = "Target Support Files/Pods-XYDebugView";
 			sourceTree = "<group>";
 		};
+		3F3A09611FCE7AEAA5A28F6C8CA63827 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C7BAE916404E5D080DC458A279D022B7 /* FORGestureTrackDisplay.modulemap */,
+				519A399A80BCC5603F799577413A14BD /* FORGestureTrackDisplay.xcconfig */,
+				901C0640A5CBB1A3984B1B6FD5C92BE7 /* FORGestureTrackDisplay-dummy.m */,
+				FE6956963D4BE6294B8A0BD91999B736 /* FORGestureTrackDisplay-prefix.pch */,
+				C0FEA7E0BF38D28DEAE208B5217F114A /* FORGestureTrackDisplay-umbrella.h */,
+				A2F1FDEFAD4937901DD9A4313A682DAC /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/FORGestureTrackDisplay";
+			sourceTree = "<group>";
+		};
 		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				438B396F6B4147076630CAEFE34282C1 /* iOS */,
+				E6EE98446B568159EE277B68FD442AF0 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		438B396F6B4147076630CAEFE34282C1 /* iOS */ = {
+		61D2E301461A54B70F29D03B2A401678 /* FORGestureTrackDisplay */ = {
 			isa = PBXGroup;
 			children = (
-				D88AAE1F92055A60CC2FC970D7D34634 /* Foundation.framework */,
-				B63C6A64CF66340668996F78DA6BB482 /* UIKit.framework */,
+				763911AF07F3327A49717F18576076FF /* FORGestureTrack.h */,
+				A999A319C9A0136C347FA5C113BD5371 /* FORGestureTrack.m */,
+				9EEF2F778B0F9869DA93140009AA9706 /* FORTrackGesture.h */,
+				B26676F5871E285FC7FC5F9C713698D8 /* FORTrackGesture.m */,
+				3F3A09611FCE7AEAA5A28F6C8CA63827 /* Support Files */,
 			);
-			name = iOS;
+			name = FORGestureTrackDisplay;
+			path = FORGestureTrackDisplay;
 			sourceTree = "<group>";
 		};
-		4F5CDFA4418D2EC41CC04C5141C8E217 /* XYDebugView */ = {
+		655CE185614314BED2DC95B06B1DBA50 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0469B2AF675FC197A1135E4191536865 /* UIColor+XYRandom.h */,
-				2387AB66313928B2452AE7E5E0AF3490 /* UIColor+XYRandom.m */,
-				667E860B1FB6C2583C3FC3A325CAEEDD /* XYDebug+runtime.h */,
-				EBE39D8C9AD6E116F32BE14D3ECD3C11 /* XYDebug+runtime.m */,
-				51DAAD6DD4D52202422C4AE03BEE956E /* XYDebugView.h */,
-				4D3E039D3F6D6099A232A439E49843A7 /* XYDebugView.m */,
-				4600133F988B4C2563DD31C19356393A /* XYDebugViewManager.h */,
-				64F6634C5532ACADADAE2E49E076A620 /* XYDebugViewManager.m */,
-				8B9407826CBC948AA6EA83F871752D72 /* XYDebugWindow.h */,
-				0026B0F525D0CD90EE275D03884508CE /* XYDebugWindow.m */,
-				670904D01081658AD234AD861DD772B8 /* Support Files */,
+				06107092DAF2EC6268DFE6BED2B9AFCD /* FORGestureTrackDisplay.framework */,
+				426A05749C7A15B94DC228F11119A8CE /* Pods_XYDebugView.framework */,
 			);
-			name = XYDebugView;
-			path = XYDebugView;
-			sourceTree = "<group>";
-		};
-		670904D01081658AD234AD861DD772B8 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				845E63053F6EAD016ED951C8E0C7EE33 /* Info.plist */,
-				E1E7B4EF5EFB78E418645FCDF6A9631B /* XYDebugView.modulemap */,
-				45304F90050EC7BA65868DA5D3815FA9 /* XYDebugView.xcconfig */,
-				CD8F400670978DC39EB5AC5E0DD8BA44 /* XYDebugView-dummy.m */,
-				FC0E402EC698CB6E519305511C532EE7 /* XYDebugView-prefix.pch */,
-				322056D08B35B43081D5623B4370E159 /* XYDebugView-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/XYDebugView";
+			name = Products;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -181,10 +154,19 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				1A63375E0DB7F03A343B08C4237FB449 /* Pods */,
-				3C73792ABF9DFCD9F5577B33B74DC7F9 /* Products */,
+				380C15F69D4D7ED87BAB66EB6D4C49D5 /* Pods */,
+				655CE185614314BED2DC95B06B1DBA50 /* Products */,
 				FE2BC71AF9FBF42050E0A7BD0FD09799 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		E6EE98446B568159EE277B68FD442AF0 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */,
+				7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		FE2BC71AF9FBF42050E0A7BD0FD09799 /* Targets Support Files */ = {
@@ -198,63 +180,60 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		2AF74266CAAC9653590A0EFE67267FF5 /* Headers */ = {
+		2EC4061BB63511F81E9FCE21F303B44A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EEAAEDA15C92F89A2058937381D1AC7 /* Pods-XYDebugView-umbrella.h in Headers */,
+				4AFF356FE6244BD2F52008E64175B080 /* FORGestureTrack.h in Headers */,
+				11358158BC8506642121A20301B174AC /* FORGestureTrackDisplay-umbrella.h in Headers */,
+				AD431D219659190CA9A5D606CBE687F2 /* FORTrackGesture.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8098387D45913A5F2289712DCB3EEB9F /* Headers */ = {
+		F63148F485E067541913C172A2E57925 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56544583352E21B20E692AC2CA34C0AD /* UIColor+XYRandom.h in Headers */,
-				DED6FC964FD5A3B159A8FD29B4BC5862 /* XYDebug+runtime.h in Headers */,
-				DEA49BE5AE9AECC0594883F23666C61B /* XYDebugView-umbrella.h in Headers */,
-				6608D6E96394CF29FE0A158FD69540A3 /* XYDebugView.h in Headers */,
-				9A7196C6C3B6C48278F0396F22DFDEDC /* XYDebugViewManager.h in Headers */,
-				51673C59439C459FDAAD602B8022963A /* XYDebugWindow.h in Headers */,
+				95AE6FB6F272762DBB866F36A92BAE0C /* Pods-XYDebugView-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		49272951DA73E9319F3A5BD9AA3261A2 /* XYDebugView */ = {
+		ED70C752FD5DAE4603C84ED49E990084 /* FORGestureTrackDisplay */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1CA27DD82DC9AB7D3CDD904BC03AC6E0 /* Build configuration list for PBXNativeTarget "XYDebugView" */;
+			buildConfigurationList = 167D718ACFD3B6772314D8A04DA2A57D /* Build configuration list for PBXNativeTarget "FORGestureTrackDisplay" */;
 			buildPhases = (
-				D8535A95E3AC32CC89AA7F00FE6A977E /* Sources */,
-				F5D3C762B897A0D0697B956399063061 /* Frameworks */,
-				8098387D45913A5F2289712DCB3EEB9F /* Headers */,
+				21175080E226EB5CFAF4725AECE3BE2F /* Sources */,
+				E9CCE08B957FDE6F53A1E44F048CB6DB /* Frameworks */,
+				2EC4061BB63511F81E9FCE21F303B44A /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = XYDebugView;
-			productName = XYDebugView;
-			productReference = 4C5D0AD0B87ACE7DCD1F302162A0EABE /* XYDebugView.framework */;
+			name = FORGestureTrackDisplay;
+			productName = FORGestureTrackDisplay;
+			productReference = 06107092DAF2EC6268DFE6BED2B9AFCD /* FORGestureTrackDisplay.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F454B9FCFAE340CAEDB519466F89377E /* Pods-XYDebugView */ = {
+		EFE1040DA28DCC47FC3E4AD63EDDF210 /* Pods-XYDebugView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0474BE5C3989C7E55A57622753423856 /* Build configuration list for PBXNativeTarget "Pods-XYDebugView" */;
+			buildConfigurationList = 866531ED23F34BCBD4E6C3EF5B780E2E /* Build configuration list for PBXNativeTarget "Pods-XYDebugView" */;
 			buildPhases = (
-				9C098C2130CA7BCB1C4FABDDD1B877B9 /* Sources */,
-				0BAB1668A1BE171DA14B63E0341DCD97 /* Frameworks */,
-				2AF74266CAAC9653590A0EFE67267FF5 /* Headers */,
+				9068EC011007C3AACBBA9BB03C1819EB /* Sources */,
+				AB0EDBEC1C4B32777B35E68EC4BE8395 /* Frameworks */,
+				F63148F485E067541913C172A2E57925 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B86C9B104FF3A6E24A5E8F78825566DB /* PBXTargetDependency */,
+				9B906CCD40CEE322C06DD9738397FED6 /* PBXTargetDependency */,
 			);
 			name = "Pods-XYDebugView";
 			productName = "Pods-XYDebugView";
-			productReference = D7DE256D1960668E0DB38B1887692C46 /* Pods_XYDebugView.framework */;
+			productReference = 426A05749C7A15B94DC228F11119A8CE /* Pods_XYDebugView.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -263,7 +242,7 @@
 		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
@@ -274,92 +253,52 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 3C73792ABF9DFCD9F5577B33B74DC7F9 /* Products */;
+			productRefGroup = 655CE185614314BED2DC95B06B1DBA50 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F454B9FCFAE340CAEDB519466F89377E /* Pods-XYDebugView */,
-				49272951DA73E9319F3A5BD9AA3261A2 /* XYDebugView */,
+				ED70C752FD5DAE4603C84ED49E990084 /* FORGestureTrackDisplay */,
+				EFE1040DA28DCC47FC3E4AD63EDDF210 /* Pods-XYDebugView */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9C098C2130CA7BCB1C4FABDDD1B877B9 /* Sources */ = {
+		21175080E226EB5CFAF4725AECE3BE2F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCC4FA721467F41CDD228FEB830096FB /* Pods-XYDebugView-dummy.m in Sources */,
+				788A0C65B02740E877B2E6D6E0175B59 /* FORGestureTrack.m in Sources */,
+				29F0900F821934B6A63B2511ACA50080 /* FORGestureTrackDisplay-dummy.m in Sources */,
+				DC1B6573B4E19B4AE4C8E9C69D6D64D9 /* FORTrackGesture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D8535A95E3AC32CC89AA7F00FE6A977E /* Sources */ = {
+		9068EC011007C3AACBBA9BB03C1819EB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B5CEAE166374FDA6D50C1F4444D0318 /* UIColor+XYRandom.m in Sources */,
-				5014E1FF57AD015EF4AA76112194925A /* XYDebug+runtime.m in Sources */,
-				E3F11EAF94C1FEAA1CAFD138ECCDE59E /* XYDebugView-dummy.m in Sources */,
-				7E54A824FC333BB7E57F32BA33412D97 /* XYDebugView.m in Sources */,
-				ABF4741566A4820132D520EC68DEC56B /* XYDebugViewManager.m in Sources */,
-				94B96E96E74025882107D5D3F0FDD329 /* XYDebugWindow.m in Sources */,
+				91DAAA5E373EB691173B2E450A6D489D /* Pods-XYDebugView-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B86C9B104FF3A6E24A5E8F78825566DB /* PBXTargetDependency */ = {
+		9B906CCD40CEE322C06DD9738397FED6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = XYDebugView;
-			target = 49272951DA73E9319F3A5BD9AA3261A2 /* XYDebugView */;
-			targetProxy = 662472F890A8919AD68DD340358F9136 /* PBXContainerItemProxy */;
+			name = FORGestureTrackDisplay;
+			target = ED70C752FD5DAE4603C84ED49E990084 /* FORGestureTrackDisplay */;
+			targetProxy = 5C05604815E82396328D6FC3AAFDB5B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2494C5FE17D513CA23313510BC57A394 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E92E5754B278373A00C1F9DCCCC09F17 /* Pods-XYDebugView.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-XYDebugView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-XYDebugView/Pods-XYDebugView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_XYDebugView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		34FE9531DA9AF2820790339988D5FF41 /* Release */ = {
+		015A368F878AC3E2CEAE21DDE8026304 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -367,121 +306,10 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		58D1354B8F673083517A18984BF9CF66 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 45304F90050EC7BA65868DA5D3815FA9 /* XYDebugView.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/XYDebugView/XYDebugView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/XYDebugView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/XYDebugView/XYDebugView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = XYDebugView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		6764FCDB2D22DCA9A37E88023DD6D6D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 45304F90050EC7BA65868DA5D3815FA9 /* XYDebugView.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/XYDebugView/XYDebugView-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/XYDebugView/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/XYDebugView/XYDebugView.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = XYDebugView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		C104F7F091290C3D1E248192F07FE689 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
@@ -510,11 +338,85 @@
 			};
 			name = Debug;
 		};
-		D6E42BE9CCE67A3B621B1C5DA3763533 /* Debug */ = {
+		3BDC1B8F3D704872C47958779407C06A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E92E5754B278373A00C1F9DCCCC09F17 /* Pods-XYDebugView.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-XYDebugView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-XYDebugView/Pods-XYDebugView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_XYDebugView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4E2B0DB2145C0B2E452B0D5A364B80BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8048B0E9D35DE1CDB2B3576FACCB630F /* Pods-XYDebugView.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -546,23 +448,76 @@
 			};
 			name = Debug;
 		};
+		691AF57E9C6CDFFEA8DE61613084C655 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 519A399A80BCC5603F799577413A14BD /* FORGestureTrackDisplay.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/FORGestureTrackDisplay/FORGestureTrackDisplay-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FORGestureTrackDisplay/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FORGestureTrackDisplay/FORGestureTrackDisplay.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = FORGestureTrackDisplay;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DE38541BD14C7D5CA298A92288A31DA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 519A399A80BCC5603F799577413A14BD /* FORGestureTrackDisplay.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/FORGestureTrackDisplay/FORGestureTrackDisplay-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FORGestureTrackDisplay/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FORGestureTrackDisplay/FORGestureTrackDisplay.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = FORGestureTrackDisplay;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0474BE5C3989C7E55A57622753423856 /* Build configuration list for PBXNativeTarget "Pods-XYDebugView" */ = {
+		167D718ACFD3B6772314D8A04DA2A57D /* Build configuration list for PBXNativeTarget "FORGestureTrackDisplay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D6E42BE9CCE67A3B621B1C5DA3763533 /* Debug */,
-				2494C5FE17D513CA23313510BC57A394 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1CA27DD82DC9AB7D3CDD904BC03AC6E0 /* Build configuration list for PBXNativeTarget "XYDebugView" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6764FCDB2D22DCA9A37E88023DD6D6D9 /* Debug */,
-				58D1354B8F673083517A18984BF9CF66 /* Release */,
+				691AF57E9C6CDFFEA8DE61613084C655 /* Debug */,
+				DE38541BD14C7D5CA298A92288A31DA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -570,8 +525,17 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C104F7F091290C3D1E248192F07FE689 /* Debug */,
-				34FE9531DA9AF2820790339988D5FF41 /* Release */,
+				015A368F878AC3E2CEAE21DDE8026304 /* Debug */,
+				44CDBB6D11DE06DB64D6268622BDC47E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		866531ED23F34BCBD4E6C3EF5B780E2E /* Build configuration list for PBXNativeTarget "Pods-XYDebugView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E2B0DB2145C0B2E452B0D5A364B80BB /* Debug */,
+				3BDC1B8F3D704872C47958779407C06A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

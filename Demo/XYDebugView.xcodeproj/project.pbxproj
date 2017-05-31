@@ -13,6 +13,12 @@
 		65758CB21ED5B41600A7738D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB01ED5B41600A7738D /* Main.storyboard */; };
 		65758CB41ED5B41600A7738D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB31ED5B41600A7738D /* Assets.xcassets */; };
 		65758CB71ED5B41600A7738D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB51ED5B41600A7738D /* LaunchScreen.storyboard */; };
+		6583DC521EDF293400D1F3B4 /* UIColor+XYRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */; };
+		6583DC531EDF293400D1F3B4 /* XYDebug+runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4B1EDF293400D1F3B4 /* XYDebug+runtime.m */; };
+		6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */; };
+		6583DC551EDF293400D1F3B4 /* XYDebugViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */; };
+		6583DC561EDF293400D1F3B4 /* XYDebugWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */; };
+		6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC581EDF2AE400D1F3B4 /* UIWindow+Runtime.m */; };
 		F42F7918F9077D132C143A18 /* Pods_XYDebugView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +33,18 @@
 		65758CB31ED5B41600A7738D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65758CB61ED5B41600A7738D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65758CB81ED5B41600A7738D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6583DC481EDF293400D1F3B4 /* UIColor+XYRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+XYRandom.h"; sourceTree = "<group>"; };
+		6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XYRandom.m"; sourceTree = "<group>"; };
+		6583DC4A1EDF293400D1F3B4 /* XYDebug+runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XYDebug+runtime.h"; sourceTree = "<group>"; };
+		6583DC4B1EDF293400D1F3B4 /* XYDebug+runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XYDebug+runtime.m"; sourceTree = "<group>"; };
+		6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugView.h; sourceTree = "<group>"; };
+		6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugView.m; sourceTree = "<group>"; };
+		6583DC4E1EDF293400D1F3B4 /* XYDebugViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugViewManager.h; sourceTree = "<group>"; };
+		6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugViewManager.m; sourceTree = "<group>"; };
+		6583DC501EDF293400D1F3B4 /* XYDebugWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugWindow.h; sourceTree = "<group>"; };
+		6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugWindow.m; sourceTree = "<group>"; };
+		6583DC571EDF2AE400D1F3B4 /* UIWindow+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Runtime.h"; sourceTree = "<group>"; };
+		6583DC581EDF2AE400D1F3B4 /* UIWindow+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Runtime.m"; sourceTree = "<group>"; };
 		7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYDebugView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DE005133616843BDEAF6F6 /* Pods-XYDebugView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYDebugView.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView.release.xcconfig"; sourceTree = "<group>"; };
 		E8DD6F7D0E917ADD00EBC4FC /* Pods-XYDebugView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYDebugView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView.debug.xcconfig"; sourceTree = "<group>"; };
@@ -74,10 +92,13 @@
 		65758CA61ED5B41600A7738D /* XYDebugView */ = {
 			isa = PBXGroup;
 			children = (
+				6583DC471EDF293400D1F3B4 /* Class */,
 				65758CAA1ED5B41600A7738D /* AppDelegate.h */,
 				65758CAB1ED5B41600A7738D /* AppDelegate.m */,
 				65758CAD1ED5B41600A7738D /* ViewController.h */,
 				65758CAE1ED5B41600A7738D /* ViewController.m */,
+				6583DC571EDF2AE400D1F3B4 /* UIWindow+Runtime.h */,
+				6583DC581EDF2AE400D1F3B4 /* UIWindow+Runtime.m */,
 				65758CB01ED5B41600A7738D /* Main.storyboard */,
 				65758CB31ED5B41600A7738D /* Assets.xcassets */,
 				65758CB51ED5B41600A7738D /* LaunchScreen.storyboard */,
@@ -93,6 +114,24 @@
 				65758CA81ED5B41600A7738D /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6583DC471EDF293400D1F3B4 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				6583DC481EDF293400D1F3B4 /* UIColor+XYRandom.h */,
+				6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */,
+				6583DC4A1EDF293400D1F3B4 /* XYDebug+runtime.h */,
+				6583DC4B1EDF293400D1F3B4 /* XYDebug+runtime.m */,
+				6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */,
+				6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */,
+				6583DC4E1EDF293400D1F3B4 /* XYDebugViewManager.h */,
+				6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */,
+				6583DC501EDF293400D1F3B4 /* XYDebugWindow.h */,
+				6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */,
+			);
+			name = Class;
+			path = ../../XYDebugView;
 			sourceTree = "<group>";
 		};
 		A22F45403A9B4FE37D0BCC99 /* Frameworks */ = {
@@ -201,7 +240,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		BF3755F1054640B09581C325 /* [CP] Copy Pods Resources */ = {
@@ -227,8 +266,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				65758CAF1ED5B41600A7738D /* ViewController.m in Sources */,
+				6583DC551EDF293400D1F3B4 /* XYDebugViewManager.m in Sources */,
+				6583DC561EDF293400D1F3B4 /* XYDebugWindow.m in Sources */,
 				65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */,
 				65758CA91ED5B41600A7738D /* main.m in Sources */,
+				6583DC531EDF293400D1F3B4 /* XYDebug+runtime.m in Sources */,
+				6583DC521EDF293400D1F3B4 /* UIColor+XYRandom.m in Sources */,
+				6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */,
+				6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

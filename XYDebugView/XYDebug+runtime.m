@@ -87,6 +87,7 @@ const static char * DebugColorSublayer = "DebugColorSublayer";
 
 
 const static char * DebugStoreZPosition = "DebugStoreZPosition";
+const static char * DebugStoreOrigin = "DebugStoreOrigin";
 
 @implementation CALayer (XYDebug)
 
@@ -99,6 +100,20 @@ const static char * DebugStoreZPosition = "DebugStoreZPosition";
 - (void)setDebug_zPostion:(CGFloat)debug_zPostion
 {
     objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGPoint)debugPoint
+{
+    NSValue *obj = objc_getAssociatedObject(self, DebugStoreOrigin);
+    if ([obj isKindOfClass:[NSValue class]]) {
+        return [obj CGPointValue];
+    }
+    return CGPointZero;
+}
+
+- (void)setDebugPoint:(CGPoint)debugPoint
+{
+    objc_setAssociatedObject(self, DebugStoreOrigin, [NSValue valueWithCGPoint:debugPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration

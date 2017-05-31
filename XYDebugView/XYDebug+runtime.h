@@ -22,6 +22,8 @@
 
 @property (nonatomic, assign) CGFloat debug_zPostion;
 
+@property (nonatomic, assign) CGPoint debugPoint;
+
 - (void)zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration;
 
 @end

@@ -18,8 +18,15 @@
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
 #endif
 
-@interface XYDebugWindow ()
-
+@interface XYDebugWindow ()<UIGestureRecognizerDelegate>
+{
+    UIPanGestureRecognizer *_horizonPan;
+    UIPanGestureRecognizer *_verticalPan;
+    CGPoint _horiPanPoint;
+    CGPoint _verticalPoint;
+    CGPoint _doublePoint;
+    CATransform3D _sublayerTransform;
+}
 @property (nonatomic, strong) DebugSlider *layerSlider;
 
 @property (nonatomic, strong) DebugSlider *distanceSlider;
@@ -47,15 +54,11 @@
         
         _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         _scrollView.layer.zPosition = -MAXFLOAT;
-        _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH*2,SCREEN_HEIGHT*2);
-        _scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
+        _scrollView.contentSize = CGSizeMake(SCREEN_WIDTH,SCREEN_HEIGHT);
         _scrollView.backgroundColor = [UIColor whiteColor];
         _scrollView.showsVerticalScrollIndicator = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.hidden = YES;
-        CATransform3D transform = CATransform3DIdentity;
-        transform.m34 = -1.0 / 500;
-        _scrollView.layer.sublayerTransform = transform;
         
         _layerSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-30, 40, 30, SCREEN_HEIGHT-40*2)];
         _layerSlider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
@@ -70,13 +73,11 @@
             [weakSelf showDifferentLayers:percent];
         };
         _layerSlider.touchEndBlock = ^{
+            weakSelf.layerSlider.defalutPercent = 0;
             [weakSelf showAllLayer];
         };
         _distanceSlider.touchMoveBlock = ^(float percent) {
             [weakSelf changeDistance:percent];
-        };
-        _distanceSlider.touchEndBlock = ^{
-            [weakSelf recoverLayersDistance];
         };
         
         [self addSubview:_scrollView];
@@ -86,6 +87,23 @@
         self.backgroundColor = [UIColor clearColor];
         self.debugLayers = [NSHashTable weakObjectsHashTable];
         self.layer.masksToBounds = YES;
+        
+        _horizonPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(horizontalPan:)];
+        _horizonPan.delegate = self;
+        _verticalPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(verticalPan:)];
+        _verticalPan.delegate = self;
+        
+        UIPanGestureRecognizer *doublePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(doublePan:)];
+        doublePan.minimumNumberOfTouches = 2;
+        
+        UIRotationGestureRecognizer *rotate = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateGes:)];
+        
+        [self.scrollView addGestureRecognizer:_horizonPan];
+        [self.scrollView addGestureRecognizer:_verticalPan];
+        [self.scrollView addGestureRecognizer:doublePan];
+        [self.scrollView addGestureRecognizer:rotate];
+        
+        self.scrollView.multipleTouchEnabled = YES;
     }
     return self;
 }
@@ -124,7 +142,6 @@
         [[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         [self.debugLayers removeAllObjects];
         [self scrollViewAddLayersInView:_souceView layerLevel:0 index:0];
-        _scrollView.contentOffset = CGPointMake(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0);
         _scrollView.hidden = NO;
         _layerSlider.hidden = NO;
         _distanceSlider.hidden = NO;
@@ -143,10 +160,7 @@
             cloneView.layer.zPosition = 0;
             cloneView.layer.debug_zPostion = layerLevel*20+index;
             cloneView.layer.masksToBounds = YES;
-            
-            CGRect frame = [view.superview convertRect:view.frame toView:_souceView];
-            frame.origin = CGPointMake(CGRectGetMinX(frame)+SCREEN_WIDTH/2.f, CGRectGetMinY(frame)+SCREEN_HEIGHT/2.f);
-            cloneView.layer.frame = frame;
+            cloneView.layer.frame = [view.superview convertRect:view.frame toView:_souceView];
             cloneView.layer.opacity = 0.8;
             [self.debugLayers addObject:cloneView.layer];
             [self.scrollView.layer addSublayer:cloneView.layer];
@@ -154,6 +168,27 @@
         [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [self scrollViewAddLayersInView:obj layerLevel:layerLevel+1 index:idx];
         }];
+    }
+}
+
+- (void)reCalculateZPostion
+{
+    CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
+    CGFloat positionMin = positionMax;
+    for (CALayer *layer in self.debugLayers) {
+        if (layer.debug_zPostion >= positionMax) {
+            positionMax = layer.debug_zPostion;
+        }
+        if (layer.debug_zPostion <= positionMin) {
+            positionMin = layer.debug_zPostion;
+        }
+    }
+    
+    CGFloat defalutMin = -600;
+    CGFloat defalutMax = 400;
+    CGFloat scale = (defalutMax-defalutMin)/(positionMax-positionMin);
+    for (CALayer *layer in self.debugLayers) {
+        layer.debug_zPostion = defalutMin + (layer.debug_zPostion - positionMin)*scale;
     }
 }
 
@@ -201,34 +236,130 @@
     }
 }
 
-- (void)reCalculateZPostion
-{
-    CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
-    CGFloat positionMin = positionMax;
-    for (CALayer *layer in self.debugLayers) {
-        if (layer.debug_zPostion >= positionMax) {
-            positionMax = layer.debug_zPostion;
-        }
-        if (layer.debug_zPostion <= positionMin) {
-            positionMin = layer.debug_zPostion;
-        }
-    }
-    
-    CGFloat defalutMin = -600;
-    CGFloat defalutMax = 400;
-    CGFloat scale = (defalutMax-defalutMin)/(positionMax-positionMin);
-    for (CALayer *layer in self.debugLayers) {
-        layer.debug_zPostion = defalutMin + (layer.debug_zPostion - positionMin)*scale;
-    }
-}
-
 - (void)recoverLayersDistance
 {
     _distanceSlider.defalutPercent = 0.5;
     
+    CATransform3D transform = CATransform3DIdentity;
+    transform.m34 = -1.0 / SCREEN_HEIGHT;
+    _scrollView.layer.sublayerTransform = transform;
+    
     for (CALayer *layer in self.debugLayers) {
         [layer zPositionAnimationFrom:layer.zPosition to:layer.debug_zPostion duration:0.6];
     }
+}
+
+- (void)horizontalPan:(UIPanGestureRecognizer *)pan
+{
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan: {
+            _horiPanPoint = [pan locationInView:_scrollView];
+            _sublayerTransform = _scrollView.layer.sublayerTransform;
+        }
+            break;
+        case UIGestureRecognizerStateChanged: {
+            CGPoint current = [pan locationInView:_scrollView];
+            CGFloat angle = (current.x - _horiPanPoint.x) * M_PI / SCREEN_WIDTH;
+            CATransform3D transform = CATransform3DIdentity;
+            transform.m34 = -1.0 / SCREEN_HEIGHT;
+            _scrollView.layer.sublayerTransform = CATransform3DRotate(_sublayerTransform, angle, 0, 1, 0);
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)verticalPan:(UIPanGestureRecognizer *)pan
+{
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan:{
+            _verticalPoint = [pan locationInView:_scrollView];
+            _sublayerTransform = _scrollView.layer.sublayerTransform;
+        }
+            break;
+        case UIGestureRecognizerStateChanged:{
+            CGPoint current = [pan locationInView:_scrollView];
+            CGFloat angle = (current.y - _verticalPoint.y) * M_PI / SCREEN_HEIGHT;
+            _scrollView.layer.sublayerTransform = CATransform3DRotate(_sublayerTransform, -angle, 1, 0, 0);
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)doublePan:(UIPanGestureRecognizer *)pan
+{
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan:{
+            _doublePoint = [pan locationInView:_scrollView];
+            for (CALayer *subLayer in self.debugLayers) {
+                subLayer.debugPoint = subLayer.frame.origin;
+            }
+        }
+            break;
+        case UIGestureRecognizerStateChanged:{
+            CGPoint current = [pan locationInView:_scrollView];
+            for (CALayer *subLayer in self.debugLayers) {
+                CGFloat x = current.x - _doublePoint.x;
+                CGFloat y = current.y - _doublePoint.y;
+                subLayer.frame = CGRectMake(subLayer.debugPoint.x+x, subLayer.debugPoint.y+y, subLayer.frame.size.width, subLayer.frame.size.height);
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)rotateGes:(UIRotationGestureRecognizer *)rotate
+{
+    switch (rotate.state) {
+        case UIGestureRecognizerStateBegan:{
+            _sublayerTransform = _scrollView.layer.sublayerTransform;
+        }
+            break;
+        case UIGestureRecognizerStateChanged:{
+            CGFloat rotation = rotate.rotation;
+            _scrollView.layer.sublayerTransform = CATransform3DRotate(_sublayerTransform, rotation, 0, 0, 1);
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)pinchGes:(UIPinchGestureRecognizer *)pinch
+{
+    switch (pinch.state) {
+        case UIGestureRecognizerStateBegan:{
+            
+        }
+            break;
+        case UIGestureRecognizerStateChanged:{
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer == _horizonPan) {
+        CGPoint velocity = [_horizonPan velocityInView:_horizonPan.view];
+        return fabs(velocity.x) > fabs(velocity.y);
+    } else if (gestureRecognizer == _verticalPan) {
+        CGPoint velocity = [_verticalPan velocityInView:_verticalPan.view];
+        return fabs(velocity.y) > fabs(velocity.x);
+    }
+    return NO;
 }
 
 @end

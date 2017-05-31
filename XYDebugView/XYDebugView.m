@@ -88,7 +88,6 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    _colorLayer.frame = CGRectMake(0, 0, self.bounds.size.width, 0);
     !_touchEndBlock ?: _touchEndBlock();
 }
 

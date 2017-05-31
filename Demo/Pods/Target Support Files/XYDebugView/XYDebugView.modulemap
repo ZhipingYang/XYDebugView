@@ -1,6 +1,0 @@
-framework module XYDebugView {
-  umbrella header "XYDebugView-umbrella.h"
-
-  export *
-  module * { export * }
-}
