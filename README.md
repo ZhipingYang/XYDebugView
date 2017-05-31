@@ -20,7 +20,8 @@ XYDebugView is debug tool to draw the all view's frame in device screen and show
 
 **debug 3d**
 
-![debug_image](https://github.com/ZhipingYang/XYDebugView/raw/master/picture/debug.gif)
+![untitled](https://cloud.githubusercontent.com/assets/9360037/26644677/1df50532-4668-11e7-8423-27f3c9d1960a.gif)
+
 
 ## Installation
 
