@@ -7,7 +7,7 @@
 //
 
 #import "XYDebugView.h"
-#import "UIColor+XYRandom.h"
+#import "XYDebugCategory.h"
 
 @interface XYDebugCloneView ()
 
@@ -27,7 +27,7 @@
     self = [super initWithFrame:srcView.frame];
     if (self) {
         self.srcView = srcView;
-        self.backgroundColor = [UIColor randomLightColorWithAlpha:1];
+        self.backgroundColor = [UIColor debug_randomLightColorWithAlpha:1];
     }
     return self;
 }
@@ -39,10 +39,13 @@
         if ([mArr containsObject:subview.layer]) {
             [mArr removeObject:subview.layer];
         }
-    }
+	}
+	
     CALayer *newLayer = [CALayer layer];
     newLayer.contents = self.srcView.layer.contents;
     newLayer.frame = self.srcView.layer.frame;
+	newLayer.contentsScale = self.srcView.layer.contentsScale;
+	newLayer.contentsGravity = self.srcView.layer.contentsGravity;
     
     for (CALayer *sublayer in mArr) {
         CALayer *newSub = [[CALayer alloc] initWithLayer:sublayer];

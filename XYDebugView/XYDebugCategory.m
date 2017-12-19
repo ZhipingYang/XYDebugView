@@ -6,24 +6,24 @@
 //
 //
 
-#import "XYDebug+runtime.h"
+#import "XYDebugCategory.h"
 #import <objc/runtime.h>
 
 const static char * DebugStoreUIViewBackColor = "DebugStoreUIViewBackColor";
 const static char * DebugHasStoreUIViewBackColor = "DebugHasStoreUIViewBackColor";
 const static char * DebugCloneView = "DebugCloneView";
-const static char * DebugColorSublayer = "DebugColorSublayer";
+const static char * debug_colorSublayer = "debug_colorSublayer";
 
 @implementation UIView (XYDebug)
 
-- (void)setDebugStoreOrginalColor:(UIColor *)debugStoreOrginalColor
+- (void)setDebug_storeOrginalColor:(UIColor *)debug_storeOrginalColor
 {
-    if ([debugStoreOrginalColor isKindOfClass:[UIColor class]] && debugStoreOrginalColor) {
-        objc_setAssociatedObject(self, DebugStoreUIViewBackColor, debugStoreOrginalColor, OBJC_ASSOCIATION_RETAIN);
+    if ([debug_storeOrginalColor isKindOfClass:[UIColor class]] && debug_storeOrginalColor) {
+        objc_setAssociatedObject(self, DebugStoreUIViewBackColor, debug_storeOrginalColor, OBJC_ASSOCIATION_RETAIN);
     }
 }
 
-- (UIColor *)debugStoreOrginalColor
+- (UIColor *)debug_storeOrginalColor
 {
     id obj = objc_getAssociatedObject(self, DebugStoreUIViewBackColor);
     if ([obj isKindOfClass:[UIColor class]]) {
@@ -32,9 +32,9 @@ const static char * DebugColorSublayer = "DebugColorSublayer";
     return nil;
 }
 
-- (CALayer *)debugColorSublayer
+- (CALayer *)debug_colorSublayer
 {
-    CALayer *obj = objc_getAssociatedObject(self, DebugColorSublayer);
+    CALayer *obj = objc_getAssociatedObject(self, debug_colorSublayer);
     if ([obj isKindOfClass:[CALayer class]] && obj) {
         obj.frame = self.bounds;
         return obj;
@@ -42,45 +42,57 @@ const static char * DebugColorSublayer = "DebugColorSublayer";
     obj = [[CALayer alloc] init];
     obj.borderColor = [[UIColor redColor] colorWithAlphaComponent:0.3].CGColor;
     obj.borderWidth = 1/[UIScreen mainScreen].scale;
-    objc_setAssociatedObject(self, DebugColorSublayer, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    return [self debugColorSublayer];
+    objc_setAssociatedObject(self, debug_colorSublayer, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return [self debug_colorSublayer];
 }
 
-- (XYDebugCloneView *)cloneView
+- (XYDebugCloneView *)debug_cloneView
 {
     XYDebugCloneView *obj = objc_getAssociatedObject(self, DebugCloneView);
     if ([obj isKindOfClass:[XYDebugCloneView class]] && obj) {
         return obj;
     }
     obj = [XYDebugCloneView cloneWith:self];
-    obj.debugColorSublayer.frame = obj.bounds;
-    [obj.layer addSublayer:obj.debugColorSublayer];
+    obj.debug_colorSublayer.frame = obj.bounds;
+    [obj.layer addSublayer:obj.debug_colorSublayer];
     objc_setAssociatedObject(self, DebugCloneView, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    return [self cloneView];
+    return [self debug_cloneView];
 }
 
-- (void)setHasStoreDebugColor:(BOOL)hasStoreDebugColor
+- (void)setDebug_hasStoreDebugColor:(BOOL)debug_hasStoreDebugColor
 {
-    objc_setAssociatedObject(self, DebugHasStoreUIViewBackColor, @(hasStoreDebugColor), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, DebugHasStoreUIViewBackColor, @(debug_hasStoreDebugColor), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)hasStoreDebugColor
+- (BOOL)debug_hasStoreDebugColor
 {
     id obj = objc_getAssociatedObject(self, DebugHasStoreUIViewBackColor);
     return [obj boolValue];
 }
 
-- (NSArray<UIView *> *)debuRecurrenceAllSubviews
+- (NSArray<UIView *> *)debug_recurrenceAllSubviews
 {
     NSMutableArray <UIView *> *all = @[].mutableCopy;
     void (^getSubViewsBlock)(UIView *current) = ^(UIView *current){
         [all addObject:current];
         for (UIView *sub in current.subviews) {
-            [all addObjectsFromArray:[sub debuRecurrenceAllSubviews]];
+            [all addObjectsFromArray:[sub debug_recurrenceAllSubviews]];
         }
     };
     getSubViewsBlock(self);
     return [NSArray arrayWithArray:all];
+}
+
+- (void)debug_resetView
+{
+	UIColor * debug_associatedColor = objc_getAssociatedObject(self, DebugStoreUIViewBackColor);
+	objc_removeAssociatedObjects(debug_associatedColor);
+	CALayer *debug_associatedLayer = objc_getAssociatedObject(self, debug_colorSublayer);
+	objc_removeAssociatedObjects(debug_associatedLayer);
+	XYDebugCloneView *debug_associatedView = objc_getAssociatedObject(self, DebugCloneView);
+	objc_removeAssociatedObjects(debug_associatedView);
+	NSNumber *debug_associatedBool = objc_getAssociatedObject(self, DebugHasStoreUIViewBackColor);
+	objc_removeAssociatedObjects(debug_associatedBool);
 }
 
 @end
@@ -102,7 +114,7 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
     objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CGPoint)debugPoint
+- (CGPoint)debug_oriPoint
 {
     NSValue *obj = objc_getAssociatedObject(self, DebugStoreOrigin);
     if ([obj isKindOfClass:[NSValue class]]) {
@@ -111,12 +123,12 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
     return CGPointZero;
 }
 
-- (void)setDebugPoint:(CGPoint)debugPoint
+- (void)setDebug_oriPoint:(CGPoint)debug_oriPoint
 {
-    objc_setAssociatedObject(self, DebugStoreOrigin, [NSValue valueWithCGPoint:debugPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, DebugStoreOrigin, [NSValue valueWithCGPoint:debug_oriPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration
+- (void)debug_zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration
 {
     if ([self animationForKey:@"zPosition"]) {
         [self removeAnimationForKey:@"zPosition"];
@@ -131,4 +143,27 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
     [self addAnimation:theAnimation forKey:@"zPosition"];
 }
 
+@end
+
+
+
+@implementation UIColor (XYDebug)
+
++ (UIColor *)debug_randomLightColorWithAlpha:(CGFloat)alpha
+{
+	
+	return [UIColor colorWithRed:(arc4random()%100+155)/255.0
+						   green:(arc4random()%100+155)/255.0
+							blue:(arc4random()%100+155)/255.0
+						   alpha:alpha];
+}
+
++ (UIColor *)debug_randomDrakColorWithAlpha:(CGFloat)alpha
+{
+	
+	return [UIColor colorWithRed:(arc4random()%150)/255.0
+						   green:(arc4random()%150)/255.0
+							blue:(arc4random()%150)/255.0
+						   alpha:alpha];
+}
 @end

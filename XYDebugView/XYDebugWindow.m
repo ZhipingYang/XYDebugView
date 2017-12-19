@@ -8,7 +8,7 @@
 
 #import "XYDebugWindow.h"
 #import "XYDebugViewManager.h"
-#import "XYDebug+runtime.h"
+#import "XYDebugCategory.h"
 
 #ifndef SCREEN_WIDTH
 #define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
@@ -28,7 +28,7 @@
 
 @property (nonatomic, strong) DebugSlider *distanceSlider;
 
-@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIView *scrollView;
 
 @property (nonatomic, strong) NSHashTable <CALayer *> *debugLayers;
 
@@ -42,19 +42,17 @@
 {
 	self = [super initWithFrame:frame];
 	if (self) {
-		_button = [UIButton buttonWithType:UIButtonTypeCustom];
-		[_button setTitle:@"tap statusbar to refresh debugging..." forState:UIControlStateNormal];
-		_button.backgroundColor = [UIColor redColor];
-		_button.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
-		_button.titleLabel.font = [UIFont systemFontOfSize:11];
-		_button.layer.zPosition = MAXFLOAT;
+		_statusBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		[_statusBarButton setTitle:@"tap statusbar to refresh debugging..." forState:UIControlStateNormal];
+		_statusBarButton.backgroundColor = [UIColor redColor];
+		_statusBarButton.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+		_statusBarButton.titleLabel.font = [UIFont systemFontOfSize:11];
+		_statusBarButton.layer.zPosition = MAXFLOAT;
 		
-		_scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+		_scrollView = [[UIView alloc] initWithFrame:self.bounds];
 		_scrollView.layer.zPosition = -MAXFLOAT;
-		_scrollView.contentSize = CGSizeMake(SCREEN_WIDTH,SCREEN_HEIGHT);
+		_scrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		_scrollView.backgroundColor = [UIColor whiteColor];
-		_scrollView.showsVerticalScrollIndicator = NO;
-		_scrollView.showsHorizontalScrollIndicator = NO;
 		_scrollView.hidden = YES;
 		
 		_layerSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-30, 40, 30, SCREEN_HEIGHT-40*2)];
@@ -78,7 +76,7 @@
 		};
 		
 		[self addSubview:_scrollView];
-		[self addSubview:_button];
+		[self addSubview:_statusBarButton];
 		[self addSubview:_layerSlider];
 		[self addSubview:_distanceSlider];
 		self.backgroundColor = [UIColor clearColor];
@@ -91,10 +89,13 @@
 		doublePan.minimumNumberOfTouches = 2;
 		
 		UIRotationGestureRecognizer *rotate = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateGes:)];
+
+		UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGes:)];
 		
 		[self.scrollView addGestureRecognizer:singlePan];
 		[self.scrollView addGestureRecognizer:doublePan];
 		[self.scrollView addGestureRecognizer:rotate];
+		[self.scrollView addGestureRecognizer:pinch];
 		
 		self.scrollView.multipleTouchEnabled = YES;
 	}
@@ -108,8 +109,8 @@
 	} else if (![self pointInside:point withEvent:event]) {
 		return nil;
 	} else if (_frameManager.isDebugging) {
-		if (CGRectContainsPoint(_button.frame,point)) {
-			return _button;
+		if (CGRectContainsPoint(_statusBarButton.frame,point)) {
+			return _statusBarButton;
 		} else if (CGRectContainsPoint(_layerSlider.frame,point) && _souceView) {
 			return _layerSlider;
 		} else if (CGRectContainsPoint(_distanceSlider.frame,point) && _souceView) {
@@ -148,10 +149,10 @@
 {
 	if ([view isKindOfClass:[UIView class]] && view) {
 		if (view.superview) {
-			UIView *cloneView = view.cloneView;
+			UIView *cloneView = view.debug_cloneView;
 			cloneView.layer.zPosition = 0;
 			cloneView.layer.debug_zPostion = layerLevel*20+index;
-			cloneView.layer.masksToBounds = YES;
+//			cloneView.layer.masksToBounds = YES;
 			cloneView.layer.frame = [view.superview convertRect:view.frame toView:_souceView];
 			cloneView.layer.opacity = 0.8;
 			[self.debugLayers addObject:cloneView.layer];
@@ -232,12 +233,12 @@
 {
 	_distanceSlider.defalutPercent = 0.5;
 	
-	CATransform3D transform = CATransform3DIdentity;
+	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
 	transform.m34 = -1.0 / SCREEN_HEIGHT;
 	_scrollView.layer.sublayerTransform = transform;
 	
 	for (CALayer *layer in self.debugLayers) {
-		[layer zPositionAnimationFrom:layer.zPosition to:layer.debug_zPostion duration:0.6];
+		[layer debug_zPositionAnimationFrom:layer.zPosition to:layer.debug_zPostion duration:0.6];
 	}
 }
 
@@ -270,7 +271,7 @@
 		case UIGestureRecognizerStateBegan:{
 			_doublePoint = [pan locationInView:_scrollView];
 			for (CALayer *subLayer in self.debugLayers) {
-				subLayer.debugPoint = subLayer.frame.origin;
+				subLayer.debug_oriPoint = subLayer.frame.origin;
 			}
 		}
 			break;
@@ -279,7 +280,7 @@
 			for (CALayer *subLayer in self.debugLayers) {
 				CGFloat x = current.x - _doublePoint.x;
 				CGFloat y = current.y - _doublePoint.y;
-				subLayer.frame = CGRectMake(subLayer.debugPoint.x+x, subLayer.debugPoint.y+y, subLayer.frame.size.width, subLayer.frame.size.height);
+				subLayer.frame = CGRectMake(subLayer.debug_oriPoint.x+x, subLayer.debug_oriPoint.y+y, subLayer.frame.size.width, subLayer.frame.size.height);
 			}
 		}
 			break;
@@ -310,11 +311,11 @@
 {
 	switch (pinch.state) {
 		case UIGestureRecognizerStateBegan:{
-			
+			_sublayerTransform = _scrollView.layer.sublayerTransform;
 		}
 			break;
 		case UIGestureRecognizerStateChanged:{
-			
+			_scrollView.layer.sublayerTransform = CATransform3DScale(_sublayerTransform, pinch.scale, pinch.scale, pinch.scale);
 		}
 			break;
 			

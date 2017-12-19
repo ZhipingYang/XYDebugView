@@ -21,6 +21,6 @@
 
 @property void (^touchMoveBlock)(float percent);
 
-@property void (^touchEndBlock)();
+@property void (^touchEndBlock)(void);
 
 @end
