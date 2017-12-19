@@ -52,7 +52,7 @@
 		_scrollView = [[UIView alloc] initWithFrame:self.bounds];
 		_scrollView.layer.zPosition = -MAXFLOAT;
 		_scrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		_scrollView.backgroundColor = [UIColor whiteColor];
+		_scrollView.backgroundColor = [UIColor darkGrayColor];
 		_scrollView.hidden = YES;
 		
 		_layerSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-30, 40, 30, SCREEN_HEIGHT-40*2)];
@@ -232,8 +232,8 @@
 - (void)recoverLayersDistance
 {
 	_distanceSlider.defalutPercent = 0.5;
-	
-	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
+	// 向上平移100
+	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(0, -100, 0), 0.6, 0.6, 0.6);
 	transform.m34 = -1.0 / SCREEN_HEIGHT;
 	_scrollView.layer.sublayerTransform = transform;
 	
@@ -256,8 +256,8 @@
 			CGFloat angleY = (current.y - _panPoint.y) * M_PI / SCREEN_HEIGHT;
 			CATransform3D transform = CATransform3DIdentity;
 			transform.m34 = -1.0 / SCREEN_HEIGHT;
-			_scrollView.layer.sublayerTransform = CATransform3DRotate(_sublayerTransform, angleX, 0, 1, 0);
-			_scrollView.layer.sublayerTransform = CATransform3DRotate(_scrollView.layer.sublayerTransform, -angleY, 1, 0, 0);
+			CATransform3D transform3D = CATransform3DRotate(_sublayerTransform, angleX, 0, 1, 0);
+			_scrollView.layer.sublayerTransform = CATransform3DRotate(transform3D, -angleY, 1, 0, 0);
 		}
 			break;
 		default:
@@ -267,6 +267,10 @@
 
 - (void)doublePan:(UIPanGestureRecognizer *)pan
 {
+	if (pan.numberOfTouches<=1) {
+		return;
+	}
+
 	switch (pan.state) {
 		case UIGestureRecognizerStateBegan:{
 			_doublePoint = [pan locationInView:_scrollView];

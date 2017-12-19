@@ -135,8 +135,8 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
     }
     CABasicAnimation *theAnimation;
     theAnimation = [CABasicAnimation animationWithKeyPath:@"zPosition"];
-    theAnimation.fromValue = [NSNumber numberWithFloat:from];
-    theAnimation.toValue = [NSNumber numberWithFloat:to];
+	theAnimation.fromValue = [NSNumber numberWithFloat:from];
+	theAnimation.toValue = [NSNumber numberWithFloat:to];
     theAnimation.duration = duration;
     theAnimation.fillMode = kCAFillModeForwards;
     theAnimation.removedOnCompletion = NO;
