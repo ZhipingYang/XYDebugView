@@ -32,10 +32,10 @@
 
 /* Begin PBXFileReference section */
 		02E0517AC8A3EE73E3EE723A71FC29D1 /* Pods-XYDebugView-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XYDebugView-frameworks.sh"; sourceTree = "<group>"; };
-		06107092DAF2EC6268DFE6BED2B9AFCD /* FORGestureTrackDisplay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FORGestureTrackDisplay.framework; path = FORGestureTrackDisplay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		06107092DAF2EC6268DFE6BED2B9AFCD /* FORGestureTrackDisplay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FORGestureTrackDisplay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		228DBEB9B6B43935E078AB3A2B06B779 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2805323F23F24E0BDAB9E0432F5B9547 /* Pods-XYDebugView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-XYDebugView-umbrella.h"; sourceTree = "<group>"; };
-		426A05749C7A15B94DC228F11119A8CE /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_XYDebugView.framework; path = "Pods-XYDebugView.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		426A05749C7A15B94DC228F11119A8CE /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYDebugView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		519A399A80BCC5603F799577413A14BD /* FORGestureTrackDisplay.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FORGestureTrackDisplay.xcconfig; sourceTree = "<group>"; };
 		616BEB51ECCAD129BDBCB7A956B56CC6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		673B533F55EDC63E67F58CE05E9F28FA /* Pods-XYDebugView-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-XYDebugView-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -43,15 +43,15 @@
 		7EC994CDC2D681BA26389F78A7E4B325 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		8048B0E9D35DE1CDB2B3576FACCB630F /* Pods-XYDebugView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XYDebugView.debug.xcconfig"; sourceTree = "<group>"; };
 		901C0640A5CBB1A3984B1B6FD5C92BE7 /* FORGestureTrackDisplay-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FORGestureTrackDisplay-dummy.m"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9EEF2F778B0F9869DA93140009AA9706 /* FORTrackGesture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FORTrackGesture.h; path = FORGestureTrackDisplay/FORTrackGesture.h; sourceTree = "<group>"; };
 		A2F1FDEFAD4937901DD9A4313A682DAC /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A999A319C9A0136C347FA5C113BD5371 /* FORGestureTrack.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FORGestureTrack.m; path = FORGestureTrackDisplay/FORGestureTrack.m; sourceTree = "<group>"; };
-		B15842E57C44AA39F8ECC832AF81E271 /* Pods-XYDebugView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-XYDebugView.modulemap"; sourceTree = "<group>"; };
+		B15842E57C44AA39F8ECC832AF81E271 /* Pods-XYDebugView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-XYDebugView.modulemap"; sourceTree = "<group>"; };
 		B26676F5871E285FC7FC5F9C713698D8 /* FORTrackGesture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FORTrackGesture.m; path = FORGestureTrackDisplay/FORTrackGesture.m; sourceTree = "<group>"; };
 		C0FEA7E0BF38D28DEAE208B5217F114A /* FORGestureTrackDisplay-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FORGestureTrackDisplay-umbrella.h"; sourceTree = "<group>"; };
 		C72A222FF268CFE1DE1ACCCEBDD44F82 /* Pods-XYDebugView-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-XYDebugView-resources.sh"; sourceTree = "<group>"; };
-		C7BAE916404E5D080DC458A279D022B7 /* FORGestureTrackDisplay.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = FORGestureTrackDisplay.modulemap; sourceTree = "<group>"; };
+		C7BAE916404E5D080DC458A279D022B7 /* FORGestureTrackDisplay.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = FORGestureTrackDisplay.modulemap; sourceTree = "<group>"; };
 		CE4495B08551BEC3D8C98ADAAF7BD7C6 /* Pods-XYDebugView-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-XYDebugView-acknowledgements.plist"; sourceTree = "<group>"; };
 		E92E5754B278373A00C1F9DCCCC09F17 /* Pods-XYDebugView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-XYDebugView.release.xcconfig"; sourceTree = "<group>"; };
 		EA910A6856F22B28B8AD546350202D27 /* Pods-XYDebugView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-XYDebugView-dummy.m"; sourceTree = "<group>"; };
@@ -136,7 +136,6 @@
 				B26676F5871E285FC7FC5F9C713698D8 /* FORTrackGesture.m */,
 				3F3A09611FCE7AEAA5A28F6C8CA63827 /* Support Files */,
 			);
-			name = FORGestureTrackDisplay;
 			path = FORGestureTrackDisplay;
 			sourceTree = "<group>";
 		};
@@ -243,7 +242,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0920;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -303,20 +302,30 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
@@ -382,19 +391,29 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",

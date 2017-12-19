@@ -14,8 +14,7 @@
 		65758CB41ED5B41600A7738D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB31ED5B41600A7738D /* Assets.xcassets */; };
 		65758CB71ED5B41600A7738D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB51ED5B41600A7738D /* LaunchScreen.storyboard */; };
 		657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 657ED40F1EDF35C30047D1F8 /* NSObject+Runtime.m */; };
-		6583DC521EDF293400D1F3B4 /* UIColor+XYRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */; };
-		6583DC531EDF293400D1F3B4 /* XYDebug+runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4B1EDF293400D1F3B4 /* XYDebug+runtime.m */; };
+		6583DC531EDF293400D1F3B4 /* XYDebugCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */; };
 		6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */; };
 		6583DC551EDF293400D1F3B4 /* XYDebugViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */; };
 		6583DC561EDF293400D1F3B4 /* XYDebugWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */; };
@@ -36,10 +35,8 @@
 		65758CB81ED5B41600A7738D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		657ED40E1EDF35C30047D1F8 /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		657ED40F1EDF35C30047D1F8 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
-		6583DC481EDF293400D1F3B4 /* UIColor+XYRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+XYRandom.h"; sourceTree = "<group>"; };
-		6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+XYRandom.m"; sourceTree = "<group>"; };
-		6583DC4A1EDF293400D1F3B4 /* XYDebug+runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XYDebug+runtime.h"; sourceTree = "<group>"; };
-		6583DC4B1EDF293400D1F3B4 /* XYDebug+runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XYDebug+runtime.m"; sourceTree = "<group>"; };
+		6583DC4A1EDF293400D1F3B4 /* XYDebugCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugCategory.h; sourceTree = "<group>"; };
+		6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugCategory.m; sourceTree = "<group>"; };
 		6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugView.h; sourceTree = "<group>"; };
 		6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugView.m; sourceTree = "<group>"; };
 		6583DC4E1EDF293400D1F3B4 /* XYDebugViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugViewManager.h; sourceTree = "<group>"; };
@@ -124,10 +121,8 @@
 		6583DC471EDF293400D1F3B4 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				6583DC481EDF293400D1F3B4 /* UIColor+XYRandom.h */,
-				6583DC491EDF293400D1F3B4 /* UIColor+XYRandom.m */,
-				6583DC4A1EDF293400D1F3B4 /* XYDebug+runtime.h */,
-				6583DC4B1EDF293400D1F3B4 /* XYDebug+runtime.m */,
+				6583DC4A1EDF293400D1F3B4 /* XYDebugCategory.h */,
+				6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */,
 				6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */,
 				6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */,
 				6583DC4E1EDF293400D1F3B4 /* XYDebugViewManager.h */,
@@ -176,7 +171,7 @@
 		65758C9C1ED5B41600A7738D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = XcodeYang;
 				TargetAttributes = {
 					65758CA31ED5B41600A7738D = {
@@ -275,9 +270,8 @@
 				6583DC561EDF293400D1F3B4 /* XYDebugWindow.m in Sources */,
 				65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */,
 				65758CA91ED5B41600A7738D /* main.m in Sources */,
-				6583DC531EDF293400D1F3B4 /* XYDebug+runtime.m in Sources */,
+				6583DC531EDF293400D1F3B4 /* XYDebugCategory.m in Sources */,
 				657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */,
-				6583DC521EDF293400D1F3B4 /* UIColor+XYRandom.m in Sources */,
 				6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */,
 				6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */,
 			);
@@ -315,7 +309,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -323,7 +319,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -364,7 +364,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -372,7 +374,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
