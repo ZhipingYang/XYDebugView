@@ -4,7 +4,7 @@ s.summary      = 'The tool of UIView to Debug its frame'
 s.description      = <<-DESC
 XYDebugView is debug tool to draw the all views frame in device screen and show it by 2d/3d style like reveal did.
                        DESC
-s.version      = '0.2.1'
+s.version      = '0.2.2'
 s.homepage     = "https://github.com/ZhipingYang/XYDebugView"
 s.license      = 'MIT'
 s.authors      = { 'ZhipingYang' => 'XcodeYang@gmail.com' }
