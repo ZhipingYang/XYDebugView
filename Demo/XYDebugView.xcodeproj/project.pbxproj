@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		656C75001FED168500E21A4C /* XYOverlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C74FF1FED168500E21A4C /* XYOverlayerView.m */; };
+		656C75041FED1CB500E21A4C /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C75021FED1CB500E21A4C /* TTRangeSlider.m */; };
 		65758CA91ED5B41600A7738D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CA81ED5B41600A7738D /* main.m */; };
 		65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CAB1ED5B41600A7738D /* AppDelegate.m */; };
 		65758CAF1ED5B41600A7738D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CAE1ED5B41600A7738D /* ViewController.m */; };
@@ -23,6 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		656C74FE1FED168500E21A4C /* XYOverlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYOverlayerView.h; sourceTree = "<group>"; };
+		656C74FF1FED168500E21A4C /* XYOverlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYOverlayerView.m; sourceTree = "<group>"; };
+		656C75011FED1CB500E21A4C /* TTRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSlider.h; sourceTree = "<group>"; };
+		656C75021FED1CB500E21A4C /* TTRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRangeSlider.m; sourceTree = "<group>"; };
+		656C75031FED1CB500E21A4C /* TTRangeSliderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSliderDelegate.h; sourceTree = "<group>"; };
 		65758CA41ED5B41600A7738D /* XYDebugView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYDebugView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65758CA81ED5B41600A7738D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65758CAA1ED5B41600A7738D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -121,6 +128,9 @@
 		6583DC471EDF293400D1F3B4 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				656C75011FED1CB500E21A4C /* TTRangeSlider.h */,
+				656C75021FED1CB500E21A4C /* TTRangeSlider.m */,
+				656C75031FED1CB500E21A4C /* TTRangeSliderDelegate.h */,
 				6583DC4A1EDF293400D1F3B4 /* XYDebugCategory.h */,
 				6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */,
 				6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */,
@@ -129,6 +139,8 @@
 				6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */,
 				6583DC501EDF293400D1F3B4 /* XYDebugWindow.h */,
 				6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */,
+				656C74FE1FED168500E21A4C /* XYOverlayerView.h */,
+				656C74FF1FED168500E21A4C /* XYOverlayerView.m */,
 			);
 			name = Class;
 			path = ../../XYDebugView;
@@ -271,9 +283,11 @@
 				65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */,
 				65758CA91ED5B41600A7738D /* main.m in Sources */,
 				6583DC531EDF293400D1F3B4 /* XYDebugCategory.m in Sources */,
+				656C75041FED1CB500E21A4C /* TTRangeSlider.m in Sources */,
 				657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */,
 				6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */,
 				6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */,
+				656C75001FED168500E21A4C /* XYOverlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
