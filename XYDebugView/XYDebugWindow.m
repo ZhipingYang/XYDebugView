@@ -18,7 +18,7 @@
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
 #endif
 
-@interface XYDebugWindow ()
+@interface XYDebugWindow ()<UIGestureRecognizerDelegate>
 {
 	CGPoint _panPoint;
 	CGPoint _doublePoint;
@@ -32,6 +32,7 @@
 
 @property (nonatomic, strong) NSHashTable <CALayer *> *debugLayers;
 
+@property (nonatomic, strong) NSMutableSet *doubleTouchsGestures;
 @end
 
 @implementation XYDebugWindow
@@ -42,6 +43,8 @@
 {
 	self = [super initWithFrame:frame];
 	if (self) {
+		_doubleTouchsGestures = [NSMutableSet set];
+		
 		_statusBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		[_statusBarButton setTitle:@"tap statusbar to refresh debugging..." forState:UIControlStateNormal];
 		_statusBarButton.backgroundColor = [UIColor redColor];
@@ -54,6 +57,7 @@
 		_scrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		_scrollView.backgroundColor = [UIColor darkGrayColor];
 		_scrollView.hidden = YES;
+		_scrollView.multipleTouchEnabled = YES;
 		
 		_layerSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-30, 40, 30, SCREEN_HEIGHT-40*2)];
 		_layerSlider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
@@ -87,10 +91,16 @@
 		
 		UIPanGestureRecognizer *doublePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(doublePan:)];
 		doublePan.minimumNumberOfTouches = 2;
+		doublePan.delegate = self;
+		doublePan.cancelsTouchesInView = NO;
 		
 		UIRotationGestureRecognizer *rotate = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateGes:)];
-
+		rotate.delegate = self;
+		rotate.cancelsTouchesInView = NO;
+		
 		UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGes:)];
+		pinch.delegate = self;
+		pinch.cancelsTouchesInView = NO;
 		
 		[self.scrollView addGestureRecognizer:singlePan];
 		[self.scrollView addGestureRecognizer:doublePan];
@@ -98,6 +108,7 @@
 		[self.scrollView addGestureRecognizer:pinch];
 		
 		self.scrollView.multipleTouchEnabled = YES;
+		[_doubleTouchsGestures addObjectsFromArray:@[doublePan,rotate,pinch]];
 	}
 	return self;
 }
@@ -270,62 +281,32 @@
 	if (pan.numberOfTouches<=1) {
 		return;
 	}
-
-	switch (pan.state) {
-		case UIGestureRecognizerStateBegan:{
-			_doublePoint = [pan locationInView:_scrollView];
-			for (CALayer *subLayer in self.debugLayers) {
-				subLayer.debug_oriPoint = subLayer.frame.origin;
-			}
-		}
-			break;
-		case UIGestureRecognizerStateChanged:{
-			CGPoint current = [pan locationInView:_scrollView];
-			for (CALayer *subLayer in self.debugLayers) {
-				CGFloat x = current.x - _doublePoint.x;
-				CGFloat y = current.y - _doublePoint.y;
-				subLayer.frame = CGRectMake(subLayer.debug_oriPoint.x+x, subLayer.debug_oriPoint.y+y, subLayer.frame.size.width, subLayer.frame.size.height);
-			}
-		}
-			break;
-		default:
-			break;
+	
+	if (pan.state == UIGestureRecognizerStateBegan || pan.state == UIGestureRecognizerStateChanged) {
+		CGPoint point = [pan translationInView:_scrollView];
+		_scrollView.layer.sublayerTransform = CATransform3DTranslate(_scrollView.layer.sublayerTransform, point.x, point.y, 0);
+		[pan setTranslation:CGPointZero inView:_scrollView];
 	}
 }
 
 - (void)rotateGes:(UIRotationGestureRecognizer *)rotate
 {
-	switch (rotate.state) {
-		case UIGestureRecognizerStateBegan:{
-			_sublayerTransform = _scrollView.layer.sublayerTransform;
-		}
-			break;
-		case UIGestureRecognizerStateChanged:{
-			CGFloat rotation = rotate.rotation;
-			_scrollView.layer.sublayerTransform = CATransform3DRotate(_sublayerTransform, rotation, 0, 0, 1);
-		}
-			break;
-			
-		default:
-			break;
-	}
+	_scrollView.layer.sublayerTransform = CATransform3DRotate(_scrollView.layer.sublayerTransform, rotate.rotation, 0, 0, 1);
+	[rotate setRotation:0];
 }
 
 - (void)pinchGes:(UIPinchGestureRecognizer *)pinch
 {
-	switch (pinch.state) {
-		case UIGestureRecognizerStateBegan:{
-			_sublayerTransform = _scrollView.layer.sublayerTransform;
-		}
-			break;
-		case UIGestureRecognizerStateChanged:{
-			_scrollView.layer.sublayerTransform = CATransform3DScale(_sublayerTransform, pinch.scale, pinch.scale, pinch.scale);
-		}
-			break;
-			
-		default:
-			break;
+	_scrollView.layer.sublayerTransform = CATransform3DScale(_scrollView.layer.sublayerTransform, pinch.scale, pinch.scale, pinch.scale);
+	[pinch setScale:1];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+	if ([_doubleTouchsGestures containsObject:gestureRecognizer] && [_doubleTouchsGestures containsObject:otherGestureRecognizer]) {
+		return YES;
 	}
+	return NO;
 }
 
 @end
