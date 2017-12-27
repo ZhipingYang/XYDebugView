@@ -19,7 +19,7 @@ s.source_files = [
 ]
 
 s.resources = [
-"XYDebugView/resource/*.{png,xib}}"
+"XYDebugView/resource/*.{png,xib}"
 ]
 
 s.frameworks = 'UIKit'
