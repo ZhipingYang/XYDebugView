@@ -27,6 +27,31 @@
                         <action selector="debugStyleChanged:" destination="iN0-l3-epB" eventType="touchUpInside" id="eCC-ni-UPF"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZ8-vd-sWe">
+                    <rect key="frame" x="315" y="607" width="44" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="Gf2-LO-bC5"/>
+                        <constraint firstAttribute="width" constant="44" id="wyU-LX-6Ag"/>
+                    </constraints>
+                    <state key="normal" image="reset.png"/>
+                    <connections>
+                        <action selector="resetAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="lev-nv-olw"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Pd-JD-SiB" userLabel="FilterButton">
+                    <rect key="frame" x="16" y="607" width="44" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="JUe-ym-siH"/>
+                        <constraint firstAttribute="height" constant="44" id="bwX-yJ-PfY"/>
+                    </constraints>
+                    <state key="normal" image="filter.png"/>
+                    <connections>
+                        <action selector="filterAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="oRO-IF-d0T"/>
+                        <action selector="resetAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Mrt-QY-Rui"/>
+                    </connections>
+                </button>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pra-CE-Yta">
                     <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="B0t-qs-iUx">
@@ -127,6 +152,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="VU9-pH-dNO" firstAttribute="leading" secondItem="B0t-qs-iUx" secondAttribute="leading" id="0z3-fK-Cnt"/>
                             <constraint firstItem="r5I-qJ-x5a" firstAttribute="top" secondItem="k3v-j7-I4D" secondAttribute="bottom" constant="3" id="993-tr-pol"/>
@@ -143,36 +169,16 @@
                             <constraint firstItem="VU9-pH-dNO" firstAttribute="top" secondItem="r5I-qJ-x5a" secondAttribute="bottom" id="wrJ-Zp-tnJ"/>
                         </constraints>
                     </view>
-                    <color key="backgroundColor" white="1" alpha="0.28856734154929575" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="height" id="DNf-lK-iJo"/>
                     </constraints>
                     <blurEffect style="light"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="Ty3-HX-Px1" appends="YES" id="yEN-zd-EeG"/>
+                    </connections>
                 </visualEffectView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZ8-vd-sWe">
-                    <rect key="frame" x="315" y="607" width="44" height="44"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="Gf2-LO-bC5"/>
-                        <constraint firstAttribute="width" constant="44" id="wyU-LX-6Ag"/>
-                    </constraints>
-                    <state key="normal" image="reset.png"/>
-                    <connections>
-                        <action selector="resetAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="lev-nv-olw"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Pd-JD-SiB" userLabel="FilterButton">
-                    <rect key="frame" x="16" y="607" width="44" height="44"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="44" id="JUe-ym-siH"/>
-                        <constraint firstAttribute="height" constant="44" id="bwX-yJ-PfY"/>
-                    </constraints>
-                    <state key="normal" image="filter.png"/>
-                    <connections>
-                        <action selector="resetAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Mrt-QY-Rui"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
@@ -194,12 +200,18 @@
                 <outlet property="filterButton" destination="3Pd-JD-SiB" id="MqZ-Ko-ENP"/>
                 <outlet property="line" destination="k3v-j7-I4D" id="DDY-sG-n89"/>
                 <outlet property="m34Slider" destination="JNT-oR-mia" id="77V-8B-4wh"/>
+                <outlet property="panGesture" destination="Ty3-HX-Px1" id="HeF-ql-Lt7"/>
                 <outlet property="rangeSlider" destination="luY-JH-1vg" id="VAt-lH-8gt"/>
                 <outlet property="resetButton" destination="lZ8-vd-sWe" id="AoA-Sc-Zqi"/>
                 <outlet property="statusBarButton" destination="z8F-X0-LRP" id="ZEJ-y8-HUp"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="Ty3-HX-Px1">
+            <connections>
+                <action selector="panGestureAction:" destination="iN0-l3-epB" id="xQg-dr-Dba"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
     <resources>
         <image name="filter.png" width="200" height="200"/>

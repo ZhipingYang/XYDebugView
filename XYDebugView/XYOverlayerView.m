@@ -17,6 +17,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *line;
 
+@property (weak, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
+
 @end
 
 @implementation XYOverlayerView
@@ -56,10 +58,7 @@
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
 	UIView *hitView = [super hitTest:point withEvent:event];
-	if (!_showing && hitView == self) {
-		hitView = nil;
-	}
-	return hitView;
+	return hitView == self ? nil : hitView;
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -72,15 +71,75 @@
 
 #pragma mark - actions
 
+
+static CGPoint panBeginPoint;
+
+- (IBAction)panGestureAction:(UIPanGestureRecognizer *)sender {
+	CGPoint bottomPoint = [_panGesture locationInView:_bottomView];
+	CGPoint point = [_panGesture locationInView:self];
+	if (CGRectContainsPoint(_bottomView.bounds, bottomPoint) && _showing) {
+		switch (sender.state) {
+			case UIGestureRecognizerStateBegan: {
+				panBeginPoint = point;
+			}
+				break;
+			case UIGestureRecognizerStateChanged: {
+				CGFloat y = point.y - panBeginPoint.y;
+				_bottomHeight.constant = MIN(MAX(150-y, 0), 150);
+			}
+				break;
+			case UIGestureRecognizerStateEnded: {
+				CGFloat y = point.y - panBeginPoint.y;
+				_bottomHeight.constant = 150-y;
+				CGFloat speedY = [sender velocityInView:self].y;
+				if (speedY>0 || y>50) {
+					self.showing = NO;
+				} else {
+					[UIView animateWithDuration:0.2 animations:^{
+						_bottomHeight.constant = 150;
+						[self layoutIfNeeded];
+					}];
+				}
+			}
+				break;
+			case UIGestureRecognizerStateCancelled: {
+				CGFloat y = point.y - panBeginPoint.y;
+				_bottomHeight.constant = 150-y;
+				CGFloat speedY = [sender velocityInView:self].y;
+				if (speedY>0 || y>50) {
+					self.showing = NO;
+				} else {
+					[UIView animateWithDuration:0.2 animations:^{
+						_bottomHeight.constant = 150;
+						[self layoutIfNeeded];
+					}];
+				}
+			}
+				break;
+
+			default:
+				break;
+		}
+	}
+}
+
+// state
 - (IBAction)debugStyleChanged:(UIButton *)sender {
 	if ([self.delegate respondsToSelector:@selector(overlayViewDebugChanged:)]) {
 		[self.delegate overlayViewDebugChanged:self];
 	}
 }
 
+// buttons
 - (IBAction)resetAction:(UIButton *)sender {
 	if ([self.delegate respondsToSelector:@selector(overlayViewReseted:)]) {
 		[self.delegate overlayViewReseted:self];
+	}
+}
+
+- (IBAction)filterAction:(UIButton *)sender {
+	if (!_showing) {
+		self.showing = YES;
 	}
 }
 

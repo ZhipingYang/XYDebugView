@@ -27,7 +27,6 @@ typedef NS_ENUM (NSUInteger, DebugViewState) {
 
 @interface XYDebugWindow : UIWindow
 
-@property (nonatomic, weak) XYDebugViewManager *frameManager;
 @property (nonatomic, weak) id<XYDebugWindowDelegate> delegate;
 @property (nonatomic, weak) UIView *souceView;
 @property (nonatomic, strong) XYOverlayerView *overlayerView;

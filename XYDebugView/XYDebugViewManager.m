@@ -17,10 +17,14 @@
 	XYDebugStyle _debugStyle;
 }
 @property (nonatomic, strong) XYDebugWindow *assistiveWindow;
+
 @property (nonatomic, weak, nullable) UIView *debugView;
 @property (nonatomic, weak) UIWindow *keyWindow;
+
 @property (nonatomic) DebugViewState debugState;
 @property (nonatomic) BOOL isDebugging;
+
+@property (nonatomic, strong) NSHashTable <UIView *> *debuggedViews;
 
 @end
 
@@ -33,6 +37,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[self alloc] init];
+		instance.debuggedViews = [NSHashTable hashTableWithOptions:NSHashTableWeakMemory];
         instance.isDebugging = NO;
         instance.debugState = DebugViewStateNone;
 		instance.keyWindow = [UIApplication sharedApplication].keyWindow;
@@ -74,7 +79,6 @@
 	_debugStyle = debugStyle;
 	
 	_assistiveWindow = [[XYDebugWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	_assistiveWindow.frameManager = self;
 	[_assistiveWindow.overlayerView.statusBarButton addTarget:self action:@selector(debugViewBtnClick) forControlEvents:UIControlEventTouchUpInside];
 	_assistiveWindow.windowLevel = CGFLOAT_MAX;
 	_assistiveWindow.souceView = nil;
@@ -126,50 +130,51 @@
 
 - (void)currentWindowsShowDebugView:(BOOL)showDebugView
 {
+	if (!showDebugView) {
+		[_debuggedViews.allObjects enumerateObjectsUsingBlock:^(UIView * _Nonnull subview, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (!subview.debug_hasStoreDebugColor) { return; }
+			subview.backgroundColor = subview.debug_storeOrginalColor ?: [UIColor clearColor];
+			subview.debug_hasStoreDebugColor = NO;
+			subview.layer.borderWidth = CGFLOAT_MIN;
+			if (subview.debug_colorSublayer.superlayer) {
+				[subview.debug_colorSublayer removeFromSuperlayer];
+			}
+		}];
+		return;
+	}
     for (UIWindow *w in [UIApplication sharedApplication].windows) {
         if (w != _assistiveWindow && w != [UIApplication sharedApplication].keyWindow) {
-            [self traverseSubviewIn:w shouldRecoverBackColor:!showDebugView];
+            [self traverseSubviewIn:w];
         }
     }
-    [self traverseSubviewIn:[UIApplication sharedApplication].keyWindow shouldRecoverBackColor:!showDebugView];
+    [self traverseSubviewIn:[UIApplication sharedApplication].keyWindow];
 }
 
-- (void)traverseSubviewIn:(UIView *)parentView shouldRecoverBackColor:(BOOL)shouldRecoverBackColor
+- (void)traverseSubviewIn:(UIView *)parentView
 {
     NSMutableArray <UIView *>* allViews = parentView.debug_recurrenceAllSubviews.mutableCopy;
     // 移除第一个view（window）
     [allViews removeObjectAtIndex:0];
-    
-    if (shouldRecoverBackColor) {
-        // 回复原貌
-        for (UIView *subview in allViews) {
-            if (!subview.debug_hasStoreDebugColor) { return; }
-            subview.backgroundColor = subview.debug_storeOrginalColor ?: [UIColor clearColor];
-            subview.debug_hasStoreDebugColor = NO;
-            subview.layer.borderWidth = CGFLOAT_MIN;
-            if (subview.debug_colorSublayer.superlayer) {
-                [subview.debug_colorSublayer removeFromSuperlayer];
-            }
-        }
-    } else {
-        // 追加debug
-        for (UIView *subview in allViews) {
-            
-            if (subview.debug_hasStoreDebugColor || subview==_assistiveWindow.overlayerView.statusBarButton) {
-                return;
-            }
-            subview.debug_storeOrginalColor = subview.backgroundColor;
-            subview.debug_hasStoreDebugColor = YES;
-            if (!CGRectEqualToRect(subview.bounds, [UIScreen mainScreen].bounds)) {
-                subview.backgroundColor = [UIColor debug_randomLightColorWithAlpha:0.6];
-            }
-            
-            // 添加view的frame边框
-            if (!subview.debug_colorSublayer.superlayer) {
-                [subview.layer addSublayer:subview.debug_colorSublayer];
-            }
-        }
-    }
+	
+	// 追加debug
+	for (UIView *subview in allViews) {
+		
+		if (subview.debug_hasStoreDebugColor || subview==_assistiveWindow.overlayerView.statusBarButton) {
+			return;
+		}
+		subview.debug_storeOrginalColor = subview.backgroundColor;
+		subview.debug_hasStoreDebugColor = YES;
+		if (!CGRectEqualToRect(subview.bounds, [UIScreen mainScreen].bounds)) {
+			subview.backgroundColor = [UIColor debug_randomLightColorWithAlpha:0.6];
+		}
+		
+		// 添加view的frame边框
+		if (!subview.debug_colorSublayer.superlayer) {
+			[subview.layer addSublayer:subview.debug_colorSublayer];
+		}
+		
+		[_debuggedViews addObject:subview];
+	}
 }
 
 @end
