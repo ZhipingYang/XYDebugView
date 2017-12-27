@@ -167,3 +167,12 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
 						   alpha:alpha];
 }
 @end
+
+@implementation UIDevice (XYDebug)
+
++ (BOOL)isIPhoneX
+{
+	return CGSizeEqualToSize(CGSizeMake(375.f, 812.f), [UIScreen mainScreen].bounds.size) || CGSizeEqualToSize(CGSizeMake(812.f, 375.f), [UIScreen mainScreen].bounds.size);
+}
+
+@end

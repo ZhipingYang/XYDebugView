@@ -19,7 +19,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _debugSwitch.on = [XYDebugViewManager sharedInstance].isDebugging;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	_debugSwitch.on = [XYDebugViewManager isDebugging];
 }
 
 #pragma mark - delegate
@@ -57,7 +62,11 @@
 }
 
 - (IBAction)switchChanged:(UISwitch *)sender {
-    [XYDebugViewManager sharedInstance].isDebugging = sender.on;
+	if (sender.on) {
+		[XYDebugViewManager showDebug];//InView:self.tableView withDebugStyle:XYDebugStyleAll];
+	} else {
+		[XYDebugViewManager dismissDebugView];
+	}
 }
 
 @end

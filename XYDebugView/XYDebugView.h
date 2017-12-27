@@ -14,13 +14,3 @@
 
 @end
 
-
-@interface DebugSlider : UIView
-
-@property (nonatomic) float defalutPercent;
-
-@property void (^touchMoveBlock)(float percent);
-
-@property void (^touchEndBlock)(void);
-
-@end

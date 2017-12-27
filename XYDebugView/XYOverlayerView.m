@@ -7,35 +7,98 @@
 //
 
 #import "XYOverlayerView.h"
-#import "TTRangeSlider.h"
+#import "XYDebugCategory.h"
 
 @interface XYOverlayerView()
 
 @property (nonatomic, getter=isShowing) BOOL showing;
-@property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) UISlider *distanceSlider;
-@property (nonatomic, strong) UISlider *m34Slider;
-@property (nonatomic, strong) TTRangeSlider *rangeSlider;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
+
+@property (weak, nonatomic) IBOutlet UIView *line;
 
 @end
 
 @implementation XYOverlayerView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-	self = [super initWithFrame:frame];
+	self = [super initWithCoder:aDecoder];
 	if (self) {
 		_showing = NO;
-		
-		_bottomView = [UIView new];
-		_bottomView.backgroundColor = [UIColor lightGrayColor];
-		[self addSubview:_bottomView];
-		
-		_distanceSlider = [UISlider ]
 	}
 	return self;
 }
 
+- (void)layoutSubviews
+{
+	[super layoutSubviews];
+	_line.layer.cornerRadius = CGRectGetHeight(_line.frame)/2.0;
+	_line.clipsToBounds = YES;
+	
+	_filterButton.layer.cornerRadius = 22;
+	_filterButton.clipsToBounds = YES;
+	
+	_resetButton.layer.cornerRadius = 22;
+	_resetButton.clipsToBounds = YES;
+}
 
+- (void)setShowing:(BOOL)showing
+{
+	if (showing == _showing) { return; }
+	_showing = showing;
+	[UIView animateWithDuration:0.2 animations:^{
+		_bottomHeight.constant = _showing ? 150:0;
+		[self layoutIfNeeded];
+	}];
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+	UIView *hitView = [super hitTest:point withEvent:event];
+	if (!_showing && hitView == self) {
+		hitView = nil;
+	}
+	return hitView;
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+	[super touchesEnded:touches withEvent:event];
+	if (self.isShowing) {
+		self.showing = NO;
+	}
+}
+
+#pragma mark - actions
+
+- (IBAction)debugStyleChanged:(UIButton *)sender {
+	if ([self.delegate respondsToSelector:@selector(overlayViewDebugChanged:)]) {
+		[self.delegate overlayViewDebugChanged:self];
+	}
+}
+
+- (IBAction)resetAction:(UIButton *)sender {
+	if ([self.delegate respondsToSelector:@selector(overlayViewReseted:)]) {
+		[self.delegate overlayViewReseted:self];
+	}
+}
+
+// sliders
+- (IBAction)distanceChanged:(UISlider *)sender {
+	if ([self.delegate respondsToSelector:@selector(overlayView:distanceChanged:)]) {
+		[self.delegate overlayView:self distanceChanged:sender.value];
+	}
+}
+- (IBAction)showingLayerChanged:(UISlider *)sender {
+	if ([self.delegate respondsToSelector:@selector(overlayView:showingLayerChanged:)]) {
+		[self.delegate overlayView:self showingLayerChanged:sender.value];
+	}
+}
+- (IBAction)m34Changed:(UISlider *)sender {
+	if ([self.delegate respondsToSelector:@selector(overlayView:m34Changed:)]) {
+		[self.delegate overlayView:self m34Changed:sender.value];
+	}
+}
 
 @end

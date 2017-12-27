@@ -13,10 +13,14 @@
 #pragma mark - XYDebugViewManager
 
 @interface XYDebugViewManager ()
-
+{
+	XYDebugStyle _debugStyle;
+}
 @property (nonatomic, strong) XYDebugWindow *assistiveWindow;
+@property (nonatomic, weak, nullable) UIView *debugView;
 @property (nonatomic, weak) UIWindow *keyWindow;
-@property (nonatomic, assign) DebugViewState debugState;
+@property (nonatomic) DebugViewState debugState;
+@property (nonatomic) BOOL isDebugging;
 
 @end
 
@@ -31,37 +35,68 @@
         instance = [[self alloc] init];
         instance.isDebugging = NO;
         instance.debugState = DebugViewStateNone;
-        instance.keyWindow = [UIApplication sharedApplication].keyWindow;
+		instance.keyWindow = [UIApplication sharedApplication].keyWindow;
     });
     return instance;
 }
 
-- (void)setIsDebugging:(BOOL)isDebugging
++ (void)showDebug
 {
-    if (!_assistiveWindow) {
-        _assistiveWindow = [[XYDebugWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _assistiveWindow.frameManager = self;
-        [_assistiveWindow.statusBarButton addTarget:self action:@selector(debugViewBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    _assistiveWindow.windowLevel = isDebugging ? CGFLOAT_MAX:UIWindowLevelNormal;
-    _assistiveWindow.statusBarButton.hidden = !isDebugging;
-    _assistiveWindow.souceView = nil;
+	[[self sharedInstance] showDebugView:XYDebugStyle2D];
+}
 
-    if (isDebugging) {
-        [_assistiveWindow makeKeyAndVisible];
-        if (_keyWindow) {
-            [_keyWindow makeKeyWindow];
-        }
-    } else {
-        [_assistiveWindow resignKeyWindow];
-        _assistiveWindow = nil;
-        [_keyWindow makeKeyAndVisible];
-    }
-    
-    [self currentWindowsShowDebugView:NO];
-    _debugState = DebugViewStateNone;
-    _isDebugging = isDebugging;
++ (void)showDebugWithStyle:(XYDebugStyle)debugStyle
+{
+	[[self sharedInstance] showDebugView:debugStyle];
+}
+
++ (void)showDebugInView:(UIView *)View withDebugStyle:(XYDebugStyle)debugStyle
+{
+	[[self sharedInstance] showDebugView:debugStyle];
+	[self sharedInstance].debugView = View;
+}
+
++ (void)dismissDebugView
+{
+	[[self sharedInstance] dismissDebugView];
+}
+
++ (BOOL)isDebugging
+{
+	return [self sharedInstance].isDebugging;
+}
+
+- (void)showDebugView:(XYDebugStyle)debugStyle
+{
+	BOOL valide = (debugStyle == XYDebugStyle2D || debugStyle == XYDebugStyle3D);
+	NSAssert(valide, @"XYDebugStyle 类型不匹配");
+	
+	_debugStyle = debugStyle;
+	
+	_assistiveWindow = [[XYDebugWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	_assistiveWindow.frameManager = self;
+	[_assistiveWindow.overlayerView.statusBarButton addTarget:self action:@selector(debugViewBtnClick) forControlEvents:UIControlEventTouchUpInside];
+	_assistiveWindow.windowLevel = CGFLOAT_MAX;
+	_assistiveWindow.souceView = nil;
+	[_assistiveWindow makeKeyAndVisible];
+	if (_keyWindow) {
+		[_keyWindow makeKeyWindow];
+	}
+	
+	[self currentWindowsShowDebugView:NO];
+	_debugState = DebugViewStateNone;
+	_isDebugging = YES;
+}
+
+- (void)dismissDebugView
+{
+	[_assistiveWindow resignKeyWindow];
+	_assistiveWindow = nil;
+	[_keyWindow makeKeyAndVisible];
+	
+	[self currentWindowsShowDebugView:NO];
+	_debugState = DebugViewStateNone;
+	_isDebugging = NO;
 }
 
 - (void)debugViewBtnClick
@@ -120,7 +155,7 @@
         // 追加debug
         for (UIView *subview in allViews) {
             
-            if (subview.debug_hasStoreDebugColor || subview==_assistiveWindow.statusBarButton) {
+            if (subview.debug_hasStoreDebugColor || subview==_assistiveWindow.overlayerView.statusBarButton) {
                 return;
             }
             subview.debug_storeOrginalColor = subview.backgroundColor;

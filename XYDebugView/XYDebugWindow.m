@@ -18,15 +18,12 @@
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
 #endif
 
-@interface XYDebugWindow ()<UIGestureRecognizerDelegate>
+@interface XYDebugWindow ()<UIGestureRecognizerDelegate, XYOverlayerViewDelegate>
 {
 	CGPoint _panPoint;
 	CGPoint _doublePoint;
 	CATransform3D _sublayerTransform;
 }
-@property (nonatomic, strong) DebugSlider *layerSlider;
-
-@property (nonatomic, strong) DebugSlider *distanceSlider;
 
 @property (nonatomic, strong) UIView *layerSourceView;
 
@@ -44,13 +41,10 @@
 	self = [super initWithFrame:frame];
 	if (self) {
 		_doubleTouchsGestures = [NSMutableSet set];
-		
-		_statusBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-		[_statusBarButton setTitle:@"tap statusbar to refresh debugging..." forState:UIControlStateNormal];
-		_statusBarButton.backgroundColor = [UIColor redColor];
-		_statusBarButton.titleLabel.font = [UIFont systemFontOfSize:11];
-		_statusBarButton.layer.zPosition = MAXFLOAT;
-		
+		self.backgroundColor = [UIColor clearColor];
+		self.debugLayers = [NSHashTable weakObjectsHashTable];
+		self.layer.masksToBounds = YES;
+
 		CGFloat width = CGRectGetWidth(self.frame);
 		CGFloat height = CGRectGetHeight(self.frame);
 		CGFloat length = MAX(width, height);
@@ -59,34 +53,21 @@
 		_layerSourceView.backgroundColor = [UIColor darkGrayColor];
 		_layerSourceView.hidden = YES;
 		_layerSourceView.multipleTouchEnabled = YES;
-		
-		_layerSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-30, 40, 30, SCREEN_HEIGHT-40*2)];
-		_layerSlider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
-		_layerSlider.hidden = YES;
-		
-		_distanceSlider = [[DebugSlider alloc] initWithFrame:CGRectMake(0, 40, 30, SCREEN_HEIGHT-40*2)];
-		_distanceSlider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
-		_distanceSlider.hidden = YES;
-		_distanceSlider.defalutPercent = 0.5;
-		typeof(self) weakSelf = self;
-		_layerSlider.touchMoveBlock = ^(float percent) {
-			[weakSelf showDifferentLayers:percent];
-		};
-		_layerSlider.touchEndBlock = ^{
-			weakSelf.layerSlider.defalutPercent = 0;
-			[weakSelf showAllLayer];
-		};
-		_distanceSlider.touchMoveBlock = ^(float percent) {
-			[weakSelf changeDistance:percent];
-		};
-		
 		[self addSubview:_layerSourceView];
-		[self addSubview:_statusBarButton];
-		[self addSubview:_layerSlider];
-		[self addSubview:_distanceSlider];
-		self.backgroundColor = [UIColor clearColor];
-		self.debugLayers = [NSHashTable weakObjectsHashTable];
-		self.layer.masksToBounds = YES;
+		
+		
+		_overlayerView = [[NSBundle bundleForClass:[XYOverlayerView class]] loadNibNamed:NSStringFromClass([XYOverlayerView class]) owner:nil options:nil].firstObject;
+		_overlayerView.delegate = self;
+		[self addSubview:_overlayerView];
+		
+//		_layerSlider.touchMoveBlock = ^(float percent) {
+//			[weakSelf showDifferentLayers:percent];
+//		};
+//		_layerSlider.touchEndBlock = ^{
+//			weakSelf.layerSlider.defalutPercent = 0;
+//			[weakSelf showAllLayer];
+//		};
+		
 		
 		UIPanGestureRecognizer *singlePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(singlePan:)];
 		
@@ -120,18 +101,12 @@
 		return nil;
 	} else if (![self pointInside:point withEvent:event]) {
 		return nil;
-	} else if (_frameManager.isDebugging) {
-		if (CGRectContainsPoint(_statusBarButton.frame,point)) {
-			return _statusBarButton;
-		} else if (CGRectContainsPoint(_layerSlider.frame,point) && _souceView) {
-			return _layerSlider;
-		} else if (CGRectContainsPoint(_distanceSlider.frame,point) && _souceView) {
-			return _distanceSlider;
-		} else if (CGRectContainsPoint(_layerSourceView.frame,point) && _souceView) {
-			return _layerSourceView;
-		}
 	}
-	return nil;
+	UIView *hitTest = [_overlayerView hitTest:point withEvent:event];
+	if (hitTest == nil && _souceView != nil) {
+		hitTest = _layerSourceView;
+	}
+	return hitTest;
 }
 
 - (void)layoutSubviews
@@ -142,8 +117,7 @@
 	CGFloat length = MAX(width, height);
 	_layerSourceView.frame = CGRectMake((width-length)/2.0, (height-length)/2.0, length, length);
 	
-	_statusBarButton.frame = CGRectMake(0, 0, width, 20);
-	
+	_overlayerView.frame = self.bounds;
 }
 
 - (void)setSouceView:(UIView *)souceView
@@ -152,16 +126,16 @@
 	
 	if (_souceView == nil) {
 		_layerSourceView.hidden = YES;
-		_layerSlider.hidden = YES;
-		_distanceSlider.hidden = YES;
+//		_layerSlider.hidden = YES;
+//		_distanceSlider.hidden = YES;
 		
 	} else {
 		[[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
 		[self.debugLayers removeAllObjects];
 		[self scrollViewAddLayersInView:_souceView layerLevel:0 index:0];
 		_layerSourceView.hidden = NO;
-		_layerSlider.hidden = NO;
-		_distanceSlider.hidden = NO;
+//		_layerSlider.hidden = NO;
+//		_distanceSlider.hidden = NO;
 		[self reCalculateZPostion];
 		[self recoverLayersDistance];
 	}
@@ -176,7 +150,6 @@
 			UIView *cloneView = view.debug_cloneView;
 			cloneView.layer.zPosition = 0;
 			cloneView.layer.debug_zPostion = layerLevel*20+index;
-//			cloneView.layer.masksToBounds = YES;
 			cloneView.layer.frame = [view.superview convertRect:view.frame toView:_souceView];
 			cloneView.layer.opacity = 0.8;
 			[self.debugLayers addObject:cloneView.layer];
@@ -255,9 +228,10 @@
 
 - (void)recoverLayersDistance
 {
-	_distanceSlider.defalutPercent = 0.5;
+	_overlayerView.distanceSlider.value = 0.5;
 	// 向上平移100
-	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(0, -100, 0), 0.6, 0.6, 0.6);
+	CGFloat offsetX = (MAX(SCREEN_WIDTH, SCREEN_HEIGHT)-SCREEN_WIDTH)/2.0;
+	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(offsetX*0.6, -100, 0), 0.6, 0.6, 0.6);
 	transform.m34 = -1.0 / SCREEN_HEIGHT;
 	_layerSourceView.layer.sublayerTransform = transform;
 	
@@ -314,10 +288,50 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-	if ([_doubleTouchsGestures containsObject:gestureRecognizer] && [_doubleTouchsGestures containsObject:otherGestureRecognizer]) {
-		return YES;
-	}
-	return NO;
+	return [_doubleTouchsGestures containsObject:gestureRecognizer] && [_doubleTouchsGestures containsObject:otherGestureRecognizer];
+}
+
+
+#pragma mark - XYOverlayerViewDelegate
+/**
+ 修改layer之间的距离
+ */
+- (void)overlayView:(XYOverlayerView *)view distanceChanged:(CGFloat)percent
+{
+	[self changeDistance:percent];
+}
+
+/**
+ 查看layer特定的层级
+ */
+- (void)overlayView:(XYOverlayerView *)view showingLayerChanged:(CGFloat)percent
+{
+	[self showDifferentLayers:percent];
+}
+
+/**
+ 修改layer在3d下的透视效果
+ */
+- (void)overlayView:(XYOverlayerView *)view m34Changed:(CGFloat)percent
+{
+	
+}
+
+
+/**
+ 修改bug显示的阶段
+ */
+- (void)overlayViewDebugChanged:(XYOverlayerView *)view
+{
+	
+}
+
+/**
+ 修改layer之间的距离
+ */
+- (void)overlayViewReseted:(XYOverlayerView *)view
+{
+	
 }
 
 @end

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		656C75001FED168500E21A4C /* XYOverlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C74FF1FED168500E21A4C /* XYOverlayerView.m */; };
-		656C75041FED1CB500E21A4C /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 656C75021FED1CB500E21A4C /* TTRangeSlider.m */; };
 		65758CA91ED5B41600A7738D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CA81ED5B41600A7738D /* main.m */; };
 		65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CAB1ED5B41600A7738D /* AppDelegate.m */; };
 		65758CAF1ED5B41600A7738D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65758CAE1ED5B41600A7738D /* ViewController.m */; };
@@ -21,15 +20,15 @@
 		6583DC551EDF293400D1F3B4 /* XYDebugViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */; };
 		6583DC561EDF293400D1F3B4 /* XYDebugWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */; };
 		6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC581EDF2AE400D1F3B4 /* UIWindow+Runtime.m */; };
+		65AB124C1FF38A68003A2553 /* XYOverlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AB124B1FF38A68003A2553 /* XYOverlayerView.xib */; };
+		65AB12501FF3A674003A2553 /* reset.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AB124E1FF3A674003A2553 /* reset.png */; };
+		65AB12511FF3A674003A2553 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AB124F1FF3A674003A2553 /* filter.png */; };
 		F42F7918F9077D132C143A18 /* Pods_XYDebugView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		656C74FE1FED168500E21A4C /* XYOverlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYOverlayerView.h; sourceTree = "<group>"; };
 		656C74FF1FED168500E21A4C /* XYOverlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYOverlayerView.m; sourceTree = "<group>"; };
-		656C75011FED1CB500E21A4C /* TTRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSlider.h; sourceTree = "<group>"; };
-		656C75021FED1CB500E21A4C /* TTRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRangeSlider.m; sourceTree = "<group>"; };
-		656C75031FED1CB500E21A4C /* TTRangeSliderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSliderDelegate.h; sourceTree = "<group>"; };
 		65758CA41ED5B41600A7738D /* XYDebugView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYDebugView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65758CA81ED5B41600A7738D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65758CAA1ED5B41600A7738D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -52,6 +51,9 @@
 		6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugWindow.m; sourceTree = "<group>"; };
 		6583DC571EDF2AE400D1F3B4 /* UIWindow+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Runtime.h"; sourceTree = "<group>"; };
 		6583DC581EDF2AE400D1F3B4 /* UIWindow+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Runtime.m"; sourceTree = "<group>"; };
+		65AB124B1FF38A68003A2553 /* XYOverlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XYOverlayerView.xib; sourceTree = "<group>"; };
+		65AB124E1FF3A674003A2553 /* reset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reset.png; sourceTree = "<group>"; };
+		65AB124F1FF3A674003A2553 /* filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filter.png; sourceTree = "<group>"; };
 		7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYDebugView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DE005133616843BDEAF6F6 /* Pods-XYDebugView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYDebugView.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView.release.xcconfig"; sourceTree = "<group>"; };
 		E8DD6F7D0E917ADD00EBC4FC /* Pods-XYDebugView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYDebugView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView.debug.xcconfig"; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		65758CA61ED5B41600A7738D /* XYDebugView */ = {
 			isa = PBXGroup;
 			children = (
+				65AB124D1FF3A65E003A2553 /* pic */,
 				6583DC471EDF293400D1F3B4 /* Class */,
 				65758CAA1ED5B41600A7738D /* AppDelegate.h */,
 				65758CAB1ED5B41600A7738D /* AppDelegate.m */,
@@ -128,9 +131,6 @@
 		6583DC471EDF293400D1F3B4 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				656C75011FED1CB500E21A4C /* TTRangeSlider.h */,
-				656C75021FED1CB500E21A4C /* TTRangeSlider.m */,
-				656C75031FED1CB500E21A4C /* TTRangeSliderDelegate.h */,
 				6583DC4A1EDF293400D1F3B4 /* XYDebugCategory.h */,
 				6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */,
 				6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */,
@@ -141,9 +141,19 @@
 				6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */,
 				656C74FE1FED168500E21A4C /* XYOverlayerView.h */,
 				656C74FF1FED168500E21A4C /* XYOverlayerView.m */,
+				65AB124B1FF38A68003A2553 /* XYOverlayerView.xib */,
 			);
 			name = Class;
 			path = ../../XYDebugView;
+			sourceTree = "<group>";
+		};
+		65AB124D1FF3A65E003A2553 /* pic */ = {
+			isa = PBXGroup;
+			children = (
+				65AB124F1FF3A674003A2553 /* filter.png */,
+				65AB124E1FF3A674003A2553 /* reset.png */,
+			);
+			path = pic;
 			sourceTree = "<group>";
 		};
 		A22F45403A9B4FE37D0BCC99 /* Frameworks */ = {
@@ -217,6 +227,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				65758CB71ED5B41600A7738D /* LaunchScreen.storyboard in Resources */,
+				65AB12511FF3A674003A2553 /* filter.png in Resources */,
+				65AB12501FF3A674003A2553 /* reset.png in Resources */,
+				65AB124C1FF38A68003A2553 /* XYOverlayerView.xib in Resources */,
 				65758CB41ED5B41600A7738D /* Assets.xcassets in Resources */,
 				65758CB21ED5B41600A7738D /* Main.storyboard in Resources */,
 			);
@@ -283,7 +296,6 @@
 				65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */,
 				65758CA91ED5B41600A7738D /* main.m in Sources */,
 				6583DC531EDF293400D1F3B4 /* XYDebugCategory.m in Sources */,
-				656C75041FED1CB500E21A4C /* TTRangeSlider.m in Sources */,
 				657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */,
 				6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */,
 				6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */,

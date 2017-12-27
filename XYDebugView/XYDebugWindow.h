@@ -7,6 +7,7 @@
 //
 
 #import "XYDebugView.h"
+#import "XYOverlayerView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,7 +30,7 @@ typedef NS_ENUM (NSUInteger, DebugViewState) {
 @property (nonatomic, weak) XYDebugViewManager *frameManager;
 @property (nonatomic, weak) id<XYDebugWindowDelegate> delegate;
 @property (nonatomic, weak) UIView *souceView;
-@property (nonatomic, strong) UIButton *statusBarButton;
+@property (nonatomic, strong) XYOverlayerView *overlayerView;
 
 @end
 
