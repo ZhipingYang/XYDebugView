@@ -6,12 +6,7 @@
 //  Copyright © 2017 eclicks. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-typedef NS_OPTIONS(NSUInteger, XYDebugStyle) {
-	XYDebugStyle2D = 0,
-	XYDebugStyle3D = 1
-};
+#import "XYdebugConst.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

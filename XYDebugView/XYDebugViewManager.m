@@ -12,7 +12,7 @@
 
 #pragma mark - XYDebugViewManager
 
-@interface XYDebugViewManager ()
+@interface XYDebugViewManager ()<XYDebugWindowDelegate>
 {
 	XYDebugStyle _debugStyle;
 }
@@ -21,8 +21,8 @@
 @property (nonatomic, weak, nullable) UIView *debugView;
 @property (nonatomic, weak) UIWindow *keyWindow;
 
-@property (nonatomic) DebugViewState debugState;
 @property (nonatomic) BOOL isDebugging;
+@property (nonatomic) BOOL isDebuggingBy2D;
 
 @property (nonatomic, strong) NSHashTable <UIView *> *debuggedViews;
 
@@ -39,7 +39,7 @@
         instance = [[self alloc] init];
 		instance.debuggedViews = [NSHashTable hashTableWithOptions:NSHashTableWeakMemory];
         instance.isDebugging = NO;
-        instance.debugState = DebugViewStateNone;
+		instance.isDebuggingBy2D = NO;
 		instance.keyWindow = [UIApplication sharedApplication].keyWindow;
     });
     return instance;
@@ -79,7 +79,8 @@
 	_debugStyle = debugStyle;
 	
 	_assistiveWindow = [[XYDebugWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	[_assistiveWindow.overlayerView.statusBarButton addTarget:self action:@selector(debugViewBtnClick) forControlEvents:UIControlEventTouchUpInside];
+	_assistiveWindow.debugStyle = debugStyle;
+	_assistiveWindow.delegate = self;
 	_assistiveWindow.windowLevel = CGFLOAT_MAX;
 	_assistiveWindow.souceView = nil;
 	[_assistiveWindow makeKeyAndVisible];
@@ -87,8 +88,7 @@
 		[_keyWindow makeKeyWindow];
 	}
 	
-	[self currentWindowsShowDebugView:NO];
-	_debugState = DebugViewStateNone;
+	[self cleanDebugLayerIn2D];
 	_isDebugging = YES;
 }
 
@@ -98,56 +98,22 @@
 	_assistiveWindow = nil;
 	[_keyWindow makeKeyAndVisible];
 	
-	[self currentWindowsShowDebugView:NO];
-	_debugState = DebugViewStateNone;
+	[self cleanDebugLayerIn2D];
 	_isDebugging = NO;
 }
 
-- (void)debugViewBtnClick
+- (void)drawDebugLayerIn2DViews
 {
-    switch (self.debugState) {
-        case DebugViewStateNone: {
-            [self currentWindowsShowDebugView:YES];
-            self.debugState = DebugViewState2D;
-        }
-            break;
-        case DebugViewState2D:{
-            _assistiveWindow.souceView = [UIApplication sharedApplication].keyWindow;
-            self.debugState = DebugViewState3D;
-        }
-            break;
-        case DebugViewState3D:{
-            [self currentWindowsShowDebugView:NO];
-            self.assistiveWindow.souceView = nil;
-            self.debugState = DebugViewStateNone;
-        }
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void)currentWindowsShowDebugView:(BOOL)showDebugView
-{
-	if (!showDebugView) {
-		[_debuggedViews.allObjects enumerateObjectsUsingBlock:^(UIView * _Nonnull subview, NSUInteger idx, BOOL * _Nonnull stop) {
-			if (!subview.debug_hasStoreDebugColor) { return; }
-			subview.backgroundColor = subview.debug_storeOrginalColor ?: [UIColor clearColor];
-			subview.debug_hasStoreDebugColor = NO;
-			subview.layer.borderWidth = CGFLOAT_MIN;
-			if (subview.debug_colorSublayer.superlayer) {
-				[subview.debug_colorSublayer removeFromSuperlayer];
+	if (self.debugView) {
+		[self traverseSubviewIn:self.debugView];
+	} else {
+		for (UIWindow *w in [UIApplication sharedApplication].windows) {
+			if (w != _assistiveWindow && w != [UIApplication sharedApplication].keyWindow) {
+				[self traverseSubviewIn:w];
 			}
-		}];
-		return;
+		}
+		[self traverseSubviewIn:[UIApplication sharedApplication].keyWindow];
 	}
-    for (UIWindow *w in [UIApplication sharedApplication].windows) {
-        if (w != _assistiveWindow && w != [UIApplication sharedApplication].keyWindow) {
-            [self traverseSubviewIn:w];
-        }
-    }
-    [self traverseSubviewIn:[UIApplication sharedApplication].keyWindow];
 }
 
 - (void)traverseSubviewIn:(UIView *)parentView
@@ -159,7 +125,7 @@
 	// 追加debug
 	for (UIView *subview in allViews) {
 		
-		if (subview.debug_hasStoreDebugColor || subview==_assistiveWindow.overlayerView.statusBarButton) {
+		if (subview.debug_hasStoreDebugColor) {
 			return;
 		}
 		subview.debug_storeOrginalColor = subview.backgroundColor;
@@ -174,6 +140,40 @@
 		}
 		
 		[_debuggedViews addObject:subview];
+	}
+}
+
+- (void)cleanDebugLayerIn2D
+{
+	[_debuggedViews.allObjects enumerateObjectsUsingBlock:^(UIView * _Nonnull subview, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (!subview.debug_hasStoreDebugColor) { return; }
+		subview.backgroundColor = subview.debug_storeOrginalColor ?: [UIColor clearColor];
+		subview.debug_hasStoreDebugColor = NO;
+		subview.layer.borderWidth = CGFLOAT_MIN;
+		if (subview.debug_colorSublayer.superlayer) {
+			[subview.debug_colorSublayer removeFromSuperlayer];
+		}
+	}];
+	
+	[_debuggedViews removeAllObjects];
+}
+
+#pragma mark - XYDebugWindowDelegate
+
+- (void)debugWindowTopButtonClick:(XYDebugWindow *)window is3DDebugging:(BOOL)is3DDebugging
+{
+	if (_debugStyle == XYDebugStyle2D) {
+		if (_isDebuggingBy2D) {
+			[self cleanDebugLayerIn2D];
+		} else {
+			[self drawDebugLayerIn2DViews];
+		}
+		_isDebuggingBy2D = !_isDebuggingBy2D;
+		
+	} else if (is3DDebugging) {
+		self.assistiveWindow.souceView = nil;
+	} else {
+		_assistiveWindow.souceView = _debugView ?: [UIApplication sharedApplication].keyWindow;
 	}
 }
 

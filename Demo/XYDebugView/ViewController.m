@@ -63,7 +63,7 @@
 
 - (IBAction)switchChanged:(UISwitch *)sender {
 	if (sender.on) {
-		[XYDebugViewManager showDebugInView:self.tableView withDebugStyle:XYDebugStyle3D];
+		[XYDebugViewManager showDebugInView:[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] withDebugStyle:XYDebugStyle2D];
 	} else {
 		[XYDebugViewManager dismissDebugView];
 	}

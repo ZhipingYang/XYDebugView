@@ -9,6 +9,7 @@
 #import "XYDebugWindow.h"
 #import "XYDebugViewManager.h"
 #import "XYDebugCategory.h"
+#import "XYOverlayerView.h"
 
 #ifndef SCREEN_WIDTH
 #define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
@@ -24,6 +25,7 @@
 	CGPoint _doublePoint;
 	CATransform3D _sublayerTransform;
 }
+@property (nonatomic, strong) XYOverlayerView *overlayerView;
 
 @property (nonatomic, strong) UIView *layerSourceView;
 
@@ -59,14 +61,6 @@
 		_overlayerView = [[NSBundle bundleForClass:[XYOverlayerView class]] loadNibNamed:NSStringFromClass([XYOverlayerView class]) owner:nil options:nil].firstObject;
 		_overlayerView.delegate = self;
 		[self addSubview:_overlayerView];
-		
-//		_layerSlider.touchMoveBlock = ^(float percent) {
-//			[weakSelf showDifferentLayers:percent];
-//		};
-//		_layerSlider.touchEndBlock = ^{
-//			weakSelf.layerSlider.defalutPercent = 0;
-//			[weakSelf showAllLayer];
-//		};
 		
 		
 		UIPanGestureRecognizer *singlePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(singlePan:)];
@@ -120,22 +114,25 @@
 	_overlayerView.frame = self.bounds;
 }
 
+- (void)setDebugStyle:(XYDebugStyle)debugStyle
+{
+	_debugStyle = debugStyle;
+	_overlayerView.resetButton.hidden = debugStyle == XYDebugStyle2D;
+	_overlayerView.filterButton.hidden = debugStyle == XYDebugStyle2D;
+	_overlayerView.bottomView.hidden = debugStyle == XYDebugStyle2D;
+}
+
 - (void)setSouceView:(UIView *)souceView
 {
 	_souceView = souceView;
 	
 	if (_souceView == nil) {
 		_layerSourceView.hidden = YES;
-//		_layerSlider.hidden = YES;
-//		_distanceSlider.hidden = YES;
-		
 	} else {
 		[[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
 		[self.debugLayers removeAllObjects];
 		[self scrollViewAddLayersInView:_souceView layerLevel:0 index:0];
 		_layerSourceView.hidden = NO;
-//		_layerSlider.hidden = NO;
-//		_distanceSlider.hidden = NO;
 		[self reCalculateZPostion];
 		[self recoverLayersDistance];
 	}
@@ -323,7 +320,9 @@
  */
 - (void)overlayViewDebugChanged:(XYOverlayerView *)view
 {
-	
+	if ([self.delegate respondsToSelector:@selector(debugWindowTopButtonClick:is3DDebugging:)]) {
+		[self.delegate debugWindowTopButtonClick:self is3DDebugging:_souceView!=nil];
+	}
 }
 
 /**
