@@ -40,7 +40,7 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
         return obj;
     }
     obj = [[CALayer alloc] init];
-    obj.borderColor = [[UIColor redColor] colorWithAlphaComponent:0.3].CGColor;
+    obj.borderColor = [[UIColor redColor] colorWithAlphaComponent:0.6].CGColor;
     obj.borderWidth = 1/[UIScreen mainScreen].scale;
     objc_setAssociatedObject(self, debug_colorSublayer, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return [self debug_colorSublayer];

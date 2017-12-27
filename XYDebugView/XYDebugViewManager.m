@@ -124,21 +124,10 @@
 	
 	// 追加debug
 	for (UIView *subview in allViews) {
-		
-		if (subview.debug_hasStoreDebugColor) {
-			return;
-		}
-		subview.debug_storeOrginalColor = subview.backgroundColor;
-		subview.debug_hasStoreDebugColor = YES;
-		if (!CGRectEqualToRect(subview.bounds, [UIScreen mainScreen].bounds)) {
-			subview.backgroundColor = [UIColor debug_randomLightColorWithAlpha:0.6];
-		}
-		
 		// 添加view的frame边框
 		if (!subview.debug_colorSublayer.superlayer) {
 			[subview.layer addSublayer:subview.debug_colorSublayer];
 		}
-		
 		[_debuggedViews addObject:subview];
 	}
 }
@@ -146,10 +135,6 @@
 - (void)cleanDebugLayerIn2D
 {
 	[_debuggedViews.allObjects enumerateObjectsUsingBlock:^(UIView * _Nonnull subview, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (!subview.debug_hasStoreDebugColor) { return; }
-		subview.backgroundColor = subview.debug_storeOrginalColor ?: [UIColor clearColor];
-		subview.debug_hasStoreDebugColor = NO;
-		subview.layer.borderWidth = CGFLOAT_MIN;
 		if (subview.debug_colorSublayer.superlayer) {
 			[subview.debug_colorSublayer removeFromSuperlayer];
 		}

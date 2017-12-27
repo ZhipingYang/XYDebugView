@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param View 指定视图debug
  @param debugStyle debug类型
  */
-+ (void)showDebugInView:(UIView *)View withDebugStyle:(XYDebugStyle)debugStyle;
++ (void)showDebugInView:(nullable UIView *)View withDebugStyle:(XYDebugStyle)debugStyle;
 
 /**
  关闭debug功能
