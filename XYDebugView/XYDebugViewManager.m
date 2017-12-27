@@ -100,6 +100,7 @@
 	
 	[self cleanDebugLayerIn2D];
 	_isDebugging = NO;
+	_isDebuggingBy2D = NO;
 }
 
 - (void)drawDebugLayerIn2DViews
@@ -135,9 +136,7 @@
 - (void)cleanDebugLayerIn2D
 {
 	[_debuggedViews.allObjects enumerateObjectsUsingBlock:^(UIView * _Nonnull subview, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (subview.debug_colorSublayer.superlayer) {
-			[subview.debug_colorSublayer removeFromSuperlayer];
-		}
+		[subview debug_resetView];
 	}];
 	
 	[_debuggedViews removeAllObjects];

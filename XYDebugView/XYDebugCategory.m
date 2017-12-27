@@ -9,28 +9,10 @@
 #import "XYDebugCategory.h"
 #import <objc/runtime.h>
 
-const static char * DebugStoreUIViewBackColor = "DebugStoreUIViewBackColor";
-const static char * DebugHasStoreUIViewBackColor = "DebugHasStoreUIViewBackColor";
 const static char * DebugCloneView = "DebugCloneView";
 const static char * debug_colorSublayer = "debug_colorSublayer";
 
 @implementation UIView (XYDebug)
-
-- (void)setDebug_storeOrginalColor:(UIColor *)debug_storeOrginalColor
-{
-    if ([debug_storeOrginalColor isKindOfClass:[UIColor class]] && debug_storeOrginalColor) {
-        objc_setAssociatedObject(self, DebugStoreUIViewBackColor, debug_storeOrginalColor, OBJC_ASSOCIATION_RETAIN);
-    }
-}
-
-- (UIColor *)debug_storeOrginalColor
-{
-    id obj = objc_getAssociatedObject(self, DebugStoreUIViewBackColor);
-    if ([obj isKindOfClass:[UIColor class]]) {
-        return (UIColor *)obj;
-    }
-    return nil;
-}
 
 - (CALayer *)debug_colorSublayer
 {
@@ -59,17 +41,6 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
     return [self debug_cloneView];
 }
 
-- (void)setDebug_hasStoreDebugColor:(BOOL)debug_hasStoreDebugColor
-{
-    objc_setAssociatedObject(self, DebugHasStoreUIViewBackColor, @(debug_hasStoreDebugColor), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)debug_hasStoreDebugColor
-{
-    id obj = objc_getAssociatedObject(self, DebugHasStoreUIViewBackColor);
-    return [obj boolValue];
-}
-
 - (NSArray<UIView *> *)debug_recurrenceAllSubviews
 {
     NSMutableArray <UIView *> *all = @[].mutableCopy;
@@ -85,14 +56,11 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
 
 - (void)debug_resetView
 {
-	UIColor * debug_associatedColor = objc_getAssociatedObject(self, DebugStoreUIViewBackColor);
-	objc_removeAssociatedObjects(debug_associatedColor);
 	CALayer *debug_associatedLayer = objc_getAssociatedObject(self, debug_colorSublayer);
+	[debug_associatedLayer removeFromSuperlayer];
 	objc_removeAssociatedObjects(debug_associatedLayer);
 	XYDebugCloneView *debug_associatedView = objc_getAssociatedObject(self, DebugCloneView);
 	objc_removeAssociatedObjects(debug_associatedView);
-	NSNumber *debug_associatedBool = objc_getAssociatedObject(self, DebugHasStoreUIViewBackColor);
-	objc_removeAssociatedObjects(debug_associatedBool);
 }
 
 @end

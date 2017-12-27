@@ -12,8 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (XYDebug)
 
-@property (nonatomic, nullable) UIColor *debug_storeOrginalColor;
-@property (nonatomic) BOOL debug_hasStoreDebugColor;
 @property (nonatomic, readonly) CALayer *debug_colorSublayer;
 @property (nonatomic, readonly) XYDebugCloneView *debug_cloneView;
 @property (nonatomic, readonly) NSArray <UIView *> *debug_recurrenceAllSubviews;
