@@ -57,11 +57,9 @@
 		_layerSourceView.multipleTouchEnabled = YES;
 		[self addSubview:_layerSourceView];
 		
-		
 		_overlayerView = [[NSBundle bundleForClass:[XYOverlayerView class]] loadNibNamed:NSStringFromClass([XYOverlayerView class]) owner:nil options:nil].firstObject;
 		_overlayerView.delegate = self;
 		[self addSubview:_overlayerView];
-		
 		
 		UIPanGestureRecognizer *singlePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(singlePan:)];
 		
@@ -97,7 +95,7 @@
 		return nil;
 	}
 	UIView *hitTest = [_overlayerView hitTest:point withEvent:event];
-	if (hitTest == nil && _souceView != nil) {
+	if (hitTest == nil && _targetView != nil) {
 		hitTest = _layerSourceView;
 	}
 	return hitTest;
@@ -122,16 +120,16 @@
 	_overlayerView.bottomView.hidden = debugStyle == XYDebugStyle2D;
 }
 
-- (void)setSouceView:(UIView *)souceView
+- (void)setTargetView:(UIView *)targetView
 {
-	_souceView = souceView;
+	_targetView = targetView;
 	
-	if (_souceView == nil) {
+	if (targetView == nil) {
 		_layerSourceView.hidden = YES;
 	} else {
 		[[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
 		[self.debugLayers removeAllObjects];
-		[self scrollViewAddLayersInView:_souceView layerLevel:0 index:0];
+		[self scrollViewAddLayersInView:targetView layerLevel:0 index:0];
 		_layerSourceView.hidden = NO;
 		[self reCalculateZPostion];
 		[self recoverLayersDistance];
@@ -147,8 +145,8 @@
 			UIView *cloneView = view.debug_cloneView;
 			cloneView.layer.zPosition = 0;
 			cloneView.layer.debug_zPostion = layerLevel*20+index;
-			cloneView.layer.frame = [view.superview convertRect:view.frame toView:_souceView];
-			cloneView.layer.opacity = 0.8;
+			cloneView.layer.frame = [view.superview convertRect:view.frame toView:_targetView];
+			cloneView.layer.opacity = 1;
 			[self.debugLayers addObject:cloneView.layer];
 			[self.layerSourceView.layer addSublayer:cloneView.layer];
 		}
@@ -210,7 +208,7 @@
 - (void)showAllLayer
 {
 	for (CALayer *layer in self.debugLayers) {
-		layer.opacity = 0.8;
+		layer.opacity = 1;
 	}
 }
 
@@ -230,6 +228,13 @@
 	CGFloat offsetX = (MAX(SCREEN_WIDTH, SCREEN_HEIGHT)-SCREEN_WIDTH)/2.0;
 	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(offsetX*0.6, -100, 0), 0.6, 0.6, 0.6);
 	transform.m34 = -1.0 / SCREEN_HEIGHT;
+	
+	[_layerSourceView.layer removeAllAnimations];
+	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
+	animation.fromValue = [NSValue valueWithCATransform3D:_layerSourceView.layer.sublayerTransform];
+	animation.toValue = [NSValue valueWithCATransform3D:transform];
+	animation.duration = 0.6;
+	[_layerSourceView.layer addAnimation:animation forKey:@"SublayerTransformReset"];
 	_layerSourceView.layer.sublayerTransform = transform;
 	
 	for (CALayer *layer in self.debugLayers) {
@@ -311,7 +316,10 @@
  */
 - (void)overlayView:(XYOverlayerView *)view m34Changed:(CGFloat)percent
 {
-	
+	CGFloat offsetX = (MAX(SCREEN_WIDTH, SCREEN_HEIGHT)-SCREEN_WIDTH)/2.0;
+	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(offsetX*0.6, -100, 0), 0.6, 0.6, 0.6);
+	transform.m34 = -1.0 / (SCREEN_HEIGHT/MAX(CGFLOAT_MIN, percent));
+	_layerSourceView.layer.sublayerTransform = transform;
 }
 
 
@@ -321,7 +329,7 @@
 - (void)overlayViewDebugChanged:(XYOverlayerView *)view
 {
 	if ([self.delegate respondsToSelector:@selector(debugWindowTopButtonClick:is3DDebugging:)]) {
-		[self.delegate debugWindowTopButtonClick:self is3DDebugging:_souceView!=nil];
+		[self.delegate debugWindowTopButtonClick:self is3DDebugging:_targetView!=nil];
 	}
 }
 
@@ -330,7 +338,19 @@
  */
 - (void)overlayViewReseted:(XYOverlayerView *)view
 {
+	CGFloat offsetX = (MAX(SCREEN_WIDTH, SCREEN_HEIGHT)-SCREEN_WIDTH)/2.0;
+	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(offsetX*0.6, -100, 0), 0.6, 0.6, 0.6);
+	transform.m34 = -1.0 / SCREEN_HEIGHT;
 	
+	[self showAllLayer];
+
+	[_layerSourceView.layer removeAllAnimations];
+	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
+	animation.fromValue = [NSValue valueWithCATransform3D:_layerSourceView.layer.sublayerTransform];
+	animation.toValue = [NSValue valueWithCATransform3D:transform];
+	animation.duration = 0.6;
+	[_layerSourceView.layer addAnimation:animation forKey:@"SublayerTransformReset"];
+	_layerSourceView.layer.sublayerTransform = transform;
 }
 
 @end

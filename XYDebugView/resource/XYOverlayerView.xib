@@ -49,7 +49,6 @@
                     <state key="normal" image="filter.png"/>
                     <connections>
                         <action selector="filterAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="oRO-IF-d0T"/>
-                        <action selector="resetAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Mrt-QY-Rui"/>
                     </connections>
                 </button>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pra-CE-Yta">
@@ -210,6 +209,7 @@
         <panGestureRecognizer minimumNumberOfTouches="1" id="Ty3-HX-Px1">
             <connections>
                 <action selector="panGestureAction:" destination="iN0-l3-epB" id="xQg-dr-Dba"/>
+                <outlet property="delegate" destination="iN0-l3-epB" id="yq8-Xq-7XA"/>
             </connections>
         </panGestureRecognizer>
     </objects>

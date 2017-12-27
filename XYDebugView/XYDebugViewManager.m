@@ -82,7 +82,7 @@
 	_assistiveWindow.debugStyle = debugStyle;
 	_assistiveWindow.delegate = self;
 	_assistiveWindow.windowLevel = CGFLOAT_MAX;
-	_assistiveWindow.souceView = nil;
+	_assistiveWindow.targetView = nil;
 	[_assistiveWindow makeKeyAndVisible];
 	if (_keyWindow) {
 		[_keyWindow makeKeyWindow];
@@ -155,9 +155,9 @@
 		_isDebuggingBy2D = !_isDebuggingBy2D;
 		
 	} else if (is3DDebugging) {
-		self.assistiveWindow.souceView = nil;
+		self.assistiveWindow.targetView = nil;
 	} else {
-		_assistiveWindow.souceView = _debugView ?: [UIApplication sharedApplication].keyWindow;
+		_assistiveWindow.targetView = _debugView ?: [UIApplication sharedApplication].keyWindow;
 	}
 }
 

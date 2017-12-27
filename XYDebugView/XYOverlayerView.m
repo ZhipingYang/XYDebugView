@@ -9,7 +9,7 @@
 #import "XYOverlayerView.h"
 #import "XYDebugCategory.h"
 
-@interface XYOverlayerView()
+@interface XYOverlayerView()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, getter=isShowing) BOOL showing;
 
@@ -28,6 +28,7 @@
 	self = [super initWithCoder:aDecoder];
 	if (self) {
 		_showing = NO;
+		_panGesture.delegate = self;
 	}
 	return self;
 }
@@ -158,6 +159,15 @@ static CGPoint panBeginPoint;
 	if ([self.delegate respondsToSelector:@selector(overlayView:m34Changed:)]) {
 		[self.delegate overlayView:self m34Changed:sender.value];
 	}
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+	if (gestureRecognizer == _panGesture) {
+		CGPoint v = [_panGesture velocityInView:self];
+		return ABS(v.y) >= ABS(v.x);
+	}
+	return YES;
 }
 
 @end
