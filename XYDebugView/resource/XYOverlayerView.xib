@@ -203,6 +203,7 @@
                 <outlet property="rangeSlider" destination="luY-JH-1vg" id="VAt-lH-8gt"/>
                 <outlet property="resetButton" destination="lZ8-vd-sWe" id="AoA-Sc-Zqi"/>
                 <outlet property="statusBarButton" destination="z8F-X0-LRP" id="ZEJ-y8-HUp"/>
+                <outlet property="topBarHeight" destination="Sce-Oa-7hE" id="j0d-0d-q0V"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>

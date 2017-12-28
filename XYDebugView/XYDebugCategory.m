@@ -109,17 +109,15 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
     theAnimation.fillMode = kCAFillModeForwards;
     theAnimation.removedOnCompletion = NO;
     [self addAnimation:theAnimation forKey:@"zPosition"];
+	self.zPosition = to;
 }
 
 @end
-
-
 
 @implementation UIColor (XYDebug)
 
 + (UIColor *)debug_randomLightColorWithAlpha:(CGFloat)alpha
 {
-	
 	return [UIColor colorWithRed:(arc4random()%100+155)/255.0
 						   green:(arc4random()%100+155)/255.0
 							blue:(arc4random()%100+155)/255.0

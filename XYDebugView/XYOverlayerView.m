@@ -14,6 +14,7 @@
 @property (nonatomic, getter=isShowing) BOOL showing;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBarHeight;
 
 @property (weak, nonatomic) IBOutlet UIView *line;
 
@@ -36,6 +37,7 @@
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
+	_topBarHeight.constant = [UIDevice isIPhoneX] ? 45:20;
 	_line.layer.cornerRadius = CGRectGetHeight(_line.frame)/2.0;
 	_line.clipsToBounds = YES;
 	
@@ -48,10 +50,10 @@
 
 - (void)setShowing:(BOOL)showing
 {
-	if (showing == _showing) { return; }
 	_showing = showing;
 	[UIView animateWithDuration:0.2 animations:^{
-		_bottomHeight.constant = _showing ? 150:0;
+		CGFloat height = [UIDevice isIPhoneX] ? 200	: 150;
+		_bottomHeight.constant = _showing ? height:0;
 		[self layoutIfNeeded];
 	}];
 }
@@ -78,6 +80,7 @@ static CGPoint panBeginPoint;
 - (IBAction)panGestureAction:(UIPanGestureRecognizer *)sender {
 	CGPoint bottomPoint = [_panGesture locationInView:_bottomView];
 	CGPoint point = [_panGesture locationInView:self];
+	CGFloat height = [UIDevice isIPhoneX] ? 200	: 150;
 	if (CGRectContainsPoint(_bottomView.bounds, bottomPoint) && _showing) {
 		switch (sender.state) {
 			case UIGestureRecognizerStateBegan: {
@@ -86,35 +89,21 @@ static CGPoint panBeginPoint;
 				break;
 			case UIGestureRecognizerStateChanged: {
 				CGFloat y = point.y - panBeginPoint.y;
-				_bottomHeight.constant = MIN(MAX(150-y, 0), 150);
+				_bottomHeight.constant = MIN(MAX(height-y, 0), height);
 			}
 				break;
 			case UIGestureRecognizerStateEnded: {
 				CGFloat y = point.y - panBeginPoint.y;
-				_bottomHeight.constant = 150-y;
+				_bottomHeight.constant = height-y;
 				CGFloat speedY = [sender velocityInView:self].y;
-				if (speedY>0 || y>50) {
-					self.showing = NO;
-				} else {
-					[UIView animateWithDuration:0.2 animations:^{
-						_bottomHeight.constant = 150;
-						[self layoutIfNeeded];
-					}];
-				}
+				self.showing = speedY<=0 && y<=50;
 			}
 				break;
 			case UIGestureRecognizerStateCancelled: {
 				CGFloat y = point.y - panBeginPoint.y;
-				_bottomHeight.constant = 150-y;
+				_bottomHeight.constant = height-y;
 				CGFloat speedY = [sender velocityInView:self].y;
-				if (speedY>0 || y>50) {
-					self.showing = NO;
-				} else {
-					[UIView animateWithDuration:0.2 animations:^{
-						_bottomHeight.constant = 150;
-						[self layoutIfNeeded];
-					}];
-				}
+				self.showing = speedY<=0 && y<=50;
 			}
 				break;
 

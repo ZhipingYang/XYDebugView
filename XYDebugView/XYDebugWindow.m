@@ -124,6 +124,10 @@
 {
 	_targetView = targetView;
 	
+	_overlayerView.filterButton.hidden = !targetView;
+	_overlayerView.resetButton.hidden = !targetView;
+	_overlayerView.bottomView.hidden = !targetView;
+	
 	if (targetView == nil) {
 		_layerSourceView.hidden = YES;
 	} else {
@@ -132,7 +136,9 @@
 		[self scrollViewAddLayersInView:targetView layerLevel:0 index:0];
 		_layerSourceView.hidden = NO;
 		[self reCalculateZPostion];
-		[self recoverLayersDistance];
+		
+		_layerSourceView.layer.sublayerTransform = CATransform3DIdentity;
+		[self recoverLayersTransform];
 	}
 }
 
@@ -141,23 +147,45 @@
 - (void)scrollViewAddLayersInView:(UIView *)view layerLevel:(CGFloat)layerLevel index:(NSUInteger)index
 {
 	if ([view isKindOfClass:[UIView class]] && view) {
-		if (view.superview) {
-			UIView *cloneView = view.debug_cloneView;
-			cloneView.layer.zPosition = 0;
-			cloneView.layer.debug_zPostion = layerLevel*20+index;
-			cloneView.layer.frame = [view.superview convertRect:view.frame toView:_targetView];
-			cloneView.layer.opacity = 1;
-			[self.debugLayers addObject:cloneView.layer];
-			[self.layerSourceView.layer addSublayer:cloneView.layer];
-		}
-		[view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-			[self scrollViewAddLayersInView:obj layerLevel:layerLevel+1 index:idx];
+		
+//		if (view.superview) {
+//			UIView *cloneView = view.debug_cloneView;
+//			cloneView.layer.zPosition = 0;
+//			cloneView.layer.debug_zPostion = layerLevel*20+index;
+//			cloneView.layer.frame = [view.superview convertRect:view.frame toView:_targetView];
+//			cloneView.layer.opacity = 1;
+//			[self.debugLayers addObject:cloneView.layer];
+//			[self.layerSourceView.layer addSublayer:cloneView.layer];
+//		}
+//		[view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//			[self scrollViewAddLayersInView:obj layerLevel:layerLevel+1 index:idx];
+//		}];
+		
+		__block CGPoint offset = CGPointZero;
+		[view.debug_recurrenceAllSubviews enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (idx==0) {
+				CGSize layerSize = obj.debug_cloneView.layer.frame.size;
+				CGSize containSize = _layerSourceView.frame.size;
+				offset = CGPointMake((containSize.width-layerSize.width)/2.0, (containSize.height-layerSize.height)/2.0);
+			}
+			if (obj.superview) {
+				UIView *cloneView = obj.debug_cloneView;
+				cloneView.layer.zPosition = 0;
+				cloneView.layer.debug_zPostion = idx;
+				CGRect rect = [obj.superview convertRect:obj.frame toView:_targetView];
+				cloneView.layer.frame = CGRectOffset(rect, offset.x, offset.y);
+				cloneView.layer.opacity = 1;
+				[self.debugLayers addObject:cloneView.layer];
+				[self.layerSourceView.layer addSublayer:cloneView.layer];
+			}
 		}];
 	}
 }
 
 - (void)reCalculateZPostion
 {
+	if (_debugLayers.count<=1) { return; }
+	
 	CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
 	CGFloat positionMin = positionMax;
 	for (CALayer *layer in self.debugLayers) {
@@ -169,8 +197,12 @@
 		}
 	}
 	
-	CGFloat defalutMin = -600;
-	CGFloat defalutMax = 400;
+	CGFloat defalutMin = -300;
+	CGFloat defalutMax = 200;
+	if (_debugLayers.count<50) {
+		defalutMin = -100;
+		defalutMax = 100;
+	}
 	CGFloat scale = (defalutMax-defalutMin)/(positionMax-positionMin);
 	for (CALayer *layer in self.debugLayers) {
 		layer.debug_zPostion = defalutMin + (layer.debug_zPostion - positionMin)*scale;
@@ -191,11 +223,12 @@
 			positionMin = layer.debug_zPostion;
 		}
 	}
-	// 分成20节,每节为5
-	CGFloat gap = (positionMax - positionMin)/20.f;
+	// 分成_debugLayers.count节或20节
+	float divisor = (float)(_debugLayers.count>0 ? _debugLayers.count:20);
+	CGFloat gap = (positionMax - positionMin)/divisor;
 	
-	// 每节为5，计算当前处于那一节的layer层显示
-	float num = ceil((percent * 100)/5.f);
+	// 计算当前处于那一节的layer层显示
+	float num = ceil(percent * divisor);
 	
 	CGFloat upRange = positionMin + gap*num;
 	CGFloat dowmRange = positionMin + gap*(num-1);
@@ -221,12 +254,13 @@
 	}
 }
 
-- (void)recoverLayersDistance
+// 恢复默认
+- (void)recoverLayersTransform
 {
 	_overlayerView.distanceSlider.value = 0.5;
-	// 向上平移100
-	CGFloat offsetX = (MAX(SCREEN_WIDTH, SCREEN_HEIGHT)-SCREEN_WIDTH)/2.0;
-	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(offsetX*0.6, -100, 0), 0.6, 0.6, 0.6);
+	_overlayerView.m34Slider.value = 1;
+	
+	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
 	transform.m34 = -1.0 / SCREEN_HEIGHT;
 	
 	[_layerSourceView.layer removeAllAnimations];
@@ -236,7 +270,6 @@
 	animation.duration = 0.6;
 	[_layerSourceView.layer addAnimation:animation forKey:@"SublayerTransformReset"];
 	_layerSourceView.layer.sublayerTransform = transform;
-	
 	for (CALayer *layer in self.debugLayers) {
 		[layer debug_zPositionAnimationFrom:layer.zPosition to:layer.debug_zPostion duration:0.6];
 	}
@@ -316,12 +349,10 @@
  */
 - (void)overlayView:(XYOverlayerView *)view m34Changed:(CGFloat)percent
 {
-	CGFloat offsetX = (MAX(SCREEN_WIDTH, SCREEN_HEIGHT)-SCREEN_WIDTH)/2.0;
-	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(offsetX*0.6, -100, 0), 0.6, 0.6, 0.6);
+	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
 	transform.m34 = -1.0 / (SCREEN_HEIGHT/MAX(CGFLOAT_MIN, percent));
 	_layerSourceView.layer.sublayerTransform = transform;
 }
-
 
 /**
  修改bug显示的阶段
@@ -338,19 +369,8 @@
  */
 - (void)overlayViewReseted:(XYOverlayerView *)view
 {
-	CGFloat offsetX = (MAX(SCREEN_WIDTH, SCREEN_HEIGHT)-SCREEN_WIDTH)/2.0;
-	CATransform3D transform = CATransform3DScale(CATransform3DMakeTranslation(offsetX*0.6, -100, 0), 0.6, 0.6, 0.6);
-	transform.m34 = -1.0 / SCREEN_HEIGHT;
-	
 	[self showAllLayer];
-
-	[_layerSourceView.layer removeAllAnimations];
-	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
-	animation.fromValue = [NSValue valueWithCATransform3D:_layerSourceView.layer.sublayerTransform];
-	animation.toValue = [NSValue valueWithCATransform3D:transform];
-	animation.duration = 0.6;
-	[_layerSourceView.layer addAnimation:animation forKey:@"SublayerTransformReset"];
-	_layerSourceView.layer.sublayerTransform = transform;
+	[self recoverLayersTransform];
 }
 
 @end
