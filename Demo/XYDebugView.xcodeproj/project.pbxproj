@@ -16,7 +16,7 @@
 		65758CB71ED5B41600A7738D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65758CB51ED5B41600A7738D /* LaunchScreen.storyboard */; };
 		657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 657ED40F1EDF35C30047D1F8 /* NSObject+Runtime.m */; };
 		6583DC531EDF293400D1F3B4 /* XYDebugCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */; };
-		6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */; };
+		6583DC541EDF293400D1F3B4 /* XYDebugCloneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4D1EDF293400D1F3B4 /* XYDebugCloneView.m */; };
 		6583DC551EDF293400D1F3B4 /* XYDebugViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */; };
 		6583DC561EDF293400D1F3B4 /* XYDebugWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC511EDF293400D1F3B4 /* XYDebugWindow.m */; };
 		6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583DC581EDF2AE400D1F3B4 /* UIWindow+Runtime.m */; };
@@ -43,8 +43,8 @@
 		657ED40F1EDF35C30047D1F8 /* NSObject+Runtime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		6583DC4A1EDF293400D1F3B4 /* XYDebugCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugCategory.h; sourceTree = "<group>"; };
 		6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugCategory.m; sourceTree = "<group>"; };
-		6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugView.h; sourceTree = "<group>"; };
-		6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugView.m; sourceTree = "<group>"; };
+		6583DC4C1EDF293400D1F3B4 /* XYDebugCloneView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugCloneView.h; sourceTree = "<group>"; };
+		6583DC4D1EDF293400D1F3B4 /* XYDebugCloneView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugCloneView.m; sourceTree = "<group>"; };
 		6583DC4E1EDF293400D1F3B4 /* XYDebugViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugViewManager.h; sourceTree = "<group>"; };
 		6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYDebugViewManager.m; sourceTree = "<group>"; };
 		6583DC501EDF293400D1F3B4 /* XYDebugWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYDebugWindow.h; sourceTree = "<group>"; };
@@ -135,8 +135,8 @@
 				65AB12601FF3D200003A2553 /* XYdebugConst.h */,
 				6583DC4A1EDF293400D1F3B4 /* XYDebugCategory.h */,
 				6583DC4B1EDF293400D1F3B4 /* XYDebugCategory.m */,
-				6583DC4C1EDF293400D1F3B4 /* XYDebugView.h */,
-				6583DC4D1EDF293400D1F3B4 /* XYDebugView.m */,
+				6583DC4C1EDF293400D1F3B4 /* XYDebugCloneView.h */,
+				6583DC4D1EDF293400D1F3B4 /* XYDebugCloneView.m */,
 				6583DC4E1EDF293400D1F3B4 /* XYDebugViewManager.h */,
 				6583DC4F1EDF293400D1F3B4 /* XYDebugViewManager.m */,
 				6583DC501EDF293400D1F3B4 /* XYDebugWindow.h */,
@@ -300,7 +300,7 @@
 				6583DC531EDF293400D1F3B4 /* XYDebugCategory.m in Sources */,
 				657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */,
 				6583DC591EDF2AE400D1F3B4 /* UIWindow+Runtime.m in Sources */,
-				6583DC541EDF293400D1F3B4 /* XYDebugView.m in Sources */,
+				6583DC541EDF293400D1F3B4 /* XYDebugCloneView.m in Sources */,
 				656C75001FED168500E21A4C /* XYOverlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,7 +6,7 @@
 //
 //
 
-#import "XYDebugView.h"
+#import "XYDebugCloneView.h"
 #import "XYDebugCategory.h"
 
 @interface XYDebugCloneView ()

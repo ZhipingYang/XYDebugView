@@ -6,7 +6,7 @@
 //
 //
 
-#import "XYDebugView.h"
+#import "XYDebugCloneView.h"
 #import "XYdebugConst.h"
 
 NS_ASSUME_NONNULL_BEGIN

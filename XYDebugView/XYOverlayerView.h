@@ -26,7 +26,6 @@
  */
 - (void)overlayView:(XYOverlayerView *)view m34Changed:(CGFloat)percent;
 
-
 /**
  修改bug显示的阶段
  */

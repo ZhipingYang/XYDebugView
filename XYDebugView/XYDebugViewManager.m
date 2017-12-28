@@ -101,6 +101,7 @@
 	[self cleanDebugLayerIn2D];
 	_isDebugging = NO;
 	_isDebuggingBy2D = NO;
+	_debugView = nil;
 }
 
 - (void)drawDebugLayerIn2DViews

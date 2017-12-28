@@ -11,7 +11,13 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet UISwitch *debugSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *debugCustom2D;
+@property (weak, nonatomic) IBOutlet UISwitch *debugCustom3D;
+@property (weak, nonatomic) IBOutlet UISwitch *debugWindow2D;
+@property (weak, nonatomic) IBOutlet UISwitch *debugWindow3D;
+
+@property (strong, nonatomic) IBOutletCollection(UISwitch) NSArray<UISwitch *> *allSwitch;
+
 
 @end
 
@@ -24,7 +30,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	_debugSwitch.on = [XYDebugViewManager isDebugging];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+	[XYDebugViewManager dismissDebugView];
 }
 
 #pragma mark - delegate
@@ -33,7 +44,7 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == 2) {
         switch (indexPath.row) {
             case 0: [self showAlert]; break;
             case 1: [self showSheet]; break;
@@ -62,11 +73,26 @@
 }
 
 - (IBAction)switchChanged:(UISwitch *)sender {
+	
+	[XYDebugViewManager dismissDebugView];
+
+	[_allSwitch enumerateObjectsUsingBlock:^(UISwitch * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (obj != sender && obj.isOn) {
+			obj.on = NO;
+		}
+	}];
+	
 	if (sender.on) {
-		[XYDebugViewManager showDebugInView:nil withDebugStyle:XYDebugStyle3D];
-//		[XYDebugViewManager showDebugInView:[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]] withDebugStyle:XYDebugStyle3D];
-	} else {
-		[XYDebugViewManager dismissDebugView];
+		UITableViewCell *customCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+		if (sender == _debugCustom2D) {
+			[XYDebugViewManager showDebugInView:customCell withDebugStyle:XYDebugStyle2D];
+		} else if (sender == _debugCustom3D) {
+			[XYDebugViewManager showDebugInView:customCell withDebugStyle:XYDebugStyle3D];
+		} else if (sender == _debugWindow2D) {
+			[XYDebugViewManager showDebugWithStyle:XYDebugStyle2D];
+		} else if (sender == _debugWindow3D) {
+			[XYDebugViewManager showDebugWithStyle:XYDebugStyle3D];
+		}
 	}
 }
 
