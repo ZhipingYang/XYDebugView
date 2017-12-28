@@ -1,4 +1,4 @@
-<div style="text-align:center"><img src ="https://user-images.githubusercontent.com/9360037/34409000-147e38da-ec02-11e7-8dc3-ef548932f912.png" /></div>
+<p align="center"><img width="150" src ="https://user-images.githubusercontent.com/9360037/34412301-5c2cf4fe-ec17-11e7-8f1b-f487b4cd6218.png"/></p>
 
 > XYDebugView is debug tool to draw the all view's frame in device screen and show it by 2d/3d style like reveal did.
 
