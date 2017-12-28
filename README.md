@@ -1,5 +1,10 @@
 <p align="center"><img width="150" src ="https://user-images.githubusercontent.com/9360037/34412301-5c2cf4fe-ec17-11e7-8f1b-f487b4cd6218.png"/></p>
 
+[![CI Status](http://img.shields.io/travis/ZhipingYang/FORScrollViewEmptyAssistant.svg?style=flat)](https://travis-ci.org/ZhipingYang/XYDebugView)
+[![Version](https://img.shields.io/cocoapods/v/XYDebugView.svg?style=flat)](http://cocoapods.org/pods/XYDebugView)
+[![License](https://img.shields.io/cocoapods/l/XYDebugView.svg?style=flat)](http://cocoapods.org/pods/XYDebugView)
+[![Platform](https://img.shields.io/cocoapods/p/XYDebugView.svg?style=flat)](http://cocoapods.org/pods/XYDebugView)
+
 > XYDebugView is debug tool to draw the all view's frame in device screen and show it by 2d/3d style like reveal did.
 
 ### debug view with 2d
