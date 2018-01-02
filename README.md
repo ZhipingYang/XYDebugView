@@ -7,6 +7,46 @@
 
 > XYDebugView is debug tool to draw the all view's frame in device screen and show it by 2d/3d style like reveal did.
 
+## Use
+
+**Open debug view funtion**
+> tap the red statusBar to show or destroy the debug result
+
+```objective-c
+// XYDebugViewManager
+
+/**
+ 开启debug功能，默认使用XYDebugStyle2D对keyWindow进行debug
+ */
++ (void)showDebug;
+
+/**
+ debug the keyWindow
+ */
++ (void)showDebugWithStyle:(XYDebugStyle)debugStyle;
+
+/**
+ debug specific view
+
+ @param View the view to debug layout
+ @param debugStyle 2d/3d
+ */
++ (void)showDebugInView:(nullable UIView *)View withDebugStyle:(XYDebugStyle)debugStyle;
+```
+
+**Close debug view funtion**
+> red statusbar will be dismissed 
+
+```objective-c
+// XYDebugViewManager
+
+/**
+ close debug function
+ */
++ (void)dismissDebugView;
+```
+
+
 ### debug view with 2d
 
 <img width="250" alt="wx20170601-170002 2x" src="https://user-images.githubusercontent.com/9360037/34407789-45fd3d5e-ebfb-11e7-91ca-71eefd1fc97c.png"> <img width="250" alt="wx20170601-170002 2x" src="https://user-images.githubusercontent.com/9360037/34407791-469feae0-ebfb-11e7-8ac1-6f6c4aee9c91.png"> <img width="250" alt="wx20170601-170002 2x" src="https://user-images.githubusercontent.com/9360037/34407792-46d402ee-ebfb-11e7-8776-5e11c6564cbe.png">
@@ -19,45 +59,6 @@
 
 <img width="250" alt="wx20170601-170002 2x" src="https://user-images.githubusercontent.com/9360037/34407793-4707e82a-ebfb-11e7-83c0-104e88a087b7.png"> <img width="250" alt="wx20170601-170002 2x" src="https://user-images.githubusercontent.com/9360037/34407795-4739fd38-ebfb-11e7-9722-318268ce73e1.png"> <img width="250" alt="wx20170601-170002 2x" src="https://user-images.githubusercontent.com/9360037/34407805-48dc4c5e-ebfb-11e7-9dd7-5768d6976f29.png">
 
-
-## Use
-
-> **Open debug view funtion**
-> 
-> \> tap the red statusBar to show or destroy the debug result
-
-```objective-c
-/**
- 开启debug功能，默认使用XYDebugStyle2D对keyWindow进行debug
- */
-+ (void)showDebug;
-
-/**
- 默认debug对象是keyWindow
-
- @param debugStyle debug类型
- */
-+ (void)showDebugWithStyle:(XYDebugStyle)debugStyle;
-
-/**
- 对指定view，采用指定的debug方式
-
- @param View 指定视图debug
- @param debugStyle debug类型
- */
-+ (void)showDebugInView:(nullable UIView *)View withDebugStyle:(XYDebugStyle)debugStyle;
-```
-
-> **Close debug view funtion**
-> 
-> \> red statusbar will be dismissed 
-
-```objective-c
-/**
- 关闭debug功能
- */
-+ (void)dismissDebugView;
-```
 
 ## Installation
 
