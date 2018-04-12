@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Image Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+</head>
+<body> 
+    <ul>
+        <li>
+            <a href="images/hello.jpg" title="A fireworks display" onclick="showPic(this); return false;">Fireworks</a>
+        </li>
+        <li>
+            <a href="images/coffee.jpg" title="A cup of black coffe" onclick="showPic(this); return false;">Coffee</a>
+        </li>
+        <li>
+            <a href="images/rose.jpg" title="A red, red rose" onclick="showPic(this); return false;">Rose</a>
+        </li>
+        <li>
+            <a href="images/touxiang.jpg" title="The famous clock" onclick="showPic(this); return false;">Big ben</a>
+        </li>
+    </ul>
+    <img src="images/ph.jpg" alt="my image gallery" id="placeholder">
+    <p id="description">choose an image.</p>
+    <script src="index.js"></script>
+</body>
+</html>
