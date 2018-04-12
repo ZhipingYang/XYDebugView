@@ -28,6 +28,8 @@
 
 ## Use
 
+Run in [Online iPhone Simulator](https://appetize.io/embed/d60unk2p2531m5v90e8udczde8?device=iphone5s&scale=100&autoplay=false&orientation=portrait&deviceColor=black&osVersion=11.3)
+
 **Open debug view funtion**
 > tap the red statusBar to show or destroy the debug result
 
