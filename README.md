@@ -105,6 +105,13 @@ pod "XYDebugView", '~> 1.0.1'
 
 https://zhipingyang.github.io/XYDebugView
 
+## TODO
+
+- [ ] 添加呈现中的视图列表，选择性debug
+- [ ] 改进任意角度的m34值修改
+- [ ] 添加 ARKit
+- [ ] 修复特殊字符显示问题
+
 ## Author
 
 XcodeYang, xcodeyang@gmail.com
