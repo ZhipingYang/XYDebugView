@@ -67,7 +67,6 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
 
 
 const static char * DebugStoreZPosition = "DebugStoreZPosition";
-const static char * DebugStoreOrigin = "DebugStoreOrigin";
 
 @implementation CALayer (XYDebug)
 
@@ -80,20 +79,6 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
 - (void)setDebug_zPostion:(CGFloat)debug_zPostion
 {
     objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGPoint)debug_oriPoint
-{
-    NSValue *obj = objc_getAssociatedObject(self, DebugStoreOrigin);
-    if ([obj isKindOfClass:[NSValue class]]) {
-        return [obj CGPointValue];
-    }
-    return CGPointZero;
-}
-
-- (void)setDebug_oriPoint:(CGPoint)debug_oriPoint
-{
-    objc_setAssociatedObject(self, DebugStoreOrigin, [NSValue valueWithCGPoint:debug_oriPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)debug_zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration
@@ -126,7 +111,6 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
 
 + (UIColor *)debug_randomDrakColorWithAlpha:(CGFloat)alpha
 {
-	
 	return [UIColor colorWithRed:(arc4random()%150)/255.0
 						   green:(arc4random()%150)/255.0
 							blue:(arc4random()%150)/255.0
@@ -136,9 +120,13 @@ const static char * DebugStoreOrigin = "DebugStoreOrigin";
 
 @implementation UIDevice (XYDebug)
 
-+ (BOOL)isIPhoneX
++ (BOOL)isNotchScreen
 {
-	return CGSizeEqualToSize(CGSizeMake(375.f, 812.f), [UIScreen mainScreen].bounds.size) || CGSizeEqualToSize(CGSizeMake(812.f, 375.f), [UIScreen mainScreen].bounds.size);
+    if (@available(iOS 11.0, *)) {
+        UIEdgeInsets windowInsets = UIApplication.sharedApplication.delegate.window.safeAreaInsets;
+        return !UIEdgeInsetsEqualToEdgeInsets(windowInsets, UIEdgeInsetsZero);
+    }
+    return NO;
 }
 
 @end

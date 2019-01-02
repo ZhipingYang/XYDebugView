@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "XYDebugViewManager.h"
+#import "XYViewNode.h"
+#import "XYDebugTreeController.h"
 
 @interface ViewController ()
 
@@ -95,5 +97,20 @@
 		}
 	}
 }
+
+
+
+
+
+
+
+
+- (IBAction)showTreeView:(id)sender {
+    XYViewNode *root = [[XYViewNode alloc] initWithView:UIApplication.sharedApplication.delegate.window parent:nil];
+    XYDebugTreeController *vc = [[XYDebugTreeController alloc] initWithStyle:UITableViewStylePlain];
+    vc.rootNode = root;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 @end

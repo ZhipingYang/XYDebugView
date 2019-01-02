@@ -147,32 +147,18 @@
 - (void)scrollViewAddLayersInView:(UIView *)view layerLevel:(CGFloat)layerLevel index:(NSUInteger)index
 {
 	if ([view isKindOfClass:[UIView class]] && view) {
-		
-//		if (view.superview) {
-//			UIView *cloneView = view.debug_cloneView;
-//			cloneView.layer.zPosition = 0;
-//			cloneView.layer.debug_zPostion = layerLevel*20+index;
-//			cloneView.layer.frame = [view.superview convertRect:view.frame toView:_targetView];
-//			cloneView.layer.opacity = 1;
-//			[self.debugLayers addObject:cloneView.layer];
-//			[self.layerSourceView.layer addSublayer:cloneView.layer];
-//		}
-//		[view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//			[self scrollViewAddLayersInView:obj layerLevel:layerLevel+1 index:idx];
-//		}];
-		
 		__block CGPoint offset = CGPointZero;
 		[view.debug_recurrenceAllSubviews enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 			if (idx==0) {
 				CGSize layerSize = obj.debug_cloneView.layer.frame.size;
-				CGSize containSize = _layerSourceView.frame.size;
+                CGSize containSize = self.layerSourceView.frame.size;
 				offset = CGPointMake((containSize.width-layerSize.width)/2.0, (containSize.height-layerSize.height)/2.0);
 			}
 			if (obj.superview) {
 				UIView *cloneView = obj.debug_cloneView;
 				cloneView.layer.zPosition = 0;
 				cloneView.layer.debug_zPostion = idx;
-				CGRect rect = [obj.superview convertRect:obj.frame toView:_targetView];
+                CGRect rect = [obj.superview convertRect:obj.frame toView:self.targetView];
 				cloneView.layer.frame = CGRectOffset(rect, offset.x, offset.y);
 				cloneView.layer.opacity = 1;
 				[self.debugLayers addObject:cloneView.layer];

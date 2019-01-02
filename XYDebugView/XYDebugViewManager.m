@@ -47,7 +47,7 @@
 
 + (void)showDebug
 {
-	[[self sharedInstance] showDebugView:XYDebugStyle2D];
+	[[self sharedInstance] showDebugView:XYDebugStyleNone];
 }
 
 + (void)showDebugWithStyle:(XYDebugStyle)debugStyle
@@ -57,8 +57,8 @@
 
 + (void)showDebugInView:(UIView *)View withDebugStyle:(XYDebugStyle)debugStyle
 {
-	[[self sharedInstance] showDebugView:debugStyle];
-	[self sharedInstance].debugView = View;
+    [self sharedInstance].debugView = View;
+    [[self sharedInstance] showDebugView:debugStyle];
 }
 
 + (void)dismissDebugView

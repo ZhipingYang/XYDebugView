@@ -17,7 +17,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
 //        [self swizzleInstanceMethodWithOriginSel:@selector(makeKeyAndVisible) swizzledSel:@selector(xy_makeKeyAndVisible)];
-        [self swizzleInstanceMethodWithOriginSel:@selector(becomeKeyWindow) swizzledSel:@selector(xy_becomeKeyWindow)];
+//        [self swizzleInstanceMethodWithOriginSel:@selector(becomeKeyWindow) swizzledSel:@selector(xy_becomeKeyWindow)];
 //        [self swizzleInstanceMethodWithOriginSel:@selector(makeKeyWindow) swizzledSel:@selector(xy_makeKeyWindow)];
     });
 }

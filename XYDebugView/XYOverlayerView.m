@@ -37,7 +37,7 @@
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
-	_topBarHeight.constant = [UIDevice isIPhoneX] ? 45:20;
+	_topBarHeight.constant = [UIDevice isNotchScreen] ? 45:20;
 	_line.layer.cornerRadius = CGRectGetHeight(_line.frame)/2.0;
 	_line.clipsToBounds = YES;
 	
@@ -52,8 +52,8 @@
 {
 	_showing = showing;
 	[UIView animateWithDuration:0.2 animations:^{
-		CGFloat height = [UIDevice isIPhoneX] ? 200	: 150;
-		_bottomHeight.constant = _showing ? height:0;
+		CGFloat height = [UIDevice isNotchScreen] ? 200 : 150;
+        self->_bottomHeight.constant = self->_showing ? height:0;
 		[self layoutIfNeeded];
 	}];
 }
@@ -80,7 +80,7 @@ static CGPoint panBeginPoint;
 - (IBAction)panGestureAction:(UIPanGestureRecognizer *)sender {
 	CGPoint bottomPoint = [_panGesture locationInView:_bottomView];
 	CGPoint point = [_panGesture locationInView:self];
-	CGFloat height = [UIDevice isIPhoneX] ? 200	: 150;
+	CGFloat height = [UIDevice isNotchScreen] ? 200 : 150;
 	if (CGRectContainsPoint(_bottomView.bounds, bottomPoint) && _showing) {
 		switch (sender.state) {
 			case UIGestureRecognizerStateBegan: {
@@ -92,13 +92,7 @@ static CGPoint panBeginPoint;
 				_bottomHeight.constant = MIN(MAX(height-y, 0), height);
 			}
 				break;
-			case UIGestureRecognizerStateEnded: {
-				CGFloat y = point.y - panBeginPoint.y;
-				_bottomHeight.constant = height-y;
-				CGFloat speedY = [sender velocityInView:self].y;
-				self.showing = speedY<=0 && y<=50;
-			}
-				break;
+			case UIGestureRecognizerStateEnded:
 			case UIGestureRecognizerStateCancelled: {
 				CGFloat y = point.y - panBeginPoint.y;
 				_bottomHeight.constant = height-y;

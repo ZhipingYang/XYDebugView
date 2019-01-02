@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_OPTIONS(NSUInteger, XYDebugStyle) {
-	XYDebugStyle2D = 0,
-	XYDebugStyle3D = 1
+    XYDebugStyleNone = 0,
+	XYDebugStyle2D = 1 << 0,    // inner red lines
+	XYDebugStyle3D = 1 << 1     // random backcolor
 };
 
