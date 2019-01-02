@@ -17,7 +17,7 @@
 	</a>
 </p>
 
-> **XYDebugView** is debug tool to draw the all view's frame in device screen and show it by 2d/3d style like reveal did.
+> **[XYDebugView](https://zhipingyang.github.io/XYDebugView)** is debug tool to draw the all view's frame in device screen and show it by 2d/3d style like [Reveal](https://revealapp.com/) did.
 
 ## ScreenShot
 
@@ -28,7 +28,7 @@
 
 ## Use
 
-Run in [Online iPhone Simulator](https://appetize.io/embed/d60unk2p2531m5v90e8udczde8?device=iphone5s&scale=100&autoplay=false&orientation=portrait&deviceColor=black&osVersion=11.3)
+Run in [Online iPhone Simulator](https://zhipingyang.github.io/XYDebugView)
 
 **Open debug view funtion**
 > tap the red statusBar to show or destroy the debug result
@@ -100,6 +100,17 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod "XYDebugView", '~> 1.0.1'
 ```
+
+## GitPage
+
+https://zhipingyang.github.io/XYDebugView
+
+## TODO
+
+- [ ] 添加呈现中的视图列表，选择性debug
+- [ ] 改进任意角度的m34值修改
+- [ ] 添加 ARKit
+- [ ] 修复特殊字符显示问题
 
 ## Author
 
