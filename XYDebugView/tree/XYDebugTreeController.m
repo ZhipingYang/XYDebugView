@@ -19,8 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"TreeIndex";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([XYDebugNodeCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([XYDebugNodeCell class])];
 }
 
 - (void)setRootNode:(XYViewNode *)rootNode

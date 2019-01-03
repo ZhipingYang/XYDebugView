@@ -18,19 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7o0-EU-ypS">
-                        <rect key="frame" x="282" y="11" width="22" height="22"/>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5X3-is-vpk">
-                        <rect key="frame" x="240" y="7" width="30" height="30"/>
-                        <state key="normal" title="2D"/>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="orG-0F-haB">
-                        <rect key="frame" x="202" y="7" width="30" height="30"/>
-                        <state key="normal" title="3D"/>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ClassName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65M-YU-Uf5">
-                        <rect key="frame" x="80" y="14.5" width="114" height="14.5"/>
+                        <rect key="frame" x="80" y="14.5" width="224" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -42,18 +31,12 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="85K-ZQ-QCo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="4" id="6iD-qq-q0A"/>
-                    <constraint firstAttribute="trailing" secondItem="65M-YU-Uf5" secondAttribute="trailing" constant="126" id="Gzb-Nz-4fT"/>
+                    <constraint firstAttribute="trailing" secondItem="65M-YU-Uf5" secondAttribute="trailing" constant="16" id="Gzb-Nz-4fT"/>
                     <constraint firstItem="65M-YU-Uf5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="JT8-qz-LKX"/>
-                    <constraint firstItem="orG-0F-haB" firstAttribute="centerY" secondItem="5X3-is-vpk" secondAttribute="centerY" id="MeH-Vt-9ZY"/>
-                    <constraint firstItem="7o0-EU-ypS" firstAttribute="leading" secondItem="5X3-is-vpk" secondAttribute="trailing" constant="12" id="Pv4-Et-TPx"/>
                     <constraint firstItem="65M-YU-Uf5" firstAttribute="leading" secondItem="85K-ZQ-QCo" secondAttribute="trailing" constant="4" id="WGG-uD-JqY"/>
-                    <constraint firstItem="7o0-EU-ypS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="c5Z-TW-Ue9"/>
                     <constraint firstItem="65M-YU-Uf5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="80" id="dgX-mk-8zD"/>
-                    <constraint firstItem="5X3-is-vpk" firstAttribute="centerY" secondItem="7o0-EU-ypS" secondAttribute="centerY" id="eK5-s1-aO3"/>
                     <constraint firstItem="85K-ZQ-QCo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fTM-c8-TTM"/>
-                    <constraint firstAttribute="trailing" secondItem="7o0-EU-ypS" secondAttribute="trailing" constant="16" id="i1G-JZ-1Ke"/>
                     <constraint firstItem="85K-ZQ-QCo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rKb-rV-dtn"/>
-                    <constraint firstItem="5X3-is-vpk" firstAttribute="leading" secondItem="orG-0F-haB" secondAttribute="trailing" constant="8" id="ztT-Pp-Gs7"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
