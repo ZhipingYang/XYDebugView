@@ -7,14 +7,14 @@
 //
 
 #import "XYDebugNodeCell.h"
+#import "TreeIndexView.h"
 
 @interface XYDebugNodeCell ()
-@property (weak, nonatomic) IBOutlet UIView *vLineTop;
-@property (weak, nonatomic) IBOutlet UIView *vLineBottom;
+
+@property (nonatomic, strong) TreeIndexView *indexView;
 
 @property (weak, nonatomic) IBOutlet UILabel *classNameLabel;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *graphLeadingContraint;
+@property (weak, nonatomic) IBOutlet TreeIndexView *treeIndexView;
 
 @end
 
@@ -28,9 +28,7 @@
 - (void)setNode:(XYViewNode *)node
 {
     _node = node;
-//    _vLineTop.hidden = node.position == XYViewNodePositionTail;
-    _vLineBottom.hidden = node.position == XYViewNodePositionTail;
-    _graphLeadingContraint.constant = 8 + node.deep * 5;
+    _treeIndexView.node = node;
     _classNameLabel.text = [NSString stringWithFormat:@"%d %@",node.deep, NSStringFromClass([node.resourceView class])];
 }
 

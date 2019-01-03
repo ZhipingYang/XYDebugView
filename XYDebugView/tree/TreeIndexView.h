@@ -14,11 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) XYViewNode *node;
 
-@property (nonatomic, readonly, assign) NSInteger deep;
+- (instancetype)initWithNode:(XYViewNode *)node;
 
-- (instancetype)initWithTreeDeep:(NSInteger)deep NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 @end
 
 NS_ASSUME_NONNULL_END

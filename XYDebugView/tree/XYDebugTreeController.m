@@ -27,6 +27,16 @@
 {
     _rootNode = rootNode;
     _dataSource = [rootNode recurrenceAllChildNodes];
+    
+    int max = _dataSource.firstObject.deep;
+    for (XYViewNode *node in _dataSource) {
+        if (node.deep>max) {
+            max = node.deep;
+        }
+    }
+    [_dataSource enumerateObjectsUsingBlock:^(XYViewNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.maxDeep = max;
+    }];
 }
 
 #pragma mark - Table view data source
@@ -50,7 +60,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 40;
+    return 20;
 }
 
 @end

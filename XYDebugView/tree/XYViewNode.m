@@ -19,7 +19,7 @@
         _resourceView = view;
         _parentNode = parent;
         _deep = parent.deep + 1;
-        
+                
         NSMutableArray *mArr = @[].mutableCopy;
         for (UIView *subview in view.subviews) {
             XYViewNode *child = [[XYViewNode alloc] initWithView:subview parent:self];
@@ -30,7 +30,6 @@
     }
     return self;
 }
-
 
 @end
 
@@ -64,4 +63,14 @@
     return _childNodes.count>0;
 }
 
+- (BOOL)hasNext
+{
+    if (self.parentNode.childNodes.count<=0) return NO;
+    
+    NSUInteger index = [self.parentNode.childNodes indexOfObject:self];
+    if (index != NSNotFound && self.parentNode.childNodes.count>(index+1)) {
+        return YES;
+    }
+    return NO;
+}
 @end

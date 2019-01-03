@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) int deep;
 
+@property (nonatomic, assign) int maxDeep;
+
 @property (nonatomic, readonly, weak) UIView *resourceView;
 
 - (nullable instancetype)initWithView:(__kindof UIView *)view parent:(nullable XYViewNode *)parent NS_DESIGNATED_INITIALIZER;
@@ -40,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) XYViewNodePosition position;
 @property (nonatomic, readonly) BOOL hasChild;
+@property (nonatomic, readonly) BOOL hasNext;
 
 @end
 
