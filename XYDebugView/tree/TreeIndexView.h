@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TreeIndexView : UIView
 
 @property (nonatomic, strong) XYViewNode *node;
+@property (nonatomic, readonly) CGFloat graphRight;
 
 - (instancetype)initWithNode:(XYViewNode *)node;
 

@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_OPTIONS(NSUInteger, XYDebugStyle) {
-    XYDebugStyleNone = 0,
-	XYDebugStyle2D = 1 << 0,    // inner red lines
-	XYDebugStyle3D = 1 << 1     // random backcolor
+typedef NS_ENUM(NSInteger, XYDebugStyle) {
+    XYDebugStyleNone    = 0,    // no debug
+    XYDebugStyleIndex   = 1,    // list all debuggable view
+	XYDebugStyle2D      = 2,    // inner red lines
+	XYDebugStyle3D      = 3     // random backcolor
 };
 

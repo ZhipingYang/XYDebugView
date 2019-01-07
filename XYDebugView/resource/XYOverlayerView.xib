@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,18 +15,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z8F-X0-LRP">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
-                    <color key="backgroundColor" red="1" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="Sce-Oa-7hE"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                    <state key="normal" title="tap statusbar to refresh debugging..."/>
-                    <connections>
-                        <action selector="debugStyleChanged:" destination="iN0-l3-epB" eventType="touchUpInside" id="eCC-ni-UPF"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZ8-vd-sWe">
                     <rect key="frame" x="315" y="607" width="44" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -69,7 +57,7 @@
                                 <rect key="frame" x="0.0" y="17" width="375" height="44"/>
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yCQ-SP-f2i">
-                                        <rect key="frame" x="88" y="7.5" width="279" height="31"/>
+                                        <rect key="frame" x="88" y="7" width="279" height="31"/>
                                         <connections>
                                             <action selector="distanceChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="aNJ-qj-wYc"/>
                                         </connections>
@@ -95,10 +83,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VU9-pH-dNO" userLabel="layer">
-                                <rect key="frame" x="0.0" y="61" width="375" height="44.5"/>
+                                <rect key="frame" x="0.0" y="61" width="375" height="44"/>
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="luY-JH-1vg">
-                                        <rect key="frame" x="88" y="7.5" width="279" height="31"/>
+                                        <rect key="frame" x="88" y="7" width="279" height="31"/>
                                         <connections>
                                             <action selector="showingLayerChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="lmZ-sl-x3Q"/>
                                         </connections>
@@ -123,7 +111,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VV6-15-NIf" userLabel="m34">
-                                <rect key="frame" x="0.0" y="105.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="105" width="375" height="44"/>
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="JNT-oR-mia">
                                         <rect key="frame" x="88" y="7" width="279" height="31"/>
@@ -132,7 +120,7 @@
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m34" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObO-dF-Yjf">
-                                        <rect key="frame" x="8" y="11" width="70" height="21"/>
+                                        <rect key="frame" x="8" y="11.5" width="70" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="cnZ-pk-GRE"/>
                                         </constraints>
@@ -178,19 +166,30 @@
                         <outletCollection property="gestureRecognizers" destination="Ty3-HX-Px1" appends="YES" id="yEN-zd-EeG"/>
                     </connections>
                 </visualEffectView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GCG-C9-Axa">
+                    <rect key="frame" x="315" y="555" width="44" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="4BV-kj-517"/>
+                        <constraint firstAttribute="width" constant="44" id="kQY-vQ-D3Q"/>
+                    </constraints>
+                    <state key="normal" image="reset.png"/>
+                    <connections>
+                        <action selector="quitDebug:" destination="iN0-l3-epB" eventType="touchUpInside" id="UhN-OP-JBC"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="z8F-X0-LRP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6qc-0T-dKb"/>
                 <constraint firstAttribute="trailing" secondItem="lZ8-vd-sWe" secondAttribute="trailing" constant="16" id="CWO-Mn-CNu"/>
                 <constraint firstItem="3Pd-JD-SiB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Gds-Ji-Ld1"/>
                 <constraint firstAttribute="bottom" secondItem="lZ8-vd-sWe" secondAttribute="bottom" constant="16" id="HcQ-4Q-vjA"/>
-                <constraint firstItem="z8F-X0-LRP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="RjI-KH-sj9"/>
                 <constraint firstAttribute="bottom" secondItem="pra-CE-Yta" secondAttribute="bottom" id="UKF-2Z-Eti"/>
                 <constraint firstAttribute="bottom" secondItem="3Pd-JD-SiB" secondAttribute="bottom" constant="16" id="WrM-vR-PuA"/>
                 <constraint firstItem="pra-CE-Yta" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZCU-Qm-EEl"/>
+                <constraint firstItem="lZ8-vd-sWe" firstAttribute="top" secondItem="GCG-C9-Axa" secondAttribute="bottom" constant="8" id="ZOM-LP-YNi"/>
+                <constraint firstItem="GCG-C9-Axa" firstAttribute="trailing" secondItem="lZ8-vd-sWe" secondAttribute="trailing" id="dfs-Mv-B6p"/>
                 <constraint firstAttribute="trailing" secondItem="pra-CE-Yta" secondAttribute="trailing" id="haQ-ja-srM"/>
-                <constraint firstAttribute="trailing" secondItem="z8F-X0-LRP" secondAttribute="trailing" id="k4w-Ia-elR"/>
             </constraints>
             <connections>
                 <outlet property="bottomHeight" destination="DNf-lK-iJo" id="5y4-V6-jl1"/>
@@ -200,10 +199,9 @@
                 <outlet property="line" destination="k3v-j7-I4D" id="DDY-sG-n89"/>
                 <outlet property="m34Slider" destination="JNT-oR-mia" id="77V-8B-4wh"/>
                 <outlet property="panGesture" destination="Ty3-HX-Px1" id="HeF-ql-Lt7"/>
+                <outlet property="quitButton" destination="GCG-C9-Axa" id="H2h-II-YTR"/>
                 <outlet property="rangeSlider" destination="luY-JH-1vg" id="VAt-lH-8gt"/>
                 <outlet property="resetButton" destination="lZ8-vd-sWe" id="AoA-Sc-Zqi"/>
-                <outlet property="statusBarButton" destination="z8F-X0-LRP" id="ZEJ-y8-HUp"/>
-                <outlet property="topBarHeight" destination="Sce-Oa-7hE" id="j0d-0d-q0V"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>

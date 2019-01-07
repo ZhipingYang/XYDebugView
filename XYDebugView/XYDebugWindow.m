@@ -42,11 +42,12 @@
 {
 	self = [super initWithFrame:frame];
 	if (self) {
+        
 		_doubleTouchsGestures = [NSMutableSet set];
 		self.backgroundColor = [UIColor clearColor];
 		self.debugLayers = [NSHashTable weakObjectsHashTable];
 		self.layer.masksToBounds = YES;
-
+        
 		CGFloat width = CGRectGetWidth(self.frame);
 		CGFloat height = CGRectGetHeight(self.frame);
 		CGFloat length = MAX(width, height);

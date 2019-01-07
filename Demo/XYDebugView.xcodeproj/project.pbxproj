@@ -23,9 +23,9 @@
 		65AB125D1FF3C0E0003A2553 /* XYOverlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65AB125A1FF3C0DF003A2553 /* XYOverlayerView.xib */; };
 		65AB125E1FF3C0E0003A2553 /* reset.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AB125B1FF3C0DF003A2553 /* reset.png */; };
 		65AB125F1FF3C0E0003A2553 /* filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 65AB125C1FF3C0DF003A2553 /* filter.png */; };
+		DB098A6A21ECE2CE0003B5AD /* MethodListController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB098A6821ECE2CE0003B5AD /* MethodListController.m */; };
 		DBC347AF21DCF17900B414E3 /* XYViewNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC347AE21DCF17900B414E3 /* XYViewNode.m */; };
 		DBC347B321DCF2C700B414E3 /* XYDebugNodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC347B121DCF2C700B414E3 /* XYDebugNodeCell.m */; };
-		DBC347B421DCF2C700B414E3 /* XYDebugNodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBC347B221DCF2C700B414E3 /* XYDebugNodeCell.xib */; };
 		DBC347B721DCFD0500B414E3 /* XYDebugTreeController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC347B621DCFD0500B414E3 /* XYDebugTreeController.m */; };
 		DBC347BA21DD094200B414E3 /* TreeIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC347B921DD094100B414E3 /* TreeIndexView.m */; };
 		F42F7918F9077D132C143A18 /* Pods_XYDebugView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */; };
@@ -62,11 +62,12 @@
 		65AB12601FF3D200003A2553 /* XYdebugConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYdebugConst.h; sourceTree = "<group>"; };
 		7F2EA54D44079C80A357A0FF /* Pods_XYDebugView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XYDebugView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DE005133616843BDEAF6F6 /* Pods-XYDebugView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XYDebugView.release.xcconfig"; path = "Pods/Target Support Files/Pods-XYDebugView/Pods-XYDebugView.release.xcconfig"; sourceTree = "<group>"; };
+		DB098A6721ECE2CE0003B5AD /* MethodListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MethodListController.h; sourceTree = "<group>"; };
+		DB098A6821ECE2CE0003B5AD /* MethodListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MethodListController.m; sourceTree = "<group>"; };
 		DBC347AD21DCF17900B414E3 /* XYViewNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYViewNode.h; sourceTree = "<group>"; };
 		DBC347AE21DCF17900B414E3 /* XYViewNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYViewNode.m; sourceTree = "<group>"; };
 		DBC347B021DCF2C700B414E3 /* XYDebugNodeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYDebugNodeCell.h; sourceTree = "<group>"; };
 		DBC347B121DCF2C700B414E3 /* XYDebugNodeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYDebugNodeCell.m; sourceTree = "<group>"; };
-		DBC347B221DCF2C700B414E3 /* XYDebugNodeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XYDebugNodeCell.xib; sourceTree = "<group>"; };
 		DBC347B521DCFD0500B414E3 /* XYDebugTreeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XYDebugTreeController.h; sourceTree = "<group>"; };
 		DBC347B621DCFD0500B414E3 /* XYDebugTreeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYDebugTreeController.m; sourceTree = "<group>"; };
 		DBC347B821DD094100B414E3 /* TreeIndexView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeIndexView.h; sourceTree = "<group>"; };
@@ -188,9 +189,10 @@
 				DBC347AE21DCF17900B414E3 /* XYViewNode.m */,
 				DBC347B021DCF2C700B414E3 /* XYDebugNodeCell.h */,
 				DBC347B121DCF2C700B414E3 /* XYDebugNodeCell.m */,
-				DBC347B221DCF2C700B414E3 /* XYDebugNodeCell.xib */,
 				DBC347B521DCFD0500B414E3 /* XYDebugTreeController.h */,
 				DBC347B621DCFD0500B414E3 /* XYDebugTreeController.m */,
+				DB098A6721ECE2CE0003B5AD /* MethodListController.h */,
+				DB098A6821ECE2CE0003B5AD /* MethodListController.m */,
 				DBC347B821DD094100B414E3 /* TreeIndexView.h */,
 				DBC347B921DD094100B414E3 /* TreeIndexView.m */,
 			);
@@ -231,8 +233,8 @@
 				TargetAttributes = {
 					65758CA31ED5B41600A7738D = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = H9J886PZ98;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 34768TZSZ3;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -264,7 +266,6 @@
 				65AB125F1FF3C0E0003A2553 /* filter.png in Resources */,
 				65758CB41ED5B41600A7738D /* Assets.xcassets in Resources */,
 				65758CB21ED5B41600A7738D /* Main.storyboard in Resources */,
-				DBC347B421DCF2C700B414E3 /* XYDebugNodeCell.xib in Resources */,
 				65AB125D1FF3C0E0003A2553 /* XYOverlayerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,6 +331,7 @@
 				65758CAC1ED5B41600A7738D /* AppDelegate.m in Sources */,
 				DBC347AF21DCF17900B414E3 /* XYViewNode.m in Sources */,
 				65758CA91ED5B41600A7738D /* main.m in Sources */,
+				DB098A6A21ECE2CE0003B5AD /* MethodListController.m in Sources */,
 				6583DC531EDF293400D1F3B4 /* XYDebugCategory.m in Sources */,
 				DBC347BA21DD094200B414E3 /* TreeIndexView.m in Sources */,
 				657ED4101EDF35C30047D1F8 /* NSObject+Runtime.m in Sources */,
@@ -476,14 +478,16 @@
 			baseConfigurationReference = E8DD6F7D0E917ADD00EBC4FC /* Pods-XYDebugView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H9J886PZ98;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 34768TZSZ3;
 				INFOPLIST_FILE = XYDebugView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Daniel.XYDebugView;
+				PRODUCT_BUNDLE_IDENTIFIER = xcodeyang.XYDebugView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "77385128-ca56-4121-a84d-7263f8fe4c37";
-				PROVISIONING_PROFILE_SPECIFIER = "chelun any app";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -492,14 +496,16 @@
 			baseConfigurationReference = B2DE005133616843BDEAF6F6 /* Pods-XYDebugView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H9J886PZ98;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 34768TZSZ3;
 				INFOPLIST_FILE = XYDebugView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Daniel.XYDebugView;
+				PRODUCT_BUNDLE_IDENTIFIER = xcodeyang.XYDebugView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "77385128-ca56-4121-a84d-7263f8fe4c37";
-				PROVISIONING_PROFILE_SPECIFIER = "chelun any app";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

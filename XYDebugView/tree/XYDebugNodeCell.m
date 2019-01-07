@@ -9,41 +9,60 @@
 #import "XYDebugNodeCell.h"
 #import "TreeIndexView.h"
 #import "XYDebugViewManager.h"
+#import "MethodListController.h"
 
 @interface NSObject (Private)
 - (NSString *)_methodDescription;
 @end
 
+CGFloat XYDebugNodeCellHeight = 20;
+
 @interface XYDebugNodeCell ()
 
-@property (nonatomic, strong) TreeIndexView *indexView;
-
-@property (weak, nonatomic) IBOutlet UILabel *classNameLabel;
-@property (weak, nonatomic) IBOutlet TreeIndexView *treeIndexView;
+@property (nonatomic, strong) UILabel *classNameLabel;
+@property (nonatomic, strong) TreeIndexView *treeIndexView;
 
 @end
 
 
 @implementation XYDebugNodeCell
 
-- (void)awakeFromNib
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    [super awakeFromNib];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                          action:@selector(handleTap:)];
-    [self addGestureRecognizer:tap];
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        
+        _treeIndexView = [[TreeIndexView alloc] initWithFrame:CGRectMake(0, 0, 100, XYDebugNodeCellHeight)];
+        [self.contentView addSubview:_treeIndexView];
+        
+        _classNameLabel = [UILabel new];
+        _classNameLabel.textColor = UIColor.darkGrayColor;
+        _classNameLabel.font = [UIFont systemFontOfSize:12];
+        [self.contentView addSubview:_classNameLabel];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                              action:@selector(handleTap:)];
+        [self addGestureRecognizer:tap];
+    }
+    return self;
 }
 
 - (void)setNode:(XYViewNode *)node
 {
     _node = node;
     _treeIndexView.node = node;
-    _classNameLabel.text = [NSString stringWithFormat:@"%d %@",node.deep, NSStringFromClass([node.resourceView class])];
+    _classNameLabel.text = NSStringFromClass([node.resourceView class]);
+    [self setNeedsLayout];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:NO animated:animated];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    _classNameLabel.frame = CGRectMake(_treeIndexView.graphRight+4, 0, self.frame.size.width-_treeIndexView.graphRight, self.frame.size.height);
 }
 
 - (void)handleTap:(UIGestureRecognizer*)recognizer
@@ -70,18 +89,19 @@
 
 - (void)show2D:(id)sender
 {
-    [XYDebugViewManager showDebugInView:_node.resourceView withDebugStyle:XYDebugStyle2D];
+    [[XYDebugViewManager sharedInstance] showDebugView:_node.resourceView withDebugStyle:XYDebugStyle2D];
 }
 
 - (void)show3D:(id)sender
 {
-    [XYDebugViewManager showDebugInView:_node.resourceView withDebugStyle:XYDebugStyle3D];
+    [[XYDebugViewManager sharedInstance] showDebugView:_node.resourceView withDebugStyle:XYDebugStyle3D];
 }
 
 - (void)showInfo:(id)sender
 {
-    
-    [[[UIAlertView alloc] initWithTitle:@"Info" message:[_node.resourceView _methodDescription] delegate:nil cancelButtonTitle:@"Sure" otherButtonTitles:nil] show];
+    MethodListController *preview = [[MethodListController alloc] init];
+    preview.string = [_node.resourceView _methodDescription];
+    [(UINavigationController *)self.window.rootViewController pushViewController:preview animated:YES];
 }
 
 @end

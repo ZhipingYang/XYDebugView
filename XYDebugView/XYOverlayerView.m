@@ -14,7 +14,6 @@
 @property (nonatomic, getter=isShowing) BOOL showing;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomHeight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBarHeight;
 
 @property (weak, nonatomic) IBOutlet UIView *line;
 
@@ -37,7 +36,6 @@
 - (void)layoutSubviews
 {
 	[super layoutSubviews];
-	_topBarHeight.constant = [UIDevice isNotchScreen] ? 45:20;
 	_line.layer.cornerRadius = CGRectGetHeight(_line.frame)/2.0;
 	_line.clipsToBounds = YES;
 	
@@ -108,7 +106,7 @@ static CGPoint panBeginPoint;
 }
 
 // state
-- (IBAction)debugStyleChanged:(UIButton *)sender {
+- (IBAction)quitDebug:(UIButton *)sender {
 	if ([self.delegate respondsToSelector:@selector(overlayViewDebugChanged:)]) {
 		[self.delegate overlayViewDebugChanged:self];
 	}

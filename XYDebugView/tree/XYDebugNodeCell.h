@@ -10,6 +10,7 @@
 #import "XYViewNode.h"
 
 NS_ASSUME_NONNULL_BEGIN
+extern CGFloat XYDebugNodeCellHeight;
 
 @interface XYDebugNodeCell : UITableViewCell
 

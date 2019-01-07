@@ -16,13 +16,12 @@
 {
 	XYDebugStyle _debugStyle;
 }
+
 @property (nonatomic, strong) XYDebugWindow *assistiveWindow;
 
 @property (nonatomic, weak, nullable) UIView *debugView;
-@property (nonatomic, weak) UIWindow *keyWindow;
 
-@property (nonatomic) BOOL isDebugging;
-@property (nonatomic) BOOL isDebuggingBy2D;
+@property (nonatomic, weak) UIWindow *keyWindow;
 
 @property (nonatomic, strong) NSHashTable <UIView *> *debuggedViews;
 
@@ -38,59 +37,63 @@
     dispatch_once(&onceToken, ^{
         instance = [[self alloc] init];
 		instance.debuggedViews = [NSHashTable hashTableWithOptions:NSHashTableWeakMemory];
-        instance.isDebugging = NO;
-		instance.isDebuggingBy2D = NO;
 		instance.keyWindow = [UIApplication sharedApplication].keyWindow;
     });
     return instance;
 }
 
-+ (void)showDebug
+- (void)setDebugStyle:(XYDebugStyle)debugStyle
 {
-	[[self sharedInstance] showDebugView:XYDebugStyleNone];
+    if (debugStyle == _debugStyle) { return; }
+    
+    _debugStyle = debugStyle;
+    if (debugStyle == XYDebugStyleNone) {
+        [self dismissDebugView];
+    } else if (debugStyle == XYDebugStyleIndex) {
+        
+    } else if (debugStyle == XYDebugStyle2D) {
+        
+    } else if (debugStyle == XYDebugStyle3D) {
+        
+    }
 }
 
-+ (void)showDebugWithStyle:(XYDebugStyle)debugStyle
+- (void)showDebug
 {
-	[[self sharedInstance] showDebugView:debugStyle];
+	[self showDebugStyle:XYDebugStyle2D];
 }
 
-+ (void)showDebugInView:(UIView *)View withDebugStyle:(XYDebugStyle)debugStyle
+- (void)closeDebug
 {
-    [self sharedInstance].debugView = View;
-    [[self sharedInstance] showDebugView:debugStyle];
+    self.debugStyle = XYDebugStyleNone;
 }
 
-+ (void)dismissDebugView
+- (void)showDebugStyle:(XYDebugStyle)debugStyle
 {
-	[[self sharedInstance] dismissDebugView];
+	[self showDebugView:_keyWindow withDebugStyle:debugStyle];
 }
 
-+ (BOOL)isDebugging
+- (void)showDebugView:(UIView *)view withDebugStyle:(XYDebugStyle)debugStyle
 {
-	return [self sharedInstance].isDebugging;
+    BOOL valide = (debugStyle >= XYDebugStyleNone || debugStyle <= XYDebugStyle3D);
+    NSAssert(valide, @"XYDebugStyle 类型不匹配");
+    
+    _debugView = view;
+    _debugStyle = debugStyle;
+    
+    _assistiveWindow = [[XYDebugWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _assistiveWindow.debugStyle = debugStyle;
+    _assistiveWindow.delegate = self;
+    _assistiveWindow.windowLevel = CGFLOAT_MAX;
+    _assistiveWindow.targetView = nil;
+    [_assistiveWindow makeKeyAndVisible];
+    if (_keyWindow) {
+        [_keyWindow makeKeyWindow];
+    }
+    [self cleanDebugLayerIn2D];
 }
 
-- (void)showDebugView:(XYDebugStyle)debugStyle
-{
-	BOOL valide = (debugStyle == XYDebugStyle2D || debugStyle == XYDebugStyle3D);
-	NSAssert(valide, @"XYDebugStyle 类型不匹配");
-	
-	_debugStyle = debugStyle;
-	
-	_assistiveWindow = [[XYDebugWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-	_assistiveWindow.debugStyle = debugStyle;
-	_assistiveWindow.delegate = self;
-	_assistiveWindow.windowLevel = CGFLOAT_MAX;
-	_assistiveWindow.targetView = nil;
-	[_assistiveWindow makeKeyAndVisible];
-	if (_keyWindow) {
-		[_keyWindow makeKeyWindow];
-	}
-	
-	[self cleanDebugLayerIn2D];
-	_isDebugging = YES;
-}
+#pragma mark - private
 
 - (void)dismissDebugView
 {
@@ -99,8 +102,6 @@
 	[_keyWindow makeKeyAndVisible];
 	
 	[self cleanDebugLayerIn2D];
-	_isDebugging = NO;
-	_isDebuggingBy2D = NO;
 	_debugView = nil;
 }
 
@@ -148,12 +149,12 @@
 - (void)debugWindowTopButtonClick:(XYDebugWindow *)window is3DDebugging:(BOOL)is3DDebugging
 {
 	if (_debugStyle == XYDebugStyle2D) {
-		if (_isDebuggingBy2D) {
-			[self cleanDebugLayerIn2D];
-		} else {
-			[self drawDebugLayerIn2DViews];
-		}
-		_isDebuggingBy2D = !_isDebuggingBy2D;
+//        if (_isDebuggingBy2D) {
+//            [self cleanDebugLayerIn2D];
+//        } else {
+//            [self drawDebugLayerIn2DViews];
+//        }
+//        _isDebuggingBy2D = !_isDebuggingBy2D;
 		
 	} else if (is3DDebugging) {
 		self.assistiveWindow.targetView = nil;

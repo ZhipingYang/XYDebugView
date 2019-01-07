@@ -11,7 +11,7 @@
 
 @interface XYDebugTreeController ()
 
-@property (nonatomic, strong) NSArray <XYViewNode *> *dataSource;
+@property (nonatomic, strong) NSMutableArray<NSArray<XYViewNode *> *> *dataSources;
 
 @end
 
@@ -23,44 +23,49 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-- (void)setRootNode:(XYViewNode *)rootNode
+- (void)setRootNodes:(NSArray<XYViewNode *> *)rootNodes
 {
-    _rootNode = rootNode;
-    _dataSource = [rootNode recurrenceAllChildNodes];
+    _rootNodes = rootNodes;
+    _dataSources = @[].mutableCopy;
     
-    int max = _dataSource.firstObject.deep;
-    for (XYViewNode *node in _dataSource) {
-        if (node.deep>max) {
-            max = node.deep;
+    [rootNodes enumerateObjectsUsingBlock:^(XYViewNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSArray<XYViewNode *> *dataSource = [obj recurrenceAllChildNodes];
+        [self.dataSources addObject:dataSource];
+        
+        int max = dataSource.firstObject.deep;
+        for (XYViewNode *node in dataSource) {
+            if (node.deep>max) {
+                max = node.deep;
+            }
         }
-    }
-    [_dataSource enumerateObjectsUsingBlock:^(XYViewNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.maxDeep = max;
+        [dataSource enumerateObjectsUsingBlock:^(XYViewNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.maxDeep = max;
+        }];
     }];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.dataSources.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataSource.count;
+    return self.dataSources[section].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XYDebugNodeCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([XYDebugNodeCell class])];
     if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([XYDebugNodeCell class]) owner:nil options:nil] firstObject];
+        cell = [[XYDebugNodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([XYDebugNodeCell class])];
     }
-    cell.node = [_dataSource objectAtIndex:indexPath.row];
+    cell.node = self.dataSources[indexPath.section][indexPath.row];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 20;
+    return XYDebugNodeCellHeight;
 }
 
 @end

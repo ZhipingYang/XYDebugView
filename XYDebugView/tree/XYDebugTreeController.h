@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XYDebugTreeController : UITableViewController
 
-@property (nonatomic, strong) XYViewNode *rootNode;
+@property (nonatomic, strong) NSArray<XYViewNode *> *rootNodes;
 
 @end
 

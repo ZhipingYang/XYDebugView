@@ -57,6 +57,7 @@
     }
     
     [_vLines makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    [_vLines removeAllObjects];
     
     for (int i=0; i<=_node.deep; i++) {
         CALayer *vLine = [CALayer layer];
@@ -65,7 +66,7 @@
         [_vLines addObject:vLine];
     }
 
-    [self setNeedsLayout];
+    [self layoutSubviews];
 }
 
 - (void)layoutSubviews
@@ -75,8 +76,8 @@
     CGFloat const height =  self.frame.size.height;
     CGFloat const eachW = width/MAX(_node.maxDeep, 1);
     
-    _hLine.frame = CGRectMake(eachW * (_node.deep-1), height/2.0, width-(eachW*_node.deep-1), 1);
-    
+    _hLine.frame = CGRectMake(eachW * (_node.deep-1), height/2.0, MIN(width-(eachW*_node.deep-1), 2*eachW), 1);
+
     _vLines[self.node.deep-1].frame = CGRectMake(eachW*(self.node.deep-1), 0, 1, self.node.hasNext ? height : height/2.0);
     _vLines[self.node.deep].frame = CGRectMake(eachW*self.node.deep, height/2.0, 1, self.node.hasChild ? height/2.0 : 0);
 
@@ -86,6 +87,15 @@
         _vLines[parentNode.deep-1].hidden = !parentNode.hasNext;
         parentNode = parentNode.parentNode;
     }
+}
+
+- (CGFloat)graphRight
+{
+    CGFloat const width =  self.frame.size.width;
+    CGFloat const eachW = width/MAX(_node.maxDeep, 1);
+    CGFloat const graphLeft = eachW * (_node.deep-1);
+    CGFloat const graphLength = MIN(width-(eachW*_node.deep-1), 2*eachW);
+    return self.frame.origin.x + graphLeft + graphLength;
 }
 
 @end

@@ -37,7 +37,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-	[XYDebugViewManager dismissDebugView];
+	[[XYDebugViewManager sharedInstance] closeDebug];
 }
 
 #pragma mark - delegate
@@ -76,7 +76,7 @@
 
 - (IBAction)switchChanged:(UISwitch *)sender {
 	
-	[XYDebugViewManager dismissDebugView];
+	[[XYDebugViewManager sharedInstance] closeDebug];
 
 	[_allSwitch enumerateObjectsUsingBlock:^(UISwitch * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (obj != sender && obj.isOn) {
@@ -87,28 +87,25 @@
 	if (sender.on) {
 		UITableViewCell *customCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
 		if (sender == _debugCustom2D) {
-			[XYDebugViewManager showDebugInView:customCell withDebugStyle:XYDebugStyle2D];
+			[[XYDebugViewManager sharedInstance] showDebugView:customCell withDebugStyle:XYDebugStyle2D];
 		} else if (sender == _debugCustom3D) {
-			[XYDebugViewManager showDebugInView:customCell withDebugStyle:XYDebugStyle3D];
+			[[XYDebugViewManager sharedInstance] showDebugView:customCell withDebugStyle:XYDebugStyle3D];
 		} else if (sender == _debugWindow2D) {
-			[XYDebugViewManager showDebugWithStyle:XYDebugStyle2D];
+			[[XYDebugViewManager sharedInstance] showDebugStyle:XYDebugStyle2D];
 		} else if (sender == _debugWindow3D) {
-			[XYDebugViewManager showDebugWithStyle:XYDebugStyle3D];
+			[[XYDebugViewManager sharedInstance] showDebugStyle:XYDebugStyle3D];
 		}
 	}
 }
 
-
-
-
-
-
-
-
 - (IBAction)showTreeView:(id)sender {
-    XYViewNode *root = [[XYViewNode alloc] initWithView:UIApplication.sharedApplication.delegate.window parent:nil];
-    XYDebugTreeController *vc = [[XYDebugTreeController alloc] initWithStyle:UITableViewStylePlain];
-    vc.rootNode = root;
+    NSMutableArray<XYViewNode *> *rootNodes = @[].mutableCopy;
+    [UIApplication.sharedApplication.windows enumerateObjectsUsingBlock:^(__kindof UIWindow * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        XYViewNode *root = [[XYViewNode alloc] initWithView:UIApplication.sharedApplication.delegate.window parent:nil];
+        [rootNodes addObject:root];
+    }];
+    XYDebugTreeController *vc = [[XYDebugTreeController alloc] initWithStyle:UITableViewStyleGrouped];
+    vc.rootNodes = rootNodes;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

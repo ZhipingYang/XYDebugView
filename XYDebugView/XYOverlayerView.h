@@ -46,10 +46,10 @@
 @property (weak, nonatomic) IBOutlet UISlider *rangeSlider;
 @property (weak, nonatomic) IBOutlet UISlider *m34Slider;
 
-/// top trigger button
-@property (weak, nonatomic) IBOutlet UIButton *statusBarButton;
 /// bottom config view
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomView;
+/// quit trigger button
+@property (weak, nonatomic) IBOutlet UIButton *quitButton;
 /// reset to default button
 @property (weak, nonatomic) IBOutlet UIButton *resetButton;
 /// show config button
