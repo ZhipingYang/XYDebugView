@@ -277,13 +277,9 @@
 
 - (void)debugWindowTopButtonClick:(XYDebugWindow *)window is3DDebugging:(BOOL)is3DDebugging
 {
-	if (_debugStyle == XYDebugStyle2D) {
-        [self closeDebug];
-	} else if (is3DDebugging) {
-		self.assistiveWindow.targetView = nil;
-	} else {
-		self.assistiveWindow.targetView = _debugView ?: UIApplication.sharedApplication.debug_keyWindow;
-	}
+    (void)window;
+    (void)is3DDebugging;
+    [self closeDebug];
 }
 
 @end

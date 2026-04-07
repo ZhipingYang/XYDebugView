@@ -10,6 +10,11 @@
 #import "XYDebugCategory.h"
 #import "XYOverlayerView.h"
 
+static const CGFloat XYDebugDefaultDistancePercent = 0.5f;
+static const CGFloat XYDebugDefaultPerspectivePercent = 1.0f;
+static const NSInteger XYDebugDefaultFocusContextRange = 2;
+static const CGFloat XYDebugDefaultFocusContextOpacity = 0.05f;
+
 @interface XYDebugWindow ()<UIGestureRecognizerDelegate, XYOverlayerViewDelegate>
 {
 	CGPoint _panPoint;
@@ -20,8 +25,14 @@
 @property (nonatomic, strong) UIView *layerSourceView;
 
 @property (nonatomic, strong) NSHashTable <CALayer *> *debugLayers;
+@property (nonatomic, strong) NSHashTable <XYDebugCloneView *> *debugCloneViews;
+@property (nonatomic, copy) NSArray<NSString *> *focusItems;
+@property (nonatomic, assign) NSInteger focusedLayerIndex;
 
 @property (nonatomic, strong) NSMutableSet<UIGestureRecognizer *> *multiTouchGestures;
+@property (nonatomic, assign) XYDebugCloneTintMode layerTintMode;
+@property (nonatomic, assign) NSInteger focusContextRange;
+@property (nonatomic, assign) CGFloat focusContextOpacity;
 @end
 
 @implementation XYDebugWindow
@@ -53,8 +64,14 @@
     }
 
     _multiTouchGestures = [NSMutableSet set];
+    _layerTintMode = XYDebugCloneTintModeOff;
+    _focusItems = @[];
+    _focusedLayerIndex = 0;
+    _focusContextRange = XYDebugDefaultFocusContextRange;
+    _focusContextOpacity = XYDebugDefaultFocusContextOpacity;
     self.backgroundColor = [UIColor clearColor];
     self.debugLayers = [NSHashTable weakObjectsHashTable];
+    self.debugCloneViews = [NSHashTable weakObjectsHashTable];
     self.layer.masksToBounds = YES;
 
     _layerSourceView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -112,26 +129,40 @@
 	CGFloat height = CGRectGetHeight(self.frame);
 	CGFloat length = MAX(width, height);
 	_layerSourceView.frame = CGRectMake((width-length)/2.0, (height-length)/2.0, length, length);
-	
+		
 	_overlayerView.frame = self.bounds;
+}
+
+- (void)refreshOverlayState
+{
+    if (self.debugStyle == XYDebugStyle2D) {
+        [self.overlayerView.quitButton setTitle:@"Clear 2D" forState:UIControlStateNormal];
+        self.overlayerView.resetButton.hidden = YES;
+        self.overlayerView.filterButton.hidden = YES;
+        [self.overlayerView setControlsVisible:NO animated:NO];
+        [self.overlayerView setFocusWheelHidden:YES];
+        return;
+    }
+
+    BOOL is3DDebugging = (self.targetView != nil);
+    [self.overlayerView.quitButton setTitle:@"Close 3D" forState:UIControlStateNormal];
+    [self.overlayerView setTintMode:self.layerTintMode];
+    [self.overlayerView setFocusContextRange:self.focusContextRange];
+    [self.overlayerView setFocusContextOpacity:self.focusContextOpacity];
+    [self.overlayerView setFocusItems:self.focusItems selectedIndex:self.focusedLayerIndex];
+    [self.overlayerView setFocusWheelHidden:!is3DDebugging];
+    self.overlayerView.resetButton.hidden = !is3DDebugging;
+    self.overlayerView.filterButton.hidden = !is3DDebugging;
+
+    if (!is3DDebugging) {
+        [self.overlayerView setControlsVisible:NO animated:NO];
+    }
 }
 
 - (void)setDebugStyle:(XYDebugStyle)debugStyle
 {
 	_debugStyle = debugStyle;
-    if (debugStyle == XYDebugStyle2D) {
-        [self.overlayerView.quitButton setTitle:@"Close 2D" forState:UIControlStateNormal];
-        self.overlayerView.resetButton.hidden = YES;
-        self.overlayerView.filterButton.hidden = YES;
-        [self.overlayerView setControlsVisible:NO animated:NO];
-    } else {
-        [self.overlayerView.quitButton setTitle:(self.targetView ? @"Hide 3D" : @"Show 3D") forState:UIControlStateNormal];
-        self.overlayerView.resetButton.hidden = (self.targetView == nil);
-        self.overlayerView.filterButton.hidden = (self.targetView == nil);
-        if (self.targetView == nil) {
-            [self.overlayerView setControlsVisible:NO animated:NO];
-        }
-    }
+    [self refreshOverlayState];
 }
 
 - (void)setTargetView:(UIView *)targetView
@@ -141,26 +172,29 @@
     [self setNeedsLayout];
     [self layoutIfNeeded];
 	
-    BOOL is3DDebugging = (targetView != nil);
-    [self.overlayerView.quitButton setTitle:(is3DDebugging ? @"Hide 3D" : @"Show 3D") forState:UIControlStateNormal];
-	_overlayerView.filterButton.hidden = !is3DDebugging;
-	_overlayerView.resetButton.hidden = !is3DDebugging;
-	
 	if (targetView == nil) {
         [[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
         [self.debugLayers removeAllObjects];
+        [self.debugCloneViews removeAllObjects];
+        self.focusItems = @[];
+        self.focusedLayerIndex = 0;
+        [self.overlayerView setFocusItems:@[] selectedIndex:0];
         [self.overlayerView setControlsVisible:NO animated:NO];
-		_layerSourceView.hidden = YES;
+			_layerSourceView.hidden = YES;
 	} else {
-		[[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-		[self.debugLayers removeAllObjects];
-		[self scrollViewAddLayersInView:targetView];
-		_layerSourceView.hidden = NO;
-		[self recalculateLayerDepths];
-		
-		_layerSourceView.layer.sublayerTransform = CATransform3DIdentity;
-		[self resetLayerTransforms];
-	}
+			[[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+			[self.debugLayers removeAllObjects];
+            [self.debugCloneViews removeAllObjects];
+			[self scrollViewAddLayersInView:targetView];
+			_layerSourceView.hidden = NO;
+			[self recalculateLayerDepths];
+            [self applyTintModeToCloneViews];
+			
+			_layerSourceView.layer.sublayerTransform = CATransform3DIdentity;
+			[self resetLayerTransforms];
+		}
+
+    [self refreshOverlayState];
 }
 
 #pragma mark - private
@@ -168,25 +202,67 @@
 - (void)scrollViewAddLayersInView:(UIView *)view
 {
 	if ([view isKindOfClass:[UIView class]] && view) {
-        NSArray<UIView *> *allSubviews = view.debug_recurrenceAllSubviews;
-        UIView *rootView = allSubviews.firstObject;
-        CGSize containSize = self.layerSourceView.frame.size;
-        CGPoint offset = CGPointMake((containSize.width - rootView.bounds.size.width) / 2.0,
-                                     (containSize.height - rootView.bounds.size.height) / 2.0);
-        [allSubviews enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+	        NSArray<UIView *> *allSubviews = view.debug_recurrenceAllSubviews;
+        NSMutableArray<NSString *> *focusItems = [NSMutableArray arrayWithObject:@"All Layers"];
+	        UIView *rootView = allSubviews.firstObject;
+	        CGSize containSize = self.layerSourceView.frame.size;
+	        CGPoint offset = CGPointMake((containSize.width - rootView.bounds.size.width) / 2.0,
+	                                     (containSize.height - rootView.bounds.size.height) / 2.0);
+	        [allSubviews enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if (!obj.superview) {
                 return;
-            }
-            XYDebugCloneView *cloneView = obj.debug_cloneView;
-            cloneView.layer.zPosition = 0;
-            cloneView.layer.debug_zPostion = idx;
-            CGRect rect = [obj.superview convertRect:obj.frame toView:self.targetView];
-            cloneView.layer.frame = CGRectOffset(rect, offset.x, offset.y);
-            cloneView.layer.opacity = 1;
-            [self.debugLayers addObject:cloneView.layer];
-            [self.layerSourceView.layer addSublayer:cloneView.layer];
-        }];
-	}
+	            }
+	            XYDebugCloneView *cloneView = obj.debug_cloneView;
+	            cloneView.debugTintMode = self.layerTintMode;
+	            cloneView.layer.zPosition = 0;
+            cloneView.layer.debug_orderIndex = (NSInteger)idx;
+	            cloneView.layer.debug_zPostion = idx;
+	            CGRect rect = [obj.superview convertRect:obj.frame toView:self.targetView];
+	            cloneView.layer.frame = CGRectOffset(rect, offset.x, offset.y);
+	            cloneView.layer.opacity = 1;
+	            [self.debugLayers addObject:cloneView.layer];
+	            [self.debugCloneViews addObject:cloneView];
+            [focusItems addObject:[self focusTitleForView:obj atIndex:idx]];
+	            [self.layerSourceView.layer addSublayer:cloneView.layer];
+	        }];
+        self.focusItems = focusItems.copy;
+        self.focusedLayerIndex = 0;
+        [self.overlayerView setFocusItems:self.focusItems selectedIndex:0];
+		}
+}
+
+- (NSString *)focusTitleForView:(UIView *)view atIndex:(NSUInteger)index
+{
+    NSString *className = NSStringFromClass(view.class);
+    NSString *detail = nil;
+
+    if ([view isKindOfClass:[UILabel class]]) {
+        detail = ((UILabel *)view).text;
+    } else if ([view isKindOfClass:[UIButton class]]) {
+        detail = [((UIButton *)view) titleForState:UIControlStateNormal];
+    } else if ([view isKindOfClass:[UITextField class]]) {
+        UITextField *textField = (UITextField *)view;
+        detail = textField.text.length > 0 ? textField.text : textField.placeholder;
+    } else if ([view isKindOfClass:[UITextView class]]) {
+        detail = ((UITextView *)view).text;
+    }
+
+    detail = [[detail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] copy];
+    if (detail.length > 18) {
+        detail = [[detail substringToIndex:18] stringByAppendingString:@"..."];
+    }
+
+    if (detail.length > 0) {
+        return [NSString stringWithFormat:@"#%03lu %@  %@", (unsigned long)index, className, detail];
+    }
+    return [NSString stringWithFormat:@"#%03lu %@", (unsigned long)index, className];
+}
+
+- (void)applyTintModeToCloneViews
+{
+    for (XYDebugCloneView *cloneView in self.debugCloneViews) {
+        cloneView.debugTintMode = self.layerTintMode;
+    }
 }
 
 - (BOOL)layerDepthBoundsMin:(CGFloat *)minPosition max:(CGFloat *)maxPosition
@@ -213,73 +289,101 @@
 
 - (void)recalculateLayerDepths
 {
-    CGFloat positionMin = 0;
-    CGFloat positionMax = 0;
-    if (![self layerDepthBoundsMin:&positionMin max:&positionMax] || positionMax <= positionMin) {
+    if (self.debugLayers.count == 0) {
         return;
     }
 
-    CGFloat minimumDepth = self.debugLayers.count < 50 ? -100 : -300;
-    CGFloat maximumDepth = self.debugLayers.count < 50 ? 100 : 200;
-    CGFloat scale = (maximumDepth - minimumDepth) / (positionMax - positionMin);
+    NSInteger maximumOrderIndex = 0;
     for (CALayer *layer in self.debugLayers) {
-        layer.debug_zPostion = minimumDepth + (layer.debug_zPostion - positionMin) * scale;
+        maximumOrderIndex = MAX(maximumOrderIndex, layer.debug_orderIndex);
+    }
+
+    CGFloat frontDepth = MIN(MAX((CGFloat)self.debugLayers.count * 10.0, 280.0), CGRectGetHeight(self.bounds) * 0.82);
+    CGFloat rearDepth = -MIN(36.0, frontDepth * 0.08);
+    CGFloat spacing = maximumOrderIndex > 0 ? frontDepth / maximumOrderIndex : 0;
+    for (CALayer *layer in self.debugLayers) {
+        layer.debug_zPostion = rearDepth + layer.debug_orderIndex * spacing;
     }
 }
 
 #pragma mark - actions
 
-- (void)showDifferentLayers:(float)percent
+- (void)applyFocusedLayerIndex:(NSInteger)focusIndex updateOverlay:(BOOL)updateOverlay
 {
-    CGFloat positionMin = 0;
-    CGFloat positionMax = 0;
-    if (![self layerDepthBoundsMin:&positionMin max:&positionMax]) {
+    NSInteger maximumFocusIndex = MAX((NSInteger)self.focusItems.count - 1, 0);
+    NSInteger clampedFocusIndex = MIN(MAX(focusIndex, 0), maximumFocusIndex);
+    self.focusedLayerIndex = clampedFocusIndex;
+
+    if (updateOverlay) {
+        [self.overlayerView setFocusItems:self.focusItems selectedIndex:clampedFocusIndex];
+    }
+
+    if (clampedFocusIndex == 0) {
+        [self showAllLayer];
         return;
     }
 
-	float divisor = (float)(self.debugLayers.count > 0 ? self.debugLayers.count : 20);
-	CGFloat gap = divisor > 0 ? (positionMax - positionMin) / divisor : 0;
-	
-	// 计算当前处于那一节的layer层显示
-	float num = ceil(percent * divisor);
-	
-	CGFloat upRange = positionMin + gap*num;
-	CGFloat dowmRange = positionMin + gap*(num-1);
-	
-	for (CALayer *layer in self.debugLayers) {
-		layer.opacity = (layer.debug_zPostion>upRange || layer.debug_zPostion<dowmRange) ? 0.1:1;
-	}
+    NSInteger targetOrderIndex = clampedFocusIndex - 1;
+    for (CALayer *layer in self.debugLayers) {
+        NSInteger distance = labs(layer.debug_orderIndex - targetOrderIndex);
+        CGFloat opacity = self.focusContextOpacity;
+        if (distance == 0) {
+            opacity = 1.0;
+        } else if (distance <= self.focusContextRange) {
+            CGFloat nearestOpacity = MAX(self.focusContextOpacity, 0.56);
+            CGFloat furthestOpacity = MAX(self.focusContextOpacity, 0.14);
+            CGFloat interpolation = self.focusContextRange > 1
+            ? (CGFloat)(distance - 1) / (CGFloat)(self.focusContextRange - 1)
+            : 0;
+            opacity = nearestOpacity + (furthestOpacity - nearestOpacity) * interpolation;
+        }
+        layer.opacity = opacity;
+    }
 }
 
 - (void)showAllLayer
 {
-	for (CALayer *layer in self.debugLayers) {
+		for (CALayer *layer in self.debugLayers) {
 		layer.opacity = 1;
 	}
 }
 
 - (void)changeDistance:(float)percent
 {
-	for (CALayer *layer in self.debugLayers) {
-		[layer removeAnimationForKey:@"zPosition"];
-		layer.zPosition = 2 * layer.debug_zPostion * percent;
-	}
+		for (CALayer *layer in self.debugLayers) {
+			[layer removeAnimationForKey:@"zPosition"];
+			layer.zPosition = 2 * layer.debug_zPostion * percent;
+		}
+}
+
+- (CATransform3D)sceneTransformForPerspectivePercent:(CGFloat)percent
+{
+    CGFloat clampedPercent = MAX(percent, 0.05);
+    CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.82, 0.82, 0.82);
+    transform.m34 = -1.0 / ((CGRectGetHeight(self.bounds) * 1.35) / clampedPercent);
+    return transform;
 }
 
 // 恢复默认
 - (void)resetLayerTransforms
 {
-	_overlayerView.distanceSlider.value = 0.5;
-    _overlayerView.rangeSlider.value = 1;
-	_overlayerView.m34Slider.value = 1;
-    [_overlayerView refreshDisplayedValues];
-    [_overlayerView setControlsVisible:NO animated:NO];
-	
-	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
-	transform.m34 = -1.0 / CGRectGetHeight(self.bounds);
-	
-	[_layerSourceView.layer removeAllAnimations];
-	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
+		self.layerTintMode = XYDebugCloneTintModeOff;
+    self.focusContextRange = XYDebugDefaultFocusContextRange;
+    self.focusContextOpacity = XYDebugDefaultFocusContextOpacity;
+    [self.overlayerView setTintMode:self.layerTintMode];
+    [self.overlayerView setFocusContextRange:self.focusContextRange];
+    [self.overlayerView setFocusContextOpacity:self.focusContextOpacity];
+		_overlayerView.distanceSlider.value = XYDebugDefaultDistancePercent;
+		_overlayerView.m34Slider.value = XYDebugDefaultPerspectivePercent;
+	    [_overlayerView refreshDisplayedValues];
+	    [_overlayerView setControlsVisible:NO animated:NO];
+    [self applyTintModeToCloneViews];
+    [self applyFocusedLayerIndex:0 updateOverlay:YES];
+		
+		CATransform3D transform = [self sceneTransformForPerspectivePercent:_overlayerView.m34Slider.value];
+		
+		[_layerSourceView.layer removeAllAnimations];
+		CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
 	animation.fromValue = [NSValue valueWithCATransform3D:_layerSourceView.layer.sublayerTransform];
 	animation.toValue = [NSValue valueWithCATransform3D:transform];
 	animation.duration = 0.6;
@@ -352,11 +456,29 @@
 }
 
 /**
- 查看layer特定的层级
+ 专注于指定的layer层级
  */
-- (void)overlayView:(XYOverlayerView *)view showingLayerChanged:(CGFloat)percent
+- (void)overlayView:(XYOverlayerView *)view focusIndexChanged:(NSInteger)focusIndex
 {
-	[self showDifferentLayers:percent];
+    [self applyFocusedLayerIndex:focusIndex updateOverlay:NO];
+}
+
+/**
+ 修改 focus 时保留的上下文层数
+ */
+- (void)overlayView:(XYOverlayerView *)view focusContextRangeChanged:(NSInteger)range
+{
+    self.focusContextRange = range;
+    [self applyFocusedLayerIndex:self.focusedLayerIndex updateOverlay:NO];
+}
+
+/**
+ 修改 focus 时远处层级的最小透明度
+ */
+- (void)overlayView:(XYOverlayerView *)view focusContextOpacityChanged:(CGFloat)opacity
+{
+    self.focusContextOpacity = opacity;
+    [self applyFocusedLayerIndex:self.focusedLayerIndex updateOverlay:NO];
 }
 
 /**
@@ -364,10 +486,13 @@
  */
 - (void)overlayView:(XYOverlayerView *)view m34Changed:(CGFloat)percent
 {
-    CGFloat clampedPercent = MAX(percent, 0.05);
-	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
-	transform.m34 = -1.0 / (CGRectGetHeight(self.bounds) / clampedPercent);
-	_layerSourceView.layer.sublayerTransform = transform;
+    _layerSourceView.layer.sublayerTransform = [self sceneTransformForPerspectivePercent:percent];
+}
+
+- (void)overlayView:(XYOverlayerView *)view tintModeChanged:(XYDebugCloneTintMode)mode
+{
+    self.layerTintMode = mode;
+    [self applyTintModeToCloneViews];
 }
 
 /**
@@ -385,7 +510,6 @@
  */
 - (void)overlayViewReseted:(XYOverlayerView *)view
 {
-	[self showAllLayer];
 	[self resetLayerTransforms];
 }
 

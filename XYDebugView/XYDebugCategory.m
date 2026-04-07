@@ -37,8 +37,6 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
         return obj;
     }
     obj = [XYDebugCloneView cloneWith:self];
-    obj.debug_colorSublayer.frame = obj.bounds;
-    [obj.layer addSublayer:obj.debug_colorSublayer];
     objc_setAssociatedObject(self, DebugCloneView, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return [self debug_cloneView];
 }
@@ -73,6 +71,7 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
 
 
 const static char * DebugStoreZPosition = "DebugStoreZPosition";
+const static char * DebugStoreOrderIndex = "DebugStoreOrderIndex";
 
 @implementation CALayer (XYDebug)
 
@@ -85,6 +84,17 @@ const static char * DebugStoreZPosition = "DebugStoreZPosition";
 - (void)setDebug_zPostion:(CGFloat)debug_zPostion
 {
     objc_setAssociatedObject(self, DebugStoreZPosition, @(debug_zPostion), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSInteger)debug_orderIndex
+{
+    id obj = objc_getAssociatedObject(self, DebugStoreOrderIndex);
+    return [obj integerValue];
+}
+
+- (void)setDebug_orderIndex:(NSInteger)debug_orderIndex
+{
+    objc_setAssociatedObject(self, DebugStoreOrderIndex, @(debug_orderIndex), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)debug_zPositionAnimationFrom:(float)from to:(float)to duration:(NSTimeInterval)duration

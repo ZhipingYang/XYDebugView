@@ -1,109 +1,66 @@
-<p align="center">
-	<img width="150" src ="https://user-images.githubusercontent.com/9360037/34412301-5c2cf4fe-ec17-11e7-8f1b-f487b4cd6218.png"/>
-</p>
+# XYDebugView
 
-<p align="center">
-	<a href="https://travis-ci.org/ZhipingYang/XYDebugView">
-		<image alt="CI Status" src="http://img.shields.io/travis/ZhipingYang/FORScrollViewEmptyAssistant.svg?style=flat">
-	</a>
-	<a href="http://cocoapods.org/pods/XYDebugView">
-		<image alt="Version" src="https://img.shields.io/cocoapods/v/XYDebugView.svg?style=flat">
-	</a>
-	<a href="http://cocoapods.org/pods/XYDebugView">
-		<image alt="License" src="https://img.shields.io/cocoapods/l/XYDebugView.svg?style=flat">
-	</a>
-	<a href="http://cocoapods.org/pods/XYDebugView">
-		<image alt="Platform" src="https://img.shields.io/cocoapods/p/XYDebugView.svg?style=flat">
-	</a>
-</p>
+`XYDebugView` is a lightweight UIKit hierarchy debugger with:
 
-> **[XYDebugView](https://zhipingyang.github.io/XYDebugView)** is debug tool to draw the all view's frame in device screen and show it by 2d/3d style like [Reveal](https://revealapp.com/) did.
-
-## ScreenShot
-
-<p align="center">
-<img width=33% src="https://user-images.githubusercontent.com/9360037/34407789-45fd3d5e-ebfb-11e7-91ca-71eefd1fc97c.png"> <img width=33% src="https://user-images.githubusercontent.com/9360037/34407792-46d402ee-ebfb-11e7-8776-5e11c6564cbe.png">
-<img width=33% src="https://user-images.githubusercontent.com/9360037/34407800-480a2ee0-ebfb-11e7-9ccf-7e945ca5d88d.png">
-</p>
-
-## Use
-
-Run in [Online iPhone Simulator](https://zhipingyang.github.io/XYDebugView)
-
-**Open debug view funtion**
-> tap the red statusBar to show or destroy the debug result
-
-```objective-c
-// XYDebugViewManager
-
-/**
- 开启debug功能，默认使用XYDebugStyle2D对keyWindow进行debug
- */
-+ (void)showDebug;
-
-/**
- debug the keyWindow
- */
-+ (void)showDebugWithStyle:(XYDebugStyle)debugStyle;
-
-/**
- debug specific view
-
- @param View the view to debug layout
- @param debugStyle 2d/3d
- */
-+ (void)showDebugInView:(nullable UIView *)View withDebugStyle:(XYDebugStyle)debugStyle;
-```
-
-**Close debug view funtion**
-> dismiss red statusBar & remove debugging
-
-```objective-c
-// XYDebugViewManager
-
-/**
- close debug function
- */
-+ (void)dismissDebugView;
-```
-
-
-## debug view with 2d
-
-<img width="250" src="https://user-images.githubusercontent.com/9360037/34407789-45fd3d5e-ebfb-11e7-91ca-71eefd1fc97c.png"> <img width="250" src="https://user-images.githubusercontent.com/9360037/34407791-469feae0-ebfb-11e7-8ac1-6f6c4aee9c91.png"> <img width="250" src="https://user-images.githubusercontent.com/9360037/34407792-46d402ee-ebfb-11e7-8776-5e11c6564cbe.png">
-
-## debug with 3d
-
-- support gestures
-	- single touch pan: to rotate view angle
-	- double touches pan: move the position
-	- rotation: rotate z axis
-	- pinch: zoom
-- recover to init Transform
-- other transform
-	- change distance between layers (zPosition)
-	- prominently the specific layer (alpha)
-	- change perspective effect drawings (m34)
-
-<img width="250" src="https://user-images.githubusercontent.com/9360037/34407800-480a2ee0-ebfb-11e7-9ccf-7e945ca5d88d.png"> <img width="250" src="https://user-images.githubusercontent.com/9360037/34407803-4874991a-ebfb-11e7-9a84-c59e0a220077.png"> <img width="250" src="https://user-images.githubusercontent.com/9360037/34407806-4910dc1c-ebfb-11e7-9adb-a1360ea617ed.png">
-
-## debug specific view with 3d
-
-<img width="250" src="https://user-images.githubusercontent.com/9360037/34407793-4707e82a-ebfb-11e7-83c0-104e88a087b7.png"> <img width="250" src="https://user-images.githubusercontent.com/9360037/34407795-4739fd38-ebfb-11e7-9722-318268ce73e1.png"> <img width="250" src="https://user-images.githubusercontent.com/9360037/34407805-48dc4c5e-ebfb-11e7-9dd7-5768d6976f29.png">
-
-
-## Installation
-
-XYDebugView is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod "XYDebugView", '~> 1.0.1'
-```
+- `2D` frame inspection
+- `3D` exploded layer inspection
+- layer focus and coloring controls
+- index tree browsing for the current window or a specific view
 
 ## Demo
 
-The demo app is a pure-code sample generated from [`Demo/project.yml`](Demo/project.yml), and it consumes the library as a local development pod.
+The demo app is a pure-code sample generated from [`Demo/project.yml`](Demo/project.yml) and integrated through a local development pod.
+
+| Home | 3D Card | 3D Card Controls |
+| --- | --- | --- |
+| ![Demo Home](docs/images/demo-home.png) | ![Demo 3D Card](docs/images/demo-card-3d.png) | ![Demo 3D Card Controls](docs/images/demo-card-3d-controls.png) |
+
+## Installation
+
+`XYDebugView` is available through CocoaPods.
+
+```ruby
+pod 'XYDebugView', '~> 2.0.0'
+```
+
+## Usage
+
+```objective-c
+#import <XYDebugView/XYDebugViewManager.h>
+```
+
+### Open Debugging
+
+```objective-c
+// Debug the current key window in 2D.
+[[XYDebugViewManager sharedInstance] showDebug];
+
+// Debug the current key window in a specific style.
+[[XYDebugViewManager sharedInstance] showDebugStyle:XYDebugStyle3D];
+
+// Debug a specific view in 2D / 3D / Index mode.
+[[XYDebugViewManager sharedInstance] showDebugView:view withDebugStyle:XYDebugStyle3D];
+```
+
+### Close Debugging
+
+```objective-c
+[[XYDebugViewManager sharedInstance] closeDebug];
+```
+
+## 3D Controls
+
+The 3D inspector currently supports:
+
+- `Layer Coloring`: `Off`, `Outline`, `Filled`
+- `Focus Range`: how many neighboring layers remain visible while focused
+- `Context Fade`: minimum opacity for non-focused layers
+- `Depth Spread`: z-spacing between cloned layers
+- `Camera`: scene perspective strength
+
+The focus ruler stays pinned to the right edge and expands on touch-down, then resets back to `All Layers` shortly after touch-up.
+
+## Demo Setup
 
 ```bash
 brew install xcodegen
@@ -111,16 +68,25 @@ brew install xcodegen
 open Demo/XYDebugViewDemo.xcworkspace
 ```
 
-## GitPage
+There is also a double-click launcher at [`GenerateDemo.command`](GenerateDemo.command).
 
-https://zhipingyang.github.io/XYDebugView
+## Refresh Demo Screenshots
 
-## TODO
+```bash
+./scripts/capture_demo_screenshots.sh
+```
 
-- [ ] 添加呈现中的视图列表，选择性debug
-- [ ] 改进任意角度的m34值修改
-- [ ] 添加 ARKit
-- [ ] 修复特殊字符显示问题
+That script:
+
+- regenerates the demo project
+- builds the app for the simulator
+- launches capture scenarios
+- writes screenshots into [`docs/images`](docs/images)
+
+## Notes
+
+- The demo app adopts the modern `UIScene` lifecycle.
+- The demo is intentionally pure-code so the repository only keeps pod logic, demo logic, and generation config.
 
 ## Author
 
@@ -128,4 +94,4 @@ XcodeYang, xcodeyang@gmail.com
 
 ## License
 
-XYDebugView is available under the MIT license. See the LICENSE file for more info.
+`XYDebugView` is available under the MIT license. See [LICENSE](LICENSE).

@@ -6,6 +6,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIStackView *contentStackView;
 @property (nonatomic, strong) UIView *previewCardView;
+@property (nonatomic, assign) BOOL launchScenarioHandled;
 
 @end
 
@@ -28,6 +29,12 @@
 - (void)dealloc
 {
     [[XYDebugViewManager sharedInstance] closeDebug];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self runLaunchScenarioIfNeeded];
 }
 
 #pragma mark - UI
@@ -457,6 +464,83 @@
     controller.popoverPresentationController.sourceView = self.view;
     controller.popoverPresentationController.sourceRect = CGRectMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds), 1, 1);
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - Screenshot Support
+
+- (void)runLaunchScenarioIfNeeded
+{
+    if (self.launchScenarioHandled) {
+        return;
+    }
+    self.launchScenarioHandled = YES;
+
+    NSArray<NSString *> *arguments = NSProcessInfo.processInfo.arguments;
+    BOOL shouldOpenWindow3D = [arguments containsObject:@"-XYDemoAutoShowWindow3D"];
+    BOOL shouldOpenCard3D = [arguments containsObject:@"-XYDemoAutoShowCard3D"];
+    BOOL shouldOpenControls = [arguments containsObject:@"-XYDemoAutoOpenControls"];
+
+    if (!shouldOpenWindow3D && !shouldOpenCard3D && !shouldOpenControls) {
+        return;
+    }
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (shouldOpenWindow3D) {
+            [self showWindow3D];
+        } else if (shouldOpenCard3D) {
+            [self showCard3D];
+        }
+
+        if (shouldOpenControls) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self triggerOverlayButtonWithTitle:@"Controls"];
+            });
+        }
+    });
+}
+
+- (void)triggerOverlayButtonWithTitle:(NSString *)title
+{
+    for (UIWindow *window in [self activeWindows].reverseObjectEnumerator) {
+        UIButton *button = [self findButtonWithTitle:title inView:window];
+        if (button != nil) {
+            [button sendActionsForControlEvents:UIControlEventTouchUpInside];
+            return;
+        }
+    }
+}
+
+- (UIButton *)findButtonWithTitle:(NSString *)title inView:(UIView *)view
+{
+    if ([view isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)view;
+        if ([[button titleForState:UIControlStateNormal] isEqualToString:title]) {
+            return button;
+        }
+    }
+
+    for (UIView *subview in view.subviews.reverseObjectEnumerator) {
+        UIButton *button = [self findButtonWithTitle:title inView:subview];
+        if (button != nil) {
+            return button;
+        }
+    }
+
+    return nil;
+}
+
+- (NSArray<UIWindow *> *)activeWindows
+{
+    NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
+    if (@available(iOS 13.0, *)) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if (![scene isKindOfClass:[UIWindowScene class]]) {
+                continue;
+            }
+            [windows addObjectsFromArray:((UIWindowScene *)scene).windows];
+        }
+    }
+    return windows.copy;
 }
 
 @end

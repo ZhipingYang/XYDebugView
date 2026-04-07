@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CALayer *debug_colorSublayer;
 
 /**
- random backcolor in 3d style
+ clone view used by 3d style
  */
 @property (nonatomic, readonly) XYDebugCloneView *debug_cloneView;
 
@@ -42,6 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
  The distance between the two layers
  */
 @property (nonatomic) CGFloat debug_zPostion;
+
+/**
+ Original layer order used by 3d focus selection
+ */
+@property (nonatomic) NSInteger debug_orderIndex;
 
 /**
  easy animation way
