@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData/
+*.DS_Store
 
 ## Various settings
 *.pbxuser
@@ -21,6 +22,8 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+*.xcworkspace
+*.xcworkspace/xcshareddata/swiftpm/
 
 ## Obj-C/Swift specific
 *.hmap
@@ -35,6 +38,11 @@ xcuserdata/
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
 # Pods/
+Demo/Pods/
+Demo/Podfile.lock
+Demo/*.xcodeproj
+Demo/*.xcworkspace
+Demo/build/
 
 # Carthage
 #
@@ -61,3 +69,6 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# Local editor / tooling
+.vscode/
