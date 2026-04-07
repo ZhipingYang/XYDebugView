@@ -101,6 +101,16 @@ it, simply add the following line to your Podfile:
 pod "XYDebugView", '~> 1.0.1'
 ```
 
+## Demo
+
+The demo app is a pure-code sample generated from [`Demo/project.yml`](Demo/project.yml), and it consumes the library as a local development pod.
+
+```bash
+brew install xcodegen
+./scripts/bootstrap_demo.sh
+open Demo/XYDebugViewDemo.xcworkspace
+```
+
 ## GitPage
 
 https://zhipingyang.github.io/XYDebugView

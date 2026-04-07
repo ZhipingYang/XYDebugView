@@ -7,22 +7,12 @@
 //
 
 #import "XYDebugWindow.h"
-#import "XYDebugViewManager.h"
 #import "XYDebugCategory.h"
 #import "XYOverlayerView.h"
-
-#ifndef SCREEN_WIDTH
-#define SCREEN_WIDTH    [UIScreen mainScreen].bounds.size.width
-#endif
-
-#ifndef SCREEN_HEIGHT
-#define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
-#endif
 
 @interface XYDebugWindow ()<UIGestureRecognizerDelegate, XYOverlayerViewDelegate>
 {
 	CGPoint _panPoint;
-	CGPoint _doublePoint;
 	CATransform3D _sublayerTransform;
 }
 @property (nonatomic, strong) XYOverlayerView *overlayerView;
@@ -31,7 +21,7 @@
 
 @property (nonatomic, strong) NSHashTable <CALayer *> *debugLayers;
 
-@property (nonatomic, strong) NSMutableSet *doubleTouchsGestures;
+@property (nonatomic, strong) NSMutableSet<UIGestureRecognizer *> *multiTouchGestures;
 @end
 
 @implementation XYDebugWindow
@@ -42,50 +32,63 @@
 {
 	self = [super initWithFrame:frame];
 	if (self) {
-        
-		_doubleTouchsGestures = [NSMutableSet set];
-		self.backgroundColor = [UIColor clearColor];
-		self.debugLayers = [NSHashTable weakObjectsHashTable];
-		self.layer.masksToBounds = YES;
-        
-		CGFloat width = CGRectGetWidth(self.frame);
-		CGFloat height = CGRectGetHeight(self.frame);
-		CGFloat length = MAX(width, height);
-		_layerSourceView = [[UIView alloc] initWithFrame:CGRectMake((width-length)/2.0, (height-length)/2.0, length, length)];
-		_layerSourceView.layer.zPosition = -MAXFLOAT;
-		_layerSourceView.backgroundColor = [UIColor darkGrayColor];
-		_layerSourceView.hidden = YES;
-		_layerSourceView.multipleTouchEnabled = YES;
-		[self addSubview:_layerSourceView];
-		
-		_overlayerView = [[NSBundle bundleForClass:[XYOverlayerView class]] loadNibNamed:NSStringFromClass([XYOverlayerView class]) owner:nil options:nil].firstObject;
-		_overlayerView.delegate = self;
-		[self addSubview:_overlayerView];
-		
-		UIPanGestureRecognizer *singlePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(singlePan:)];
-		
-		UIPanGestureRecognizer *doublePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(doublePan:)];
-		doublePan.minimumNumberOfTouches = 2;
-		doublePan.delegate = self;
-		doublePan.cancelsTouchesInView = NO;
-		
-		UIRotationGestureRecognizer *rotate = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateGes:)];
-		rotate.delegate = self;
-		rotate.cancelsTouchesInView = NO;
-		
-		UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGes:)];
-		pinch.delegate = self;
-		pinch.cancelsTouchesInView = NO;
-		
-		[self.layerSourceView addGestureRecognizer:singlePan];
-		[self.layerSourceView addGestureRecognizer:doublePan];
-		[self.layerSourceView addGestureRecognizer:rotate];
-		[self.layerSourceView addGestureRecognizer:pinch];
-		
-		self.layerSourceView.multipleTouchEnabled = YES;
-		[_doubleTouchsGestures addObjectsFromArray:@[doublePan,rotate,pinch]];
+        [self xy_commonInit];
 	}
 	return self;
+}
+
+- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene API_AVAILABLE(ios(13.0))
+{
+    self = [super initWithWindowScene:windowScene];
+    if (self) {
+        [self xy_commonInit];
+    }
+    return self;
+}
+
+- (void)xy_commonInit
+{
+    if (_overlayerView != nil) {
+        return;
+    }
+
+    _multiTouchGestures = [NSMutableSet set];
+    self.backgroundColor = [UIColor clearColor];
+    self.debugLayers = [NSHashTable weakObjectsHashTable];
+    self.layer.masksToBounds = YES;
+
+    _layerSourceView = [[UIView alloc] initWithFrame:CGRectZero];
+    _layerSourceView.layer.zPosition = -MAXFLOAT;
+    _layerSourceView.backgroundColor = [UIColor darkGrayColor];
+    _layerSourceView.hidden = YES;
+    _layerSourceView.multipleTouchEnabled = YES;
+    [self addSubview:_layerSourceView];
+
+    _overlayerView = [[XYOverlayerView alloc] initWithFrame:self.bounds];
+    _overlayerView.delegate = self;
+    [self addSubview:_overlayerView];
+
+    UIPanGestureRecognizer *singlePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(singlePan:)];
+
+    UIPanGestureRecognizer *doublePan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(doublePan:)];
+    doublePan.minimumNumberOfTouches = 2;
+    doublePan.delegate = self;
+    doublePan.cancelsTouchesInView = NO;
+
+    UIRotationGestureRecognizer *rotate = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotateGes:)];
+    rotate.delegate = self;
+    rotate.cancelsTouchesInView = NO;
+
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGes:)];
+    pinch.delegate = self;
+    pinch.cancelsTouchesInView = NO;
+
+    [self.layerSourceView addGestureRecognizer:singlePan];
+    [self.layerSourceView addGestureRecognizer:doublePan];
+    [self.layerSourceView addGestureRecognizer:rotate];
+    [self.layerSourceView addGestureRecognizer:pinch];
+
+    [_multiTouchGestures addObjectsFromArray:@[doublePan, rotate, pinch]];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -116,103 +119,126 @@
 - (void)setDebugStyle:(XYDebugStyle)debugStyle
 {
 	_debugStyle = debugStyle;
-	_overlayerView.resetButton.hidden = debugStyle == XYDebugStyle2D;
-	_overlayerView.filterButton.hidden = debugStyle == XYDebugStyle2D;
-	_overlayerView.bottomView.hidden = debugStyle == XYDebugStyle2D;
+    if (debugStyle == XYDebugStyle2D) {
+        [self.overlayerView.quitButton setTitle:@"Close 2D" forState:UIControlStateNormal];
+        self.overlayerView.resetButton.hidden = YES;
+        self.overlayerView.filterButton.hidden = YES;
+        [self.overlayerView setControlsVisible:NO animated:NO];
+    } else {
+        [self.overlayerView.quitButton setTitle:(self.targetView ? @"Hide 3D" : @"Show 3D") forState:UIControlStateNormal];
+        self.overlayerView.resetButton.hidden = (self.targetView == nil);
+        self.overlayerView.filterButton.hidden = (self.targetView == nil);
+        if (self.targetView == nil) {
+            [self.overlayerView setControlsVisible:NO animated:NO];
+        }
+    }
 }
 
 - (void)setTargetView:(UIView *)targetView
 {
 	_targetView = targetView;
+
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 	
-	_overlayerView.filterButton.hidden = !targetView;
-	_overlayerView.resetButton.hidden = !targetView;
-	_overlayerView.bottomView.hidden = !targetView;
+    BOOL is3DDebugging = (targetView != nil);
+    [self.overlayerView.quitButton setTitle:(is3DDebugging ? @"Hide 3D" : @"Show 3D") forState:UIControlStateNormal];
+	_overlayerView.filterButton.hidden = !is3DDebugging;
+	_overlayerView.resetButton.hidden = !is3DDebugging;
 	
 	if (targetView == nil) {
+        [[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+        [self.debugLayers removeAllObjects];
+        [self.overlayerView setControlsVisible:NO animated:NO];
 		_layerSourceView.hidden = YES;
 	} else {
 		[[self.debugLayers allObjects] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
 		[self.debugLayers removeAllObjects];
-		[self scrollViewAddLayersInView:targetView layerLevel:0 index:0];
+		[self scrollViewAddLayersInView:targetView];
 		_layerSourceView.hidden = NO;
-		[self reCalculateZPostion];
+		[self recalculateLayerDepths];
 		
 		_layerSourceView.layer.sublayerTransform = CATransform3DIdentity;
-		[self recoverLayersTransform];
+		[self resetLayerTransforms];
 	}
 }
 
 #pragma mark - private
 
-- (void)scrollViewAddLayersInView:(UIView *)view layerLevel:(CGFloat)layerLevel index:(NSUInteger)index
+- (void)scrollViewAddLayersInView:(UIView *)view
 {
 	if ([view isKindOfClass:[UIView class]] && view) {
-		__block CGPoint offset = CGPointZero;
-		[view.debug_recurrenceAllSubviews enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-			if (idx==0) {
-				CGSize layerSize = obj.debug_cloneView.layer.frame.size;
-                CGSize containSize = self.layerSourceView.frame.size;
-				offset = CGPointMake((containSize.width-layerSize.width)/2.0, (containSize.height-layerSize.height)/2.0);
-			}
-			if (obj.superview) {
-				UIView *cloneView = obj.debug_cloneView;
-				cloneView.layer.zPosition = 0;
-				cloneView.layer.debug_zPostion = idx;
-                CGRect rect = [obj.superview convertRect:obj.frame toView:self.targetView];
-				cloneView.layer.frame = CGRectOffset(rect, offset.x, offset.y);
-				cloneView.layer.opacity = 1;
-				[self.debugLayers addObject:cloneView.layer];
-				[self.layerSourceView.layer addSublayer:cloneView.layer];
-			}
-		}];
+        NSArray<UIView *> *allSubviews = view.debug_recurrenceAllSubviews;
+        UIView *rootView = allSubviews.firstObject;
+        CGSize containSize = self.layerSourceView.frame.size;
+        CGPoint offset = CGPointMake((containSize.width - rootView.bounds.size.width) / 2.0,
+                                     (containSize.height - rootView.bounds.size.height) / 2.0);
+        [allSubviews enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (!obj.superview) {
+                return;
+            }
+            XYDebugCloneView *cloneView = obj.debug_cloneView;
+            cloneView.layer.zPosition = 0;
+            cloneView.layer.debug_zPostion = idx;
+            CGRect rect = [obj.superview convertRect:obj.frame toView:self.targetView];
+            cloneView.layer.frame = CGRectOffset(rect, offset.x, offset.y);
+            cloneView.layer.opacity = 1;
+            [self.debugLayers addObject:cloneView.layer];
+            [self.layerSourceView.layer addSublayer:cloneView.layer];
+        }];
 	}
 }
 
-- (void)reCalculateZPostion
+- (BOOL)layerDepthBoundsMin:(CGFloat *)minPosition max:(CGFloat *)maxPosition
 {
-	if (_debugLayers.count<=1) { return; }
-	
-	CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
-	CGFloat positionMin = positionMax;
-	for (CALayer *layer in self.debugLayers) {
-		if (layer.debug_zPostion >= positionMax) {
-			positionMax = layer.debug_zPostion;
-		}
-		if (layer.debug_zPostion <= positionMin) {
-			positionMin = layer.debug_zPostion;
-		}
-	}
-	
-	CGFloat defalutMin = -300;
-	CGFloat defalutMax = 200;
-	if (_debugLayers.count<50) {
-		defalutMin = -100;
-		defalutMax = 100;
-	}
-	CGFloat scale = (defalutMax-defalutMin)/(positionMax-positionMin);
-	for (CALayer *layer in self.debugLayers) {
-		layer.debug_zPostion = defalutMin + (layer.debug_zPostion - positionMin)*scale;
-	}
+    if (self.debugLayers.count == 0) {
+        return NO;
+    }
+
+    CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
+    CGFloat positionMin = positionMax;
+    for (CALayer *layer in self.debugLayers) {
+        positionMax = MAX(positionMax, layer.debug_zPostion);
+        positionMin = MIN(positionMin, layer.debug_zPostion);
+    }
+
+    if (minPosition != NULL) {
+        *minPosition = positionMin;
+    }
+    if (maxPosition != NULL) {
+        *maxPosition = positionMax;
+    }
+    return YES;
+}
+
+- (void)recalculateLayerDepths
+{
+    CGFloat positionMin = 0;
+    CGFloat positionMax = 0;
+    if (![self layerDepthBoundsMin:&positionMin max:&positionMax] || positionMax <= positionMin) {
+        return;
+    }
+
+    CGFloat minimumDepth = self.debugLayers.count < 50 ? -100 : -300;
+    CGFloat maximumDepth = self.debugLayers.count < 50 ? 100 : 200;
+    CGFloat scale = (maximumDepth - minimumDepth) / (positionMax - positionMin);
+    for (CALayer *layer in self.debugLayers) {
+        layer.debug_zPostion = minimumDepth + (layer.debug_zPostion - positionMin) * scale;
+    }
 }
 
 #pragma mark - actions
 
 - (void)showDifferentLayers:(float)percent
 {
-	CGFloat positionMax = self.debugLayers.anyObject.debug_zPostion;
-	CGFloat positionMin = positionMax;
-	for (CALayer *layer in self.debugLayers) {
-		if (layer.debug_zPostion >= positionMax) {
-			positionMax = layer.debug_zPostion;
-		}
-		if (layer.debug_zPostion <= positionMin) {
-			positionMin = layer.debug_zPostion;
-		}
-	}
-	// 分成_debugLayers.count节或20节
-	float divisor = (float)(_debugLayers.count>0 ? _debugLayers.count:20);
-	CGFloat gap = (positionMax - positionMin)/divisor;
+    CGFloat positionMin = 0;
+    CGFloat positionMax = 0;
+    if (![self layerDepthBoundsMin:&positionMin max:&positionMax]) {
+        return;
+    }
+
+	float divisor = (float)(self.debugLayers.count > 0 ? self.debugLayers.count : 20);
+	CGFloat gap = divisor > 0 ? (positionMax - positionMin) / divisor : 0;
 	
 	// 计算当前处于那一节的layer层显示
 	float num = ceil(percent * divisor);
@@ -236,19 +262,21 @@
 {
 	for (CALayer *layer in self.debugLayers) {
 		[layer removeAnimationForKey:@"zPosition"];
-		CGFloat newZPostion = 2 * layer.debug_zPostion * percent;
-		layer.zPosition = newZPostion;
+		layer.zPosition = 2 * layer.debug_zPostion * percent;
 	}
 }
 
 // 恢复默认
-- (void)recoverLayersTransform
+- (void)resetLayerTransforms
 {
 	_overlayerView.distanceSlider.value = 0.5;
+    _overlayerView.rangeSlider.value = 1;
 	_overlayerView.m34Slider.value = 1;
+    [_overlayerView refreshDisplayedValues];
+    [_overlayerView setControlsVisible:NO animated:NO];
 	
 	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
-	transform.m34 = -1.0 / SCREEN_HEIGHT;
+	transform.m34 = -1.0 / CGRectGetHeight(self.bounds);
 	
 	[_layerSourceView.layer removeAllAnimations];
 	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
@@ -272,8 +300,8 @@
 			break;
 		case UIGestureRecognizerStateChanged: {
 			CGPoint current = [pan locationInView:_layerSourceView];
-			CGFloat angleX = (current.x - _panPoint.x) * M_PI / SCREEN_WIDTH;
-			CGFloat angleY = (current.y - _panPoint.y) * M_PI / SCREEN_HEIGHT;
+			CGFloat angleX = (current.x - _panPoint.x) * M_PI / CGRectGetWidth(self.bounds);
+			CGFloat angleY = (current.y - _panPoint.y) * M_PI / CGRectGetHeight(self.bounds);
 			CATransform3D transform3D = CATransform3DRotate(_sublayerTransform, angleX, 0, 1, 0);
 			_layerSourceView.layer.sublayerTransform = CATransform3DRotate(transform3D, -angleY, 1, 0, 0);
 		}
@@ -310,7 +338,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-	return [_doubleTouchsGestures containsObject:gestureRecognizer] && [_doubleTouchsGestures containsObject:otherGestureRecognizer];
+	return [self.multiTouchGestures containsObject:gestureRecognizer] && [self.multiTouchGestures containsObject:otherGestureRecognizer];
 }
 
 
@@ -336,8 +364,9 @@
  */
 - (void)overlayView:(XYOverlayerView *)view m34Changed:(CGFloat)percent
 {
+    CGFloat clampedPercent = MAX(percent, 0.05);
 	CATransform3D transform = CATransform3DScale(CATransform3DIdentity, 0.6, 0.6, 0.6);
-	transform.m34 = -1.0 / (SCREEN_HEIGHT/MAX(CGFLOAT_MIN, percent));
+	transform.m34 = -1.0 / (CGRectGetHeight(self.bounds) / clampedPercent);
 	_layerSourceView.layer.sublayerTransform = transform;
 }
 
@@ -357,8 +386,7 @@
 - (void)overlayViewReseted:(XYOverlayerView *)view
 {
 	[self showAllLayer];
-	[self recoverLayersTransform];
+	[self resetLayerTransforms];
 }
 
 @end
-

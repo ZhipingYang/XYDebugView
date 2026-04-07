@@ -42,17 +42,20 @@
 
 @property (nonatomic, weak) id<XYOverlayerViewDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet UISlider *distanceSlider;
-@property (weak, nonatomic) IBOutlet UISlider *rangeSlider;
-@property (weak, nonatomic) IBOutlet UISlider *m34Slider;
+@property (nonatomic, strong, readonly) UISlider *distanceSlider;
+@property (nonatomic, strong, readonly) UISlider *rangeSlider;
+@property (nonatomic, strong, readonly) UISlider *m34Slider;
 
 /// bottom config view
-@property (weak, nonatomic) IBOutlet UIVisualEffectView *bottomView;
+@property (nonatomic, strong, readonly) UIVisualEffectView *bottomView;
 /// quit trigger button
-@property (weak, nonatomic) IBOutlet UIButton *quitButton;
+@property (nonatomic, strong, readonly) UIButton *quitButton;
 /// reset to default button
-@property (weak, nonatomic) IBOutlet UIButton *resetButton;
+@property (nonatomic, strong, readonly) UIButton *resetButton;
 /// show config button
-@property (weak, nonatomic) IBOutlet UIButton *filterButton;
+@property (nonatomic, strong, readonly) UIButton *filterButton;
+
+- (void)setControlsVisible:(BOOL)visible animated:(BOOL)animated;
+- (void)refreshDisplayedValues;
 
 @end

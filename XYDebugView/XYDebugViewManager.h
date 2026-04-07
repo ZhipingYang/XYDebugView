@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (XYDebugViewManager *)sharedInstance;
 
 /**
- 开启debug功能，默认使用XYDebugStyleIndex对keyWindow进行debug
+ 开启debug功能，默认使用XYDebugStyle2D对当前激活window进行debug
  */
 - (void)showDebug;
 
@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)closeDebug;
 
 /**
- 默认debug对象是keyWindow
+ 默认debug对象是当前激活window
 
  @param debugStyle debug类型
  */

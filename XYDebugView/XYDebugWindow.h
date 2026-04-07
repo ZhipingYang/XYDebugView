@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class XYDebugWindow;
-@protocol XYDebugWindowDelegate
+@protocol XYDebugWindowDelegate <NSObject>
 
 - (void)debugWindowTopButtonClick:(XYDebugWindow *)window is3DDebugging:(BOOL)is3DDebugging;
 
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XYDebugWindow : UIWindow
 
-@property (nonatomic, weak) NSObject<XYDebugWindowDelegate> *delegate;
+@property (nonatomic, weak) id<XYDebugWindowDelegate> delegate;
 @property (nonatomic, weak) UIView *targetView;
 @property (nonatomic) XYDebugStyle debugStyle;
 

@@ -11,6 +11,6 @@
 @interface XYDebugCloneView : UIView
 
 + (XYDebugCloneView *)cloneWith:(UIView *)view;
+- (void)refreshFromView:(UIView *)view;
 
 @end
-

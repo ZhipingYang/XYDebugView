@@ -1,12 +1,16 @@
 PODS:
-  - FORGestureTrackDisplay (0.0.1)
+  - XYDebugView (1.0.1)
 
 DEPENDENCIES:
-  - FORGestureTrackDisplay
+  - XYDebugView (from `..`)
+
+EXTERNAL SOURCES:
+  XYDebugView:
+    :path: ".."
 
 SPEC CHECKSUMS:
-  FORGestureTrackDisplay: 5a484572165306fd480aa328e34b772b1ca6323b
+  XYDebugView: f45ad2c3f8e9dc1f075e577b93842a9a88fe2c42
 
-PODFILE CHECKSUM: 56997562611210cf5781fb43e61119c2705a8157
+PODFILE CHECKSUM: 7aecf511183461bf0913c81cd4794731cdf356bd
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.16.2

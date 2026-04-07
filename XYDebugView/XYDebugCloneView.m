@@ -26,28 +26,40 @@
 {
     self = [super initWithFrame:srcView.frame];
     if (self) {
-        self.srcView = srcView;
+        [self refreshFromView:srcView];
         self.backgroundColor = [UIColor debug_randomLightColorWithAlpha:1];
+        self.contentMode = UIViewContentModeRedraw;
     }
     return self;
 }
 
+- (void)refreshFromView:(UIView *)view
+{
+    self.srcView = view;
+    self.bounds = (CGRect){CGPointZero, view.bounds.size};
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect
 {
-    NSMutableArray *mArr = self.srcView.layer.sublayers.mutableCopy;
-    for (UIView *subview in self.srcView.subviews) {
-        if ([mArr containsObject:subview.layer]) {
-            [mArr removeObject:subview.layer];
-        }
-	}
-	
+    [super drawRect:rect];
+    if (!self.srcView) {
+        return;
+    }
+
+    NSArray<CALayer *> *sourceSublayers = self.srcView.layer.sublayers ?: @[];
+    NSSet<CALayer *> *subviewLayers = [NSSet setWithArray:[self.srcView.subviews valueForKey:@"layer"]];
+		
     CALayer *newLayer = [CALayer layer];
     newLayer.contents = self.srcView.layer.contents;
-    newLayer.frame = self.srcView.layer.frame;
+    newLayer.frame = self.bounds;
 	newLayer.contentsScale = self.srcView.layer.contentsScale;
 	newLayer.contentsGravity = self.srcView.layer.contentsGravity;
     
-    for (CALayer *sublayer in mArr) {
+    for (CALayer *sublayer in sourceSublayers) {
+        if ([subviewLayers containsObject:sublayer]) {
+            continue;
+        }
         CALayer *newSub = [[CALayer alloc] initWithLayer:sublayer];
         newSub.frame = sublayer.frame;
         [newLayer addSublayer:newSub];

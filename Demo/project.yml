@@ -1,0 +1,31 @@
+name: XYDebugViewDemo
+
+options:
+  createIntermediateGroups: true
+  projectFormat: xcode15_3
+  deploymentTarget:
+    iOS: 13.0
+
+settings:
+  base:
+    TARGETED_DEVICE_FAMILY: "1,2"
+
+targets:
+  XYDebugViewDemo:
+    type: application
+    platform: iOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: Sources
+        group: XYDebugViewDemo
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.xcodeyang.XYDebugViewDemo
+        INFOPLIST_FILE: Sources/Info.plist
+        CODE_SIGN_STYLE: Automatic
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: 1.0
+        DEVELOPMENT_LANGUAGE: en
+        CLANG_ENABLE_MODULES: YES
+    scheme:
+      gatherCoverageData: false

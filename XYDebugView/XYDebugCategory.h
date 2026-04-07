@@ -70,6 +70,14 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 
+@interface UIApplication (XYDebug)
+
+@property (nonatomic, readonly, nonnull) NSArray<UIWindow *> *debug_activeWindows;
+@property (nonatomic, readonly, nullable) UIWindow *debug_keyWindow;
+
+@end
+
+
 @interface UIDevice (XYDebug)
 
 + (BOOL)isNotchScreen;

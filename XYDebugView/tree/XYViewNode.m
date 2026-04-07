@@ -18,7 +18,7 @@
     if (self) {
         _resourceView = view;
         _parentNode = parent;
-        _deep = parent.deep + 1;
+        _deep = parent ? (parent.deep + 1) : 1;
                 
         NSMutableArray *mArr = @[].mutableCopy;
         for (UIView *subview in view.subviews) {
@@ -37,15 +37,18 @@
 
 - (NSArray<XYViewNode *> *)recurrenceAllChildNodes
 {
-    NSMutableArray <XYViewNode *> *all = @[].mutableCopy;
-    void (^getSubViewsBlock)(XYViewNode *current) = ^(XYViewNode *current){
+    NSMutableArray<XYViewNode *> *all = [NSMutableArray array];
+    NSMutableArray<XYViewNode *> *stack = [NSMutableArray arrayWithObject:self];
+    while (stack.count > 0) {
+        XYViewNode *current = stack.lastObject;
+        [stack removeLastObject];
         [all addObject:current];
-        for (XYViewNode *sub in current.childNodes) {
-            [all addObjectsFromArray:[sub recurrenceAllChildNodes]];
+        NSEnumerator<XYViewNode *> *reverseEnumerator = current.childNodes.reverseObjectEnumerator;
+        for (XYViewNode *child in reverseEnumerator) {
+            [stack addObject:child];
         }
-    };
-    getSubViewsBlock(self);
-    return [NSArray arrayWithArray:all];
+    }
+    return all.copy;
 }
 
 - (XYViewNodePosition)position

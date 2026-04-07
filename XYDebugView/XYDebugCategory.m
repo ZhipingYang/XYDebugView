@@ -23,7 +23,8 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
     }
     obj = [[CALayer alloc] init];
     obj.borderColor = [[UIColor redColor] colorWithAlphaComponent:0.6].CGColor;
-    obj.borderWidth = 1/[UIScreen mainScreen].scale;
+    CGFloat scale = self.traitCollection.displayScale > 0 ? self.traitCollection.displayScale : 1.0;
+    obj.borderWidth = 1 / scale;
     objc_setAssociatedObject(self, debug_colorSublayer, obj, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return [self debug_colorSublayer];
 }
@@ -32,6 +33,7 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
 {
     XYDebugCloneView *obj = objc_getAssociatedObject(self, DebugCloneView);
     if ([obj isKindOfClass:[XYDebugCloneView class]] && obj) {
+        [obj refreshFromView:self];
         return obj;
     }
     obj = [XYDebugCloneView cloneWith:self];
@@ -43,24 +45,28 @@ const static char * debug_colorSublayer = "debug_colorSublayer";
 
 - (NSArray<UIView *> *)debug_recurrenceAllSubviews
 {
-    NSMutableArray <UIView *> *all = @[].mutableCopy;
-    void (^getSubViewsBlock)(UIView *current) = ^(UIView *current){
+    NSMutableArray<UIView *> *all = [NSMutableArray array];
+    NSMutableArray<UIView *> *stack = [NSMutableArray arrayWithObject:self];
+    while (stack.count > 0) {
+        UIView *current = stack.lastObject;
+        [stack removeLastObject];
         [all addObject:current];
-        for (UIView *sub in current.subviews) {
-            [all addObjectsFromArray:[sub debug_recurrenceAllSubviews]];
+        NSEnumerator<UIView *> *reverseEnumerator = current.subviews.reverseObjectEnumerator;
+        for (UIView *subview in reverseEnumerator) {
+            [stack addObject:subview];
         }
-    };
-    getSubViewsBlock(self);
-    return [NSArray arrayWithArray:all];
+    }
+    return all.copy;
 }
 
 - (void)debug_resetView
 {
 	CALayer *debug_associatedLayer = objc_getAssociatedObject(self, debug_colorSublayer);
 	[debug_associatedLayer removeFromSuperlayer];
-	objc_removeAssociatedObjects(debug_associatedLayer);
+	objc_setAssociatedObject(self, debug_colorSublayer, nil, OBJC_ASSOCIATION_ASSIGN);
 	XYDebugCloneView *debug_associatedView = objc_getAssociatedObject(self, DebugCloneView);
-	objc_removeAssociatedObjects(debug_associatedView);
+	[debug_associatedView.layer removeFromSuperlayer];
+	objc_setAssociatedObject(self, DebugCloneView, nil, OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end
@@ -118,12 +124,56 @@ const static char * DebugStoreZPosition = "DebugStoreZPosition";
 }
 @end
 
+@implementation UIApplication (XYDebug)
+
+- (NSArray<UIWindow *> *)debug_activeWindows
+{
+    NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
+    if (@available(iOS 13.0, *)) {
+        for (UIScene *scene in self.connectedScenes) {
+            if (![scene isKindOfClass:[UIWindowScene class]]) {
+                continue;
+            }
+            if (scene.activationState != UISceneActivationStateForegroundActive &&
+                scene.activationState != UISceneActivationStateForegroundInactive) {
+                continue;
+            }
+            [windows addObjectsFromArray:((UIWindowScene *)scene).windows];
+        }
+    }
+    if (windows.count == 0) {
+        if ([self.delegate respondsToSelector:@selector(window)] && self.delegate.window) {
+            [windows addObject:self.delegate.window];
+        }
+    }
+    return windows.copy;
+}
+
+- (UIWindow *)debug_keyWindow
+{
+    NSArray<UIWindow *> *windows = self.debug_activeWindows;
+    for (UIWindow *window in windows.reverseObjectEnumerator) {
+        if (window.isKeyWindow) {
+            return window;
+        }
+    }
+    for (UIWindow *window in windows.reverseObjectEnumerator) {
+        if (!window.hidden && window.alpha > 0.01) {
+            return window;
+        }
+    }
+    return nil;
+}
+
+@end
+
 @implementation UIDevice (XYDebug)
 
 + (BOOL)isNotchScreen
 {
     if (@available(iOS 11.0, *)) {
-        UIEdgeInsets windowInsets = UIApplication.sharedApplication.delegate.window.safeAreaInsets;
+        UIWindow *window = UIApplication.sharedApplication.debug_keyWindow;
+        UIEdgeInsets windowInsets = window.safeAreaInsets;
         return !UIEdgeInsetsEqualToEdgeInsets(windowInsets, UIEdgeInsetsZero);
     }
     return NO;

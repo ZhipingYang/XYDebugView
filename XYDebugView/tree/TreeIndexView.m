@@ -49,6 +49,9 @@
 - (void)setNode:(XYViewNode *)node
 {
     _node = node;
+    if (!node) {
+        return;
+    }
     
     if (!_hLine) {
         _hLine = [CALayer layer];
@@ -66,15 +69,19 @@
         [_vLines addObject:vLine];
     }
 
-    [self layoutSubviews];
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    if (!self.node) {
+        return;
+    }
     CGFloat const width =  self.frame.size.width;
     CGFloat const height =  self.frame.size.height;
-    CGFloat const eachW = width/MAX(_node.maxDeep, 1);
+    CGFloat const maxDepth = MAX(MAX(_node.maxDeep, _node.deep), 1);
+    CGFloat const eachW = width/maxDepth;
     
     _hLine.frame = CGRectMake(eachW * (_node.deep-1), height/2.0, MIN(width-(eachW*_node.deep-1), 2*eachW), 1);
 
@@ -91,8 +98,12 @@
 
 - (CGFloat)graphRight
 {
+    if (!self.node) {
+        return CGRectGetMinX(self.frame);
+    }
     CGFloat const width =  self.frame.size.width;
-    CGFloat const eachW = width/MAX(_node.maxDeep, 1);
+    CGFloat const maxDepth = MAX(MAX(_node.maxDeep, _node.deep), 1);
+    CGFloat const eachW = width/maxDepth;
     CGFloat const graphLeft = eachW * (_node.deep-1);
     CGFloat const graphLength = MIN(width-(eachW*_node.deep-1), 2*eachW);
     return self.frame.origin.x + graphLeft + graphLength;

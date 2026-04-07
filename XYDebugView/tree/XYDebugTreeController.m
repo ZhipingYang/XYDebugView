@@ -42,6 +42,10 @@
             obj.maxDeep = max;
         }];
     }];
+
+    if (self.isViewLoaded) {
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Table view data source

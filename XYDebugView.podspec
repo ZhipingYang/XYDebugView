@@ -18,8 +18,9 @@ s.source_files = [
 "XYDebugView/**/*.{h,m}",
 ]
 
-s.resources = [
-"XYDebugView/resource/*.{png,xib}"
+s.public_header_files = [
+"XYDebugView/XYDebugViewManager.h",
+"XYDebugView/XYdebugConst.h",
 ]
 
 s.frameworks = 'UIKit'
